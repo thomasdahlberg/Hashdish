@@ -3,7 +3,8 @@
     width: 100vw;
     justify-content: space-between;
     background-color: #F8E16C;
-    color: #211103
+    color: #211103;
+    box-shadow: 3px 3px 3px #888888;
 }
 
 .title {
