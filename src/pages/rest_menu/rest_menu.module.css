@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container hr {
+    width: 100vw;
+    border-top: solid #888888 2px;
+}
+
+.header {
+    margin: 1.45rem;
+    display: flex;
+}
+
+.header button {
+    margin-left: 3rem;
+    border-radius: 50%;
+    font-size: 3rem;
+    padding: 1rem;
+    width: 5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #5CAB7D;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.header button:active {
+    background-color: green;
+    box-shadow: none;
+}
+
+.header button:focus {
+    outline: 0;
+}
+
+.form {
+    margin-left: 1.45rem;
+}
