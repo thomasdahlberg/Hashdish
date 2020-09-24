@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 1.45rem;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1.45rem;
+}
+
+.logo {
+    background-color: #F9F8F8;
+    box-shadow: 2px 2px 2px #888888;
+    padding: 1.45rem;
+}
+
+.title h1 {
+    font-size: 2rem;
+}
+
+.logo {
+    margin-right: 2rem;
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.45rem;
+}
+
+.info h3 {
+    margin-right: 2rem;
+}
+
+.gallery {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.gallery img {
+    /* margin: 1.45rem; */
+    max-width: 25vw;
+    padding: 1.45rem;
+    color: #211103;
+    background-color: #F9F8F8;
+    box-shadow: 2px 2px 2px #888888;
+}
