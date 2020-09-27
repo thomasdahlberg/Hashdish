@@ -4,15 +4,13 @@ import Footer from '../footer/footer';
 import styles from './layout.module.css';
 
 const Layout = (props) => {
-    return(
-        <div className={styles.container}>
-            <Header />
-            <div className={styles.content}>
-                {props.children}
-            </div>
-            <Footer />
-        </div>
-    )
-}
+  return (
+    <div className={styles.container}>
+      <Header handleLogout={props.handleLogout} />
+      <div className={styles.content}>{props.children}</div>
+      <Footer />
+    </div>
+  );
+};
 
 export default Layout;
