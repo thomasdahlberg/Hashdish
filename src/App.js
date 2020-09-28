@@ -38,12 +38,12 @@ class App extends Component {
 
   handleLogout = () => {
     LocalStorageService.clearToken();
-    this.setState({user: false});
+    this.setState({ user: false });
   };
 
   handleSignupOrLogin = () => {
-    this.setState({user: LocalStorageService.getAuthToken() ? true : false});
-  }
+    this.setState({ user: LocalStorageService.getAuthToken() ? true : false });
+  };
 
   render() {
     return (
@@ -51,27 +51,41 @@ class App extends Component {
         <Layout handleLogout={this.handleLogout} user={this.state.user}>
           <Switch>
             <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
-            <Route exact path="/profile" render={() => 
-              LocalStorageService.getAuthToken() ? 
-              <Profile />
-                :
-              <Redirect to='/login' />
-            }/>
+            <Route
+              exact
+              path="/profile"
+              render={() =>
+                LocalStorageService.getAuthToken() ? (
+                  <Profile />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
             <Route
               exact
               path="/menu"
               render={() =>
-                LocalStorageService.getAuthToken() ?  
-                <Menu
-                  menuItemForm={this.state.menuItemForm}
-                  handleClick={this.handleClick}
+                LocalStorageService.getAuthToken() ? (
+                  <Menu
+                    menuItemForm={this.state.menuItemForm}
+                    handleClick={this.handleClick}
+                  />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/login"
+              render={({ history }) => (
+                <Login
+                  history={history}
+                  handleSignupOrLogin={this.handleSignupOrLogin}
                 />
-                  :
-                <Redirect to='/login' />
-            }/>
-            <Route exact path="/login" render={({ history }) => 
-              <Login history={ history } handleSignupOrLogin={this.handleSignupOrLogin}/>
-            }/>
+              )}
+            />
           </Switch>
         </Layout>
       </div>
