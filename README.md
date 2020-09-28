@@ -10,4 +10,4 @@ In the project directory, you should run:
 
 ## Extension
 
-### Prettier
+### `Prettier`
