@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './rest_profile.module.css';
+import styles from './RestProfile.module.css';
 
 const Profile = (props) => {
     return(

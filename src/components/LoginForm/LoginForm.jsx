@@ -22,8 +22,9 @@ axios.interceptors.request.use(
 );
 
 class LoginForm extends Component {
+  
   state = this.getInitialState();
-
+  
   getInitialState() {
     return {
       email: '',
@@ -60,6 +61,8 @@ class LoginForm extends Component {
         console.log(error);
         alert('Failed to login');
       });
+    this.props.handleSignupOrLogin();
+    LocalStorageService.getAuthToken() ? this.props.history.push('/') : this.props.history.push('/login');
   };
 
   render() {
