@@ -1,7 +1,7 @@
 import React from 'react';
-import MenuItemForm from '../../components/menuItemForm/menuItemForm';
-import MenuItems from '../../components/menu_item/menu_items';
-import styles from './rest_menu.module.css';
+import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
+import MenuItems from '../../components/MenuItem/MenuItems';
+import styles from './RestMenu.module.css';
 
 
 

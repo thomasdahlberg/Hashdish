@@ -6,7 +6,7 @@ const Login = (props) => {
   return (
     <>
       <h1 className={styles.header}>Login</h1>
-      <LoginForm />
+      <LoginForm {...props}/>
     </>
   );
 };

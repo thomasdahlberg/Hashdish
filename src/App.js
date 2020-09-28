@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 
 // Pages
-import Profile from './pages/rest_profile/rest_profile';
-import Menu from './pages/rest_menu/rest_menu';
+import Profile from './pages/RestProfile/RestProfile';
+import Menu from './pages/RestMenu/RestMenu';
 import Login from './pages/Login/Login';
 
 // Components
-import Layout from './components/layout/layout';
+import Layout from './components/Layout/Layout';
 import LocalStorageService from './utils/localStorageService';
 
 class App extends Component {
@@ -17,6 +17,7 @@ class App extends Component {
   getInitialState() {
     return {
       menuItemForm: false,
+      user: LocalStorageService.getAuthToken() ? true : false,
     };
   }
 
@@ -37,26 +38,40 @@ class App extends Component {
 
   handleLogout = () => {
     LocalStorageService.clearToken();
+    this.setState({user: false});
   };
+
+  handleSignupOrLogin = () => {
+    this.setState({user: LocalStorageService.getAuthToken() ? true : false});
+  }
 
   render() {
     return (
       <div className="App-Outer-Container">
-        <Layout handleLogout={this.handleLogout}>
+        <Layout handleLogout={this.handleLogout} user={this.state.user}>
           <Switch>
             <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
-            <Route exact path="/profile" render={() => <Profile />} />
+            <Route exact path="/profile" render={() => 
+              LocalStorageService.getAuthToken() ? 
+              <Profile />
+                :
+              <Redirect to='/login' />
+            }/>
             <Route
               exact
               path="/menu"
-              render={() => (
+              render={() =>
+                LocalStorageService.getAuthToken() ?  
                 <Menu
                   menuItemForm={this.state.menuItemForm}
                   handleClick={this.handleClick}
                 />
-              )}
-            />
-            <Route exact path="/login" render={() => <Login />} />
+                  :
+                <Redirect to='/login' />
+            }/>
+            <Route exact path="/login" render={({ history }) => 
+              <Login history={ history } handleSignupOrLogin={this.handleSignupOrLogin}/>
+            }/>
           </Switch>
         </Layout>
       </div>

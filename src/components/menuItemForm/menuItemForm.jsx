@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './menuItemForm.module.css';
+import styles from './MenuItemForm.module.css';
 
 class MenuItemForm extends Component {
     state = this.getInitialState();
