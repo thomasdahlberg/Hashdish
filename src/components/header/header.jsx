@@ -3,32 +3,27 @@ import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 
 const Header = (props) => {
-  let nav = props.user ?
-  <Fragment>
-    <li>
-      <Link to="/menu">
-        Menu
-      </Link>
-    </li>
-    <li>
-      <Link to="/profile">
-        Profile
-      </Link>
-    </li>
-    <li>
-      <Link to="/" onClick={props.handleLogout}>
-        Log Out
-      </Link>
-    </li>
-  </Fragment>
-  :
-  <Fragment>
-    <li>
-      <Link to="/login">
-        Log In
-      </Link>
-    </li>
-  </Fragment>
+  let nav = props.user ? (
+    <Fragment>
+      <li>
+        <Link to="/menu">Menu</Link>
+      </li>
+      <li>
+        <Link to="/profile">Profile</Link>
+      </li>
+      <li>
+        <Link to="/" onClick={props.handleLogout}>
+          Log Out
+        </Link>
+      </li>
+    </Fragment>
+  ) : (
+    <Fragment>
+      <li>
+        <Link to="/login">Log In</Link>
+      </li>
+    </Fragment>
+  );
 
   return (
     <header className={styles.container}>
@@ -40,9 +35,7 @@ const Header = (props) => {
           <h2>Restaurant Manager</h2>
         </em>
       </div>
-      <ul className={styles.nav}>
-        {nav}
-      </ul>
+      <ul className={styles.nav}>{nav}</ul>
     </header>
   );
 };
