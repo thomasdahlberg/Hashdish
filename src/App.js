@@ -9,7 +9,12 @@ import Login from './pages/Login/Login';
 
 // Components
 import Layout from './components/Layout/Layout';
+
+// Utilities
 import LocalStorageService from './utils/localStorageService';
+import kitchenInstance from './utils/axiosConfig';
+
+const API = kitchenInstance;
 
 class App extends Component {
   state = this.getInitialState();
@@ -18,9 +23,30 @@ class App extends Component {
     return {
       menuItemForm: false,
       user: LocalStorageService.getAuthToken() ? true : false,
+      myKitchen: null
     };
   }
+  // Data Handlers
+  handleGetKitchen = async () => {
+    let response = await API.get('/kitchen/me');
+    let data = response.data;
+    let kitchen = {
+      address: data.address,
+      cuisine: data.cuisine,
+      email: data.email,
+      flags: data.flags,
+      kitchenId: data.kitchenId,
+      name: data.name,
+      openHours: data.openHours,
+      phoneNumber: data.phoneNumber,
+      pictureKey: data.pictureKey
+    }
+    this.setState({
+      myKitchen: kitchen
+    })
+  }
 
+  // DOM Handlers
   handleClick = (e) => {
     e.preventDefault();
     if (e.target.id === 'addMenuItem') {
@@ -36,13 +62,21 @@ class App extends Component {
     }
   };
 
+  // Login/Logout Handlers
   handleLogout = () => {
     LocalStorageService.clearToken();
-    this.setState({ user: false });
+    this.setState({ 
+      user: false,
+      myKitchen: null
+    });
   };
 
   handleSignupOrLogin = () => {
-    this.setState({ user: LocalStorageService.getAuthToken() ? true : false });
+    this.handleGetKitchen();
+    LocalStorageService.getAuthToken() ?
+    this.setState({ user: true })
+    :
+    this.setState({ user: false})
   };
 
   render() {
@@ -56,7 +90,7 @@ class App extends Component {
               path="/profile"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
-                  <Profile />
+                  <Profile handleGetKitchen={this.handleGetKitchen}/>
                 ) : (
                   <Redirect to="/login" />
                 )

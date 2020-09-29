@@ -1,25 +1,9 @@
 import React, { Component } from 'react';
 import styles from './LoginForm.module.css';
-import axios from 'axios';
-import LocalStorageService from '../../utils/localStorageService';
+import kitchenInstance from '../../utils/axiosConfig';
+import LocalStorageService from "../../utils/localStorageService";
 
-// LocalstorageService
-const localStorageService = LocalStorageService.getService();
-
-// Add a request interceptor
-axios.interceptors.request.use(
-  (config) => {
-    console.log('Axios Interceptors');
-    const token = localStorageService.getAuthToken();
-    if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
-    }
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-);
+const API = kitchenInstance;
 
 class LoginForm extends Component {
   
@@ -46,11 +30,7 @@ class LoginForm extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-    await axios
-      .post(
-        `https://dev.hashdish.com/v1.0/kitchen/authorize?email=${email}&password=${password}`,
-        {}
-      )
+    await API.post(`/kitchen/authorize?email=${email}&password=${password}`)
       .then(function (response) {
         if (response.status === 200) {
           LocalStorageService.setToken(response.data);
