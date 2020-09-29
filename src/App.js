@@ -21,9 +21,10 @@ class App extends Component {
 
   getInitialState() {
     return {
-      menuItemForm: false,
+      addMenuItem: false,
       user: LocalStorageService.getAuthToken() ? true : false,
-      myKitchen: null
+      myKitchen: null,
+      editHours: false,
     };
   }
   // Data Handlers
@@ -49,16 +50,16 @@ class App extends Component {
   // DOM Handlers
   handleClick = (e) => {
     e.preventDefault();
-    if (e.target.id === 'addMenuItem') {
-      this.handleMenuItemFormToggle();
+    if (e.target.id) {
+      this.handleFormToggle(e.target.id);
     } else return;
   };
 
-  handleMenuItemFormToggle = () => {
-    if (this.state.menuItemForm) {
-      this.setState({ menuItemForm: false });
+  handleFormToggle = (id) => {
+    if (this.state[id]) {
+      this.setState({ [id]: false });
     } else {
-      this.setState({ menuItemForm: true });
+      this.setState({ [id]: true });
     }
   };
 
@@ -79,6 +80,12 @@ class App extends Component {
     this.setState({ user: false})
   };
 
+  // Lifecycle Hooks
+
+  componentDidMount = async () => {
+    await this.handleGetKitchen();
+  }
+
   render() {
     return (
       <div className="App-Outer-Container">
@@ -90,7 +97,12 @@ class App extends Component {
               path="/profile"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
-                  <Profile handleGetKitchen={this.handleGetKitchen}/>
+                  <Profile
+                    handleClick={this.handleClick}
+                    editHours={this.state.editHours}
+                    handleGetKitchen={this.handleGetKitchen}
+                    myKitchen={this.state.myKitchen}  
+                  />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -102,7 +114,7 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Menu
-                    menuItemForm={this.state.menuItemForm}
+                    menuItemForm={this.state.addMenuItem}
                     handleClick={this.handleClick}
                   />
                 ) : (
