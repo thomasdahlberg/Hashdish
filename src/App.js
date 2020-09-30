@@ -9,41 +9,89 @@ import Login from './pages/Login/Login';
 
 // Components
 import Layout from './components/Layout/Layout';
+
+// Utilities
 import LocalStorageService from './utils/localStorageService';
+import kitchenInstance from './utils/axiosConfig';
+
+const API = kitchenInstance;
 
 class App extends Component {
   state = this.getInitialState();
 
   getInitialState() {
     return {
-      menuItemForm: false,
+      addMenuItem: false,
       user: LocalStorageService.getAuthToken() ? true : false,
+      myKitchen: null,
+      editHours: false,
     };
   }
+  // Data Handlers
+  handleGetKitchen = async () => {
+    let response = await API.get('/kitchen/me');
+    let data = response.data;
+    let kitchen = {
+      address: data.address,
+      cuisine: data.cuisine,
+      email: data.email,
+      flags: data.flags,
+      kitchenId: data.kitchenId,
+      name: data.name,
+      openHours: data.openHours,
+      phoneNumber: data.phoneNumber,
+      pictureKey: data.pictureKey
+    }
+    this.setState({
+      myKitchen: kitchen
+    })
+  }
 
+  formatTime(time) {
+    if(time < 1000){
+      let newTime = [0,String(time).slice(0,)];
+
+    }
+  }
+
+  // DOM Handlers
   handleClick = (e) => {
     e.preventDefault();
-    if (e.target.id === 'addMenuItem') {
-      this.handleMenuItemFormToggle();
+    if (e.target.id) {
+      this.handleFormToggle(e.target.id);
     } else return;
   };
 
-  handleMenuItemFormToggle = () => {
-    if (this.state.menuItemForm) {
-      this.setState({ menuItemForm: false });
+  handleFormToggle = (id) => {
+    if (this.state[id]) {
+      this.setState({ [id]: false });
     } else {
-      this.setState({ menuItemForm: true });
+      this.setState({ [id]: true });
     }
   };
 
+  // Login/Logout Handlers
   handleLogout = () => {
     LocalStorageService.clearToken();
-    this.setState({ user: false });
+    this.setState({ 
+      user: false,
+      myKitchen: null
+    });
   };
 
   handleSignupOrLogin = () => {
-    this.setState({ user: LocalStorageService.getAuthToken() ? true : false });
+    this.handleGetKitchen();
+    LocalStorageService.getAuthToken() ?
+    this.setState({ user: true })
+    :
+    this.setState({ user: false})
   };
+
+  // Lifecycle Hooks
+
+  componentDidMount = async () => {
+    await this.handleGetKitchen();
+  }
 
   render() {
     return (
@@ -56,7 +104,12 @@ class App extends Component {
               path="/profile"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
-                  <Profile />
+                  <Profile
+                    handleClick={this.handleClick}
+                    editHours={this.state.editHours}
+                    handleGetKitchen={this.handleGetKitchen}
+                    myKitchen={this.state.myKitchen}  
+                  />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -68,7 +121,7 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Menu
-                    menuItemForm={this.state.menuItemForm}
+                    menuItemForm={this.state.addMenuItem}
                     handleClick={this.handleClick}
                   />
                 ) : (
