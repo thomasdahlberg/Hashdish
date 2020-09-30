@@ -3,6 +3,30 @@ import { Redirect } from 'react-router-dom';
 import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import styles from './RestProfile.module.css';
 
+function profileTime(time) {
+    if(time < 1200) {
+        if(time < 1000) {
+            let newTime = [String(time).slice(0,1),":",String(time).slice(1)," AM"].join("")
+            return newTime;
+        } else {
+            let newTime = [String(time).slice(0,2),":",String(time).slice(2)," AM"].join("")
+            return newTime;
+        }
+    } else if(time < 1300) {
+        let newTime = [String(time).slice(0,2),":",String(time).slice(2)," PM"].join("")
+        return newTime;
+    } else {
+        let adjust = time - 1200;
+        if(adjust < 1000) {
+            let newTime = [String(adjust).slice(0,1),":",String(adjust).slice(1)," PM"].join("")
+            return newTime;
+        } else {
+            let newTime = [String(adjust).slice(0,2),":",String(adjust).slice(2)," PM"].join("")
+            return newTime;
+        }
+    }
+}
+
 const Profile = (props) => {
     return(
         <div>
@@ -24,11 +48,14 @@ const Profile = (props) => {
                     </div>
                 </section>
                 {props.editHours ? 
-                    <UpdateHours handleClick={props.handleClick}/>
+                    <UpdateHours
+                        openHours={props.myKitchen.openHours} 
+                        handleClick={props.handleClick}
+                    />
                     :
                     <section className={styles.info}>
                         {props.myKitchen.openHours.map(({name, openHours}, idx) => 
-                            <p key={idx}>{name}: {openHours[0]}</p>
+                            openHours[0] ? <p key={idx}>{name}: {profileTime(openHours[0][0])} - {profileTime(openHours[0][1])}</p> : null
                         )}
                         <div className={styles.edit}>
                             <button id="editHours" onClick={props.handleClick}>Edit</button>

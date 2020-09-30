@@ -3,6 +3,16 @@ import styles from './UpdateHours.module.css';
 import kitchenInstance from '../../utils/axiosConfig';
 import LocalStorageService from "../../utils/localStorageService";
 
+function formatTime(time) {
+    if(time < 1000){
+      let newTime = [0,String(time).slice(0,1),":",String(time).slice(1)].join("");
+      return newTime;
+    } else {
+      let newTime = [String(time).slice(0,2),":",String(time).slice(2)].join("");
+      return newTime;
+    }
+}
+
 class UpdateHours extends Component {
     state = this.getInitialState();
   
@@ -61,17 +71,16 @@ class UpdateHours extends Component {
                             <select 
                                 id={day} 
                                 name={day}  
-                                defaultValue=""
+                                defaultValue={this.props.openHours[idx].name}
                                 onChange={this.handleChange}
                             >
                                 <option name={day} value="" disabled>Choose a Day</option>
                                 {dayChoices.map((choice, idx) => <option name={day} value={choice} key={idx}>{choice}</option>)}
                             </select>
                             <label htmlFor={`${day}Open`}>Open:</label>
-                            <input type="time" id={`${day}Open`} name={`${day}Open`}/>
+                            <input type="time" id={`${day}Open`} name={`${day}Open`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][0]) : null} onChange={this.handleChange}/>
                             <label htmlFor={`${day}Close`}>Close:</label>
-                            <input type="time" id={`${day}Close`} name={`${day}Close`}/>
-
+                            <input type="time" id={`${day}Close`} name={`${day}Close`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][1]) : null} onChange={this.handleChange}/>
                         </div>    
                     )}
                     <button disabled={!this.isFormValid()} type="submit">

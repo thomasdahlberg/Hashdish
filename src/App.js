@@ -47,6 +47,13 @@ class App extends Component {
     })
   }
 
+  formatTime(time) {
+    if(time < 1000){
+      let newTime = [0,String(time).slice(0,)];
+
+    }
+  }
+
   // DOM Handlers
   handleClick = (e) => {
     e.preventDefault();
