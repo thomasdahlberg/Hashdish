@@ -13,50 +13,66 @@ function formatTime(time) {
     }
 }
 
+function deformatTime(time) {
+    let newTime = time.slice(0,2) + time.slice(3)
+    if(newTime[0] === '0'){
+        newTime = newTime.slice(1);
+    }
+    return Number(newTime);
+}
+
 class UpdateHours extends Component {
-    state = this.getInitialState();
+    constructor(props){
+        super(props)
+        this.state = this.getInitialState();
+    }
   
     getInitialState() {
       return {
-        day1: {
-            name: null,
-            openHours: []
-            },
-        day2: {
-            name: null,
-            openHours: []
-            },
-        day3: {
-            name: null,
-            openHours: []
-            },
-        day4: {
-            name: null,
-            openHours: []
-            },
-        day5: {
-            name: null,
-            openHours: []
-            },
-        day6: {
-            name: null,
-            openHours: []
-            },
-        day7: {
-            name: null,
-            openHours: []
-            },
+        day1: this.props.openHours[0].name,
+        open1: this.props.openHours[0].openHours[0] ? this.props.openHours[0].openHours[0][0] : null,
+        close1: this.props.openHours[0].openHours[0] ? this.props.openHours[0].openHours[0][1] : null,
+        day2: this.props.openHours[1].name,
+        open2: this.props.openHours[1].openHours[0] ? this.props.openHours[1].openHours[0][0] : null,
+        close2: this.props.openHours[1].openHours[0] ? this.props.openHours[1].openHours[0][1] : null,
+        day3: this.props.openHours[2].name,
+        open3: this.props.openHours[2].openHours[0] ? this.props.openHours[2].openHours[0][0] : null,
+        close3: this.props.openHours[2].openHours[0] ? this.props.openHours[2].openHours[0][1] : null,
+        day4: this.props.openHours[3].name,
+        open4: this.props.openHours[3].openHours[0] ? this.props.openHours[3].openHours[0][0] : null,
+        close4: this.props.openHours[3].openHours[0] ? this.props.openHours[3].openHours[0][1] : null,
+        day5: this.props.openHours[4].name,
+        open5: this.props.openHours[4].openHours[0] ? this.props.openHours[4].openHours[0][0] : null,
+        close5: this.props.openHours[4].openHours[0] ? this.props.openHours[4].openHours[0][1] : null,
+        day6: this.props.openHours[5].name,
+        open6: this.props.openHours[5].openHours[0] ? this.props.openHours[5].openHours[0][0] : null,
+        close6: this.props.openHours[5].openHours[0] ? this.props.openHours[5].openHours[0][1] : null,
+        day7: this.props.openHours[6].name,
+        open7: this.props.openHours[6].openHours[0] ? this.props.openHours[6].openHours[0][0] : null,
+        close7: this.props.openHours[6].openHours[0] ? this.props.openHours[6].openHours[0][1] : null,
       };
     }
   
     isFormValid = () => {
-      return this.state.email && this.state.password;
+        return this.state.day1 &&
+            this.state.day2 &&
+            this.state.day3 &&
+            this.state.day4 &&
+            this.state.day5 &&
+            this.state.day6 &&
+            this.state.day7;
     };
   
     handleChange = (event) => {
-      this.setState({
-        [event.target.name]: event.target.value,
-      });
+        if(event.target.name.includes("open") || event.target.name.includes("close")){
+            this.setState({
+                [event.target.name]: deformatTime(event.target.value)
+            });
+        } else {
+            this.setState({
+                [event.target.name]: event.target.value
+            });
+        }
     };
 
     render() {
@@ -77,10 +93,10 @@ class UpdateHours extends Component {
                                 <option name={day} value="" disabled>Choose a Day</option>
                                 {dayChoices.map((choice, idx) => <option name={day} value={choice} key={idx}>{choice}</option>)}
                             </select>
-                            <label htmlFor={`${day}Open`}>Open:</label>
-                            <input type="time" id={`${day}Open`} name={`${day}Open`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][0]) : null} onChange={this.handleChange}/>
-                            <label htmlFor={`${day}Close`}>Close:</label>
-                            <input type="time" id={`${day}Close`} name={`${day}Close`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][1]) : null} onChange={this.handleChange}/>
+                            <label htmlFor={`$open${idx+1}`}>Open:</label>
+                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][0]) : null} onChange={this.handleChange}/>
+                            <label htmlFor={`close${idx+1}`}>Close:</label>
+                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][1]) : null} onChange={this.handleChange}/>
                         </div>    
                     )}
                     <button disabled={!this.isFormValid()} type="submit">
