@@ -98,10 +98,11 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Profile
-                    handleClick={this.handleClick}
+                    myKitchen={this.state.myKitchen}  
                     editHours={this.state.editHours}
                     handleGetKitchen={this.handleGetKitchen}
-                    myKitchen={this.state.myKitchen}  
+                    handleClick={this.handleClick}
+                    handleFormToggle={this.handleFormToggle}
                   />
                 ) : (
                   <Redirect to="/login" />

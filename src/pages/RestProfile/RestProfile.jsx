@@ -51,6 +51,7 @@ const Profile = (props) => {
                     <UpdateHours
                         openHours={props.myKitchen.openHours} 
                         handleClick={props.handleClick}
+                        handleFormToggle={props.handleFormToggle}
                     />
                     :
                     <section className={styles.info}>

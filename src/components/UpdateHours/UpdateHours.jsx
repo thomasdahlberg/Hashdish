@@ -1,7 +1,9 @@
 import React, { Component} from 'react';
 import styles from './UpdateHours.module.css';
 import kitchenInstance from '../../utils/axiosConfig';
-import LocalStorageService from "../../utils/localStorageService";
+// import LocalStorageService from "../../utils/localStorageService";
+
+const API = kitchenInstance;
 
 function formatTime(time) {
     if(time < 1000){
@@ -74,6 +76,28 @@ class UpdateHours extends Component {
             });
         }
     };
+
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        let hourArray = [];
+        for(let i = 1; i < 8; i++){
+            let obj = {name: this.state[`day${i}`], openHours: this.state[`open${i}`] ? [[this.state[`open${i}`], this.state[`close${i}`]]] : []};
+            hourArray.push(obj);
+        }
+        console.log(JSON.stringify(hourArray));
+        await API.patch(`/kitchen`, {
+            openHours: hourArray
+        })
+          .then(function (response) {
+            if (response.status === 200) {
+              console.log(response.data);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        this.props.handleFormToggle();
+      };
 
     render() {
         const days = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6' , 'day7'];
