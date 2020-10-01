@@ -25,6 +25,7 @@ class App extends Component {
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
       editHours: false,
+      editProfPhoto: false
     };
   }
   // Data Handlers
@@ -100,6 +101,7 @@ class App extends Component {
                   <Profile
                     myKitchen={this.state.myKitchen}  
                     editHours={this.state.editHours}
+                    editProfPhoto={this.state.editProfPhoto}
                     handleGetKitchen={this.handleGetKitchen}
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}

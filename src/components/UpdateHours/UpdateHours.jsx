@@ -1,7 +1,6 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import styles from './UpdateHours.module.css';
 import kitchenInstance from '../../utils/axiosConfig';
-// import LocalStorageService from "../../utils/localStorageService";
 
 const API = kitchenInstance;
 
@@ -103,10 +102,11 @@ class UpdateHours extends Component {
         const days = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6' , 'day7'];
         const dayChoices = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
         return(
-            <section>
-                <form action="" onSubmit={this.handleSubmit}>
+            <section className={styles.container}>
+                <form onSubmit={this.handleSubmit}>
+                    <h3>Update Open Hours</h3>
                     {days.map((day, idx) =>
-                        <div key={day}>
+                        <div className ={styles.day} key={day}>
                             <label htmlFor={day}>Day {idx + 1}:</label>
                             <select 
                                 id={day} 
@@ -123,11 +123,11 @@ class UpdateHours extends Component {
                             <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][1]) : null} onChange={this.handleChange}/>
                         </div>    
                     )}
-                    <button disabled={!this.isFormValid()} type="submit">
-                        Update Hours
-                    </button>
+                    <div className={styles.btns}>
+                        <button disabled={!this.isFormValid()} type="submit">Update</button>
+                        <button className={styles.cancel} id="editHours" onClick={this.props.handleClick}>Cancel</button>
+                    </div>
                 </form>
-                <button id="editHours" onClick={this.props.handleClick}>Cancel</button>
             </section>
         )
     }  

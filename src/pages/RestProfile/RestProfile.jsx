@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import UpdateHours from '../../components/UpdateHours/UpdateHours';
+import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
 import styles from './RestProfile.module.css';
 
 function profileTime(time) {
@@ -34,13 +35,19 @@ const Profile = (props) => {
             :
             <div className={styles.container}>
                 <section className={styles.header}>
+                {props.editProfPhoto ? 
+                    <UpdatePhoto
+                        handleFormToggle={props.handleFormToggle}
+                        handleClick={props.handleClick}
+                    />
+                    :
                     <div className={styles.logo}>
                         <img src="./art-box-logo.svg" alt="restaurant logo"/>
                         <div className={styles.edit}>
-                            <button>Edit</button>
-                            <button>Delete</button>
+                            <button id="editProfPhoto" onClick={props.handleClick}>Edit</button>
                         </div>
                     </div>
+                }
                     <div className={styles.title}>
                         <h1>{props.myKitchen.name}</h1>
                         <h2>{props.myKitchen.address}</h2>
@@ -60,15 +67,9 @@ const Profile = (props) => {
                         )}
                         <div className={styles.edit}>
                             <button id="editHours" onClick={props.handleClick}>Edit</button>
-                            <button>Delete</button>
                         </div>
                     </section>
                 }
-                <section className={styles.gallery}>
-                    <img src="./rest1.jpg" alt="1"/>
-                    <img src="./rest2.jpg" alt="2"/>
-                    <img src="./rest3.jpg" alt="3"/>
-                </section>
             </div>
             }
         </div>
