@@ -30,39 +30,23 @@ class UpdateHours extends Component {
   
     getInitialState() {
       return {
-        day1: this.props.openHours[0].name,
-        open1: this.props.openHours[0].openHours[0] ? this.props.openHours[0].openHours[0][0] : null,
-        close1: this.props.openHours[0].openHours[0] ? this.props.openHours[0].openHours[0][1] : null,
-        day2: this.props.openHours[1].name,
-        open2: this.props.openHours[1].openHours[0] ? this.props.openHours[1].openHours[0][0] : null,
-        close2: this.props.openHours[1].openHours[0] ? this.props.openHours[1].openHours[0][1] : null,
-        day3: this.props.openHours[2].name,
-        open3: this.props.openHours[2].openHours[0] ? this.props.openHours[2].openHours[0][0] : null,
-        close3: this.props.openHours[2].openHours[0] ? this.props.openHours[2].openHours[0][1] : null,
-        day4: this.props.openHours[3].name,
-        open4: this.props.openHours[3].openHours[0] ? this.props.openHours[3].openHours[0][0] : null,
-        close4: this.props.openHours[3].openHours[0] ? this.props.openHours[3].openHours[0][1] : null,
-        day5: this.props.openHours[4].name,
-        open5: this.props.openHours[4].openHours[0] ? this.props.openHours[4].openHours[0][0] : null,
-        close5: this.props.openHours[4].openHours[0] ? this.props.openHours[4].openHours[0][1] : null,
-        day6: this.props.openHours[5].name,
-        open6: this.props.openHours[5].openHours[0] ? this.props.openHours[5].openHours[0][0] : null,
-        close6: this.props.openHours[5].openHours[0] ? this.props.openHours[5].openHours[0][1] : null,
-        day7: this.props.openHours[6].name,
-        open7: this.props.openHours[6].openHours[0] ? this.props.openHours[6].openHours[0][0] : null,
-        close7: this.props.openHours[6].openHours[0] ? this.props.openHours[6].openHours[0][1] : null,
+          open1: this.props.openHours[0][0],
+          close1:this.props.openHours[0][1],
+          open2: this.props.openHours[1][0],
+          close2:this.props.openHours[1][1],
+          open3: this.props.openHours[2][0],
+          close3:this.props.openHours[2][1],
+          open4: this.props.openHours[3][0],
+          close4:this.props.openHours[3][1],
+          open5: this.props.openHours[4][0],
+          close5:this.props.openHours[4][1],
+          open6: this.props.openHours[5][0],
+          close6:this.props.openHours[5][1],
+          open7: this.props.openHours[6][0],
+          close7:this.props.openHours[6][1],
       };
     }
   
-    isFormValid = () => {
-        return this.state.day1 &&
-            this.state.day2 &&
-            this.state.day3 &&
-            this.state.day4 &&
-            this.state.day5 &&
-            this.state.day6 &&
-            this.state.day7;
-    };
   
     handleChange = (event) => {
         if(event.target.name.includes("open") || event.target.name.includes("close")){
@@ -80,12 +64,17 @@ class UpdateHours extends Component {
         event.preventDefault();
         let hourArray = [];
         for(let i = 1; i < 8; i++){
-            let obj = {name: this.state[`day${i}`], openHours: this.state[`open${i}`] ? [[this.state[`open${i}`], this.state[`close${i}`]]] : []};
-            hourArray.push(obj);
+            let element = this.state[`open${i}`] ? [this.state[`open${i}`], this.state[`close${i}`]] : [];
+            hourArray.push(element);
         }
-        console.log(JSON.stringify(hourArray));
-        await API.patch(`/kitchen`, {
-            openHours: hourArray
+        let jsonArray = JSON.stringify(hourArray);
+        let json = JSON.stringify({flags: "1", openHours: `{"openHours":${jsonArray}}`});
+        console.log(json);
+
+        await API.patch(`/kitchen`, json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
           .then(function (response) {
             if (response.status === 200) {
@@ -96,35 +85,25 @@ class UpdateHours extends Component {
             console.log(error);
           });
         this.props.handleFormToggle();
-      };
+        };
 
     render() {
-        const days = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6' , 'day7'];
-        const dayChoices = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'];
         return(
             <section className={styles.container}>
                 <form onSubmit={this.handleSubmit}>
                     <h3>Update Open Hours</h3>
                     {days.map((day, idx) =>
                         <div className ={styles.day} key={day}>
-                            <label htmlFor={day}>Day {idx + 1}:</label>
-                            <select 
-                                id={day} 
-                                name={day}  
-                                defaultValue={this.props.openHours[idx].name}
-                                onChange={this.handleChange}
-                            >
-                                <option name={day} value="" disabled>Choose a Day</option>
-                                {dayChoices.map((choice, idx) => <option name={day} value={choice} key={idx}>{choice}</option>)}
-                            </select>
+                            <label>{day}</label>
                             <label htmlFor={`$open${idx+1}`}>Open:</label>
-                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][0]) : null} onChange={this.handleChange}/>
+                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx] ? formatTime(this.props.openHours[idx][0]) : null} onChange={this.handleChange}/>
                             <label htmlFor={`close${idx+1}`}>Close:</label>
-                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx].openHours[0] ? formatTime(this.props.openHours[idx].openHours[0][1]) : null} onChange={this.handleChange}/>
+                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx] ? formatTime(this.props.openHours[idx][1]) : null} onChange={this.handleChange}/>
                         </div>    
                     )}
                     <div className={styles.btns}>
-                        <button disabled={!this.isFormValid()} type="submit">Update</button>
+                        <button type="submit">Update</button>
                         <button className={styles.cancel} id="editHours" onClick={this.props.handleClick}>Cancel</button>
                     </div>
                 </form>

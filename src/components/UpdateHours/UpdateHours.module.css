@@ -23,12 +23,19 @@
     font-size: 1.5rem;
 }
 
-.day select, input {
+.day {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.day input {
     margin-right: 1rem;
 }
 
 .day label {
     margin-right: .25rem;
+    margin-left: 1rem;
 }
 
 .btns {
