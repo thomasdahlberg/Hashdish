@@ -25,6 +25,7 @@ class App extends Component {
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
       editHours: false,
+      editProfPhoto: false
     };
   }
   // Data Handlers
@@ -45,13 +46,6 @@ class App extends Component {
     this.setState({
       myKitchen: kitchen
     })
-  }
-
-  formatTime(time) {
-    if(time < 1000){
-      let newTime = [0,String(time).slice(0,)];
-
-    }
   }
 
   // DOM Handlers
@@ -105,10 +99,12 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Profile
-                    handleClick={this.handleClick}
-                    editHours={this.state.editHours}
-                    handleGetKitchen={this.handleGetKitchen}
                     myKitchen={this.state.myKitchen}  
+                    editHours={this.state.editHours}
+                    editProfPhoto={this.state.editProfPhoto}
+                    handleGetKitchen={this.handleGetKitchen}
+                    handleClick={this.handleClick}
+                    handleFormToggle={this.handleFormToggle}
                   />
                 ) : (
                   <Redirect to="/login" />
