@@ -28,6 +28,8 @@ function profileTime(time) {
     }
 }
 
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 const Profile = (props) => {
     return(
         <div>
@@ -56,14 +58,14 @@ const Profile = (props) => {
                 </section>
                 {props.editHours ? 
                     <UpdateHours
-                        openHours={props.myKitchen.openHours} 
+                        openHours={props.openHours} 
                         handleClick={props.handleClick}
                         handleFormToggle={props.handleFormToggle}
                     />
                     :
                     <section className={styles.info}>
-                        {props.myKitchen.openHours.map(({name, openHours}, idx) => 
-                            openHours[0] ? <p key={idx}>{name}: {profileTime(openHours[0][0])} - {profileTime(openHours[0][1])}</p> : null
+                        {DAYS.map((DAY, idx) => 
+                            <p key={idx}>{DAY}: {props.openHours[idx].length > 0 ? `${profileTime(props.openHours[idx][0])} - ${profileTime(props.openHours[idx][1])}` : "Closed"}</p>
                         )}
                         <div className={styles.edit}>
                             <button id="editHours" onClick={props.handleClick}>Edit</button>

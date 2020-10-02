@@ -24,6 +24,7 @@ class App extends Component {
       addMenuItem: false,
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
+      openHours: [],
       editHours: false,
       editProfPhoto: false
     };
@@ -43,8 +44,19 @@ class App extends Component {
       phoneNumber: data.phoneNumber,
       pictureKey: data.pictureKey
     }
+    this.handleOpenHoursSort(kitchen.openHours);
     this.setState({
       myKitchen: kitchen
+    })
+  }
+
+  handleOpenHoursSort = (arr) => {
+    let weekArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    for(let i = 0; i < arr.length; i++) {
+      weekArray[weekArray.indexOf(arr[i].name)] = arr[i].openHours;
+    }
+    this.setState({
+      openHours: weekArray
     })
   }
 
@@ -99,7 +111,8 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Profile
-                    myKitchen={this.state.myKitchen}  
+                    myKitchen={this.state.myKitchen}
+                    openHours={this.state.openHours}  
                     editHours={this.state.editHours}
                     editProfPhoto={this.state.editProfPhoto}
                     handleGetKitchen={this.handleGetKitchen}
