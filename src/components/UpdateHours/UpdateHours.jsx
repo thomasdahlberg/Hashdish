@@ -29,22 +29,23 @@ class UpdateHours extends Component {
     }
   
     getInitialState() {
-      return {
-          open1: this.props.openHours[0][0],
-          close1:this.props.openHours[0][1],
-          open2: this.props.openHours[1][0],
-          close2:this.props.openHours[1][1],
-          open3: this.props.openHours[2][0],
-          close3:this.props.openHours[2][1],
-          open4: this.props.openHours[3][0],
-          close4:this.props.openHours[3][1],
-          open5: this.props.openHours[4][0],
-          close5:this.props.openHours[4][1],
-          open6: this.props.openHours[5][0],
-          close6:this.props.openHours[5][1],
-          open7: this.props.openHours[6][0],
-          close7:this.props.openHours[6][1],
-      };
+        let check = this.props.openHours;
+        return {
+            open1: check[0][0] ? this.props.openHours[0][0] : null,
+            close1: check[0][0] ? this.props.openHours[0][1] : null,
+            open2: check[1][0] ? this.props.openHours[1][0] : null,
+            close2: check[1][0] ? this.props.openHours[1][1] : null,
+            open3: check[2][0] ? this.props.openHours[2][0] : null,
+            close3: check[2][0] ? this.props.openHours[2][1] : null,
+            open4: check[3][0] ? this.props.openHours[3][0] : null,
+            close4: check[3][0] ? this.props.openHours[3][1] : null,
+            open5: check[4][0] ? this.props.openHours[4][0] : null,
+            close5: check[4][0] ? this.props.openHours[4][1] : null,
+            open6: check[5][0] ? this.props.openHours[5][0] : null,
+            close6: check[5][0] ? this.props.openHours[5][1] : null,
+            open7: check[6][0] ? this.props.openHours[6][0] : null,
+            close7: check[6][0] ? this.props.openHours[6][1] : null,
+        };
     }
   
   
@@ -97,9 +98,9 @@ class UpdateHours extends Component {
                         <div className ={styles.day} key={day}>
                             <label>{day}</label>
                             <label htmlFor={`$open${idx+1}`}>Open:</label>
-                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx] ? formatTime(this.props.openHours[idx][0]) : null} onChange={this.handleChange}/>
+                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx][0] ? formatTime(this.props.openHours[idx][0]) : null} onChange={this.handleChange}/>
                             <label htmlFor={`close${idx+1}`}>Close:</label>
-                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx] ? formatTime(this.props.openHours[idx][1]) : null} onChange={this.handleChange}/>
+                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx][0] ? formatTime(this.props.openHours[idx][1]) : null} onChange={this.handleChange}/>
                         </div>    
                     )}
                     <div className={styles.btns}>
