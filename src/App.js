@@ -26,7 +26,7 @@ class App extends Component {
       myKitchen: null,
       openHours: [],
       editHours: false,
-      editProfPhoto: false
+      editProfPhoto: false,
     };
   }
   // Data Handlers
@@ -42,23 +42,23 @@ class App extends Component {
       name: data.name,
       openHours: data.openHours,
       phoneNumber: data.phoneNumber,
-      pictureKey: data.pictureKey
-    }
+      pictureKey: data.pictureKey,
+    };
     this.handleOpenHoursSort(kitchen.openHours);
     this.setState({
-      myKitchen: kitchen
-    })
-  }
+      myKitchen: kitchen,
+    });
+  };
 
   handleOpenHoursSort = (arr) => {
     let weekArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       weekArray[weekArray.indexOf(arr[i].name)] = arr[i].openHours;
     }
     this.setState({
-      openHours: weekArray
-    })
-  }
+      openHours: weekArray,
+    });
+  };
 
   // DOM Handlers
   handleClick = (e) => {
@@ -79,25 +79,24 @@ class App extends Component {
   // Login/Logout Handlers
   handleLogout = () => {
     LocalStorageService.clearToken();
-    this.setState({ 
+    this.setState({
       user: false,
-      myKitchen: null
+      myKitchen: null,
     });
   };
 
   handleSignupOrLogin = () => {
     this.handleGetKitchen();
-    LocalStorageService.getAuthToken() ?
-    this.setState({ user: true })
-    :
-    this.setState({ user: false})
+    LocalStorageService.getAuthToken()
+      ? this.setState({ user: true })
+      : this.setState({ user: false });
   };
 
   // Lifecycle Hooks
 
   componentDidMount = async () => {
     await this.handleGetKitchen();
-  }
+  };
 
   render() {
     return (
@@ -112,7 +111,7 @@ class App extends Component {
                 LocalStorageService.getAuthToken() ? (
                   <Profile
                     myKitchen={this.state.myKitchen}
-                    openHours={this.state.openHours}  
+                    openHours={this.state.openHours}
                     editHours={this.state.editHours}
                     editProfPhoto={this.state.editProfPhoto}
                     handleGetKitchen={this.handleGetKitchen}
@@ -132,6 +131,7 @@ class App extends Component {
                   <Menu
                     menuItemForm={this.state.addMenuItem}
                     handleClick={this.handleClick}
+                    handleFormToggle={this.handleFormToggle}
                   />
                 ) : (
                   <Redirect to="/login" />
