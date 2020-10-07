@@ -7,9 +7,9 @@ import styles from './RestMenu.module.css';
 const Menu = (props) => {
   return (
     <div>
-      {props.myKitchen === null ? 
+      {props.myKitchen === null ? (
         <Redirect to="/" />
-        :
+      ) : (
         <div className={styles.container}>
           <div className={styles.header}>
             <h1>Menu Admin</h1>
@@ -18,12 +18,14 @@ const Menu = (props) => {
             </button>
           </div>
           <div className={styles.form}>
-            {props.menuItemForm ? <MenuItemForm /> : null}
+            {props.menuItemForm ? (
+              <MenuItemForm handleFormToggle={props.handleFormToggle} />
+            ) : null}
           </div>
           <hr />
           <MenuItems />
         </div>
-      }
+      )}
     </div>
   );
 };
