@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
+import MenuItemForm from '../../components/menuItemForm/menuItemForm';
 import MenuItems from '../../components/MenuItem/MenuItems';
 import styles from './RestMenu.module.css';
 

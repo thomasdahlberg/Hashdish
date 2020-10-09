@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './MenuItemForm.module.css';
+import styles from './menuItemForm.module.css';
 import kitchenInstance from '../../utils/axiosConfig';
 
 const API = kitchenInstance;

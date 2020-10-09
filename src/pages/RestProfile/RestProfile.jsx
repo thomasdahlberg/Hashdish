@@ -4,28 +4,14 @@ import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
 import styles from './RestProfile.module.css';
 
-function profileTime(time) {
-    if(time < 1200) {
-        if(time < 1000) {
-            let newTime = [String(time).slice(0,1),":",String(time).slice(1)," AM"].join("")
-            return newTime;
-        } else {
-            let newTime = [String(time).slice(0,2),":",String(time).slice(2)," AM"].join("")
-            return newTime;
-        }
-    } else if(time < 1300) {
-        let newTime = [String(time).slice(0,2),":",String(time).slice(2)," PM"].join("")
-        return newTime;
-    } else {
-        let adjust = time - 1200;
-        if(adjust < 1000) {
-            let newTime = [String(adjust).slice(0,1),":",String(adjust).slice(1)," PM"].join("")
-            return newTime;
-        } else {
-            let newTime = [String(adjust).slice(0,2),":",String(adjust).slice(2)," PM"].join("")
-            return newTime;
-        }
+function profileTime(timeArr) {
+    let timeStringArr = []
+    for(var time of timeArr) {
+        var start = [String((Math.floor(time[0] / 100) % 12 === 0) ? 12 : Math.floor(time[0] / 100) % 12),":",('0' + String(time[0] % 100)).slice(-2), (time[0] / 100 >= 12) ? ' PM' : ' AM'].join("")
+        var end = [String((Math.floor(time[1] / 100) % 12 === 0) ? 12 : Math.floor(time[1] / 100) % 12),":",('0' + String(time[1] % 100)).slice(-2), (time[0] / 100 >= 12) ? ' PM' : ' AM'].join("")
+        timeStringArr.push(`${start} ~ ${end}`)
     }
+    return timeStringArr.join(', ')
 }
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -65,7 +51,7 @@ const Profile = (props) => {
                     :
                     <section className={styles.info}>
                         {DAYS.map((DAY, idx) => 
-                            <p key={idx}>{DAY}: {props.openHours[idx].length > 0 ? `${profileTime(props.openHours[idx][0])} - ${profileTime(props.openHours[idx][1])}` : "Closed"}</p>
+                            <p key={idx}>{DAY}: {props.openHours[idx]?.length > 0 ? `${profileTime(props.openHours[idx])}` : "Closed"}</p>
                         )}
                         <div className={styles.edit}>
                             <button id="editHours" onClick={props.handleClick}>Edit</button>
