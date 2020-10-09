@@ -8,7 +8,7 @@ import Menu from './pages/RestMenu/RestMenu';
 import Login from './pages/Login/Login';
 
 // Components
-import Layout from './components/Layout/layout';
+import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
@@ -166,6 +166,7 @@ class App extends Component {
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
                     handleMenuItemDelete={this.handleMenuItemDelete}
+                    handleGetKitchen={this.handleGetKitchen}
                   />
                 ) : (
                   <Redirect to="/login" />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import MenuItemForm from '../../components/MenuItemForm/menuItemForm';
+import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
 import MenuItems from '../../components/MenuItem/MenuItems';
 import styles from './RestMenu.module.css';
 
@@ -19,7 +19,11 @@ const Menu = (props) => {
           </div>
           <div className={styles.form}>
             {props.menuItemForm ? (
-              <MenuItemForm handleFormToggle={props.handleFormToggle} />
+              <MenuItemForm 
+                handleGetKitchen={props.handleGetKitchen}
+                handleFormToggle={props.handleFormToggle}
+                handleClick={props.handleClick}
+              />
             ) : null}
           </div>
           <hr />
