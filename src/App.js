@@ -8,7 +8,7 @@ import Menu from './pages/RestMenu/RestMenu';
 import Login from './pages/Login/Login';
 
 // Components
-import Layout from './components/Layout/Layout';
+import Layout from './components/Layout/layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
@@ -24,6 +24,8 @@ class App extends Component {
       addMenuItem: false,
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
+      menuItems: null,
+      menuCats: null,
       openHours: [],
       editHours: false,
       editProfPhoto: false,
@@ -45,6 +47,7 @@ class App extends Component {
       pictureKey: data.pictureKey,
     };
     this.handleOpenHoursSort(kitchen.openHours);
+    this.handleGetMenuItems(kitchen.kitchenId);
     this.setState({
       myKitchen: kitchen,
     });
@@ -59,6 +62,34 @@ class App extends Component {
       openHours: weekArray,
     });
   };
+
+  handleGetMenuItems = async (id) => {
+    let response = await API.get(`menus/${id}`);
+    let data = response.data;
+    this.setState({ menuItems: data});
+    this.handleGetMenuCategories(data);
+  }
+
+  handleGetMenuCategories = (arr) => {
+    let catArr = arr.map(el => el.category);
+    let uniqueCatsArr = [...new Set(catArr)];
+    this.setState({ menuCats: uniqueCatsArr});
+  }
+
+  handleMenuItemDelete = async (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    try {
+      await API.delete(`/kitchen/${e.target.id}`).then(response => {
+        if (response.status === 200) {
+          console.log(response);
+          this.handleGetKitchen();
+        }
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   // DOM Handlers
   handleClick = (e) => {
@@ -129,9 +160,12 @@ class App extends Component {
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Menu
+                    menuCats={this.state.menuCats}
+                    menuItems={this.state.menuItems}
                     menuItemForm={this.state.addMenuItem}
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
+                    handleMenuItemDelete={this.handleMenuItemDelete}
                   />
                 ) : (
                   <Redirect to="/login" />

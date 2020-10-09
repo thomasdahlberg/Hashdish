@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from '../Header/header';
+import Footer from '../Footer/footer';
 import styles from './Layout.module.css';
 
 const Layout = (props) => {
