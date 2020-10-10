@@ -64,12 +64,13 @@ class MenuItemForm extends Component {
       });
       console.log(error.message);
     }
-    this.props.handleFormToggle();
+    this.props.handleFormToggle("addMenuItem");
+    this.props.handleGetKitchen();
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className={styles.container}>
+      <form id="addMenuItem" onSubmit={this.handleSubmit} className={styles.container}>
         <h2>Add A New Menu Item</h2>
         <label htmlFor="image">Select Item Image:</label>
         <input
@@ -137,7 +138,7 @@ class MenuItemForm extends Component {
           <button disabled={!this.isFormValid()} type="submit">
             Submit
           </button>
-          <button>Cancel</button>
+          <button id="addMenuItem" onClick={this.props.handleClick}>Cancel</button>
         </div>
       </form>
     );

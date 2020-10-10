@@ -14,16 +14,24 @@ const Menu = (props) => {
           <div className={styles.header}>
             <h1>Menu Admin</h1>
             <button id="addMenuItem" onClick={props.handleClick}>
-              +
+              Add New Item
             </button>
           </div>
           <div className={styles.form}>
             {props.menuItemForm ? (
-              <MenuItemForm handleFormToggle={props.handleFormToggle} />
+              <MenuItemForm 
+                handleGetKitchen={props.handleGetKitchen}
+                handleFormToggle={props.handleFormToggle}
+                handleClick={props.handleClick}
+              />
             ) : null}
           </div>
           <hr />
-          <MenuItems />
+          <MenuItems 
+            menuItems={props.menuItems}
+            menuCats={props.menuCats}
+            handleMenuItemDelete={props.handleMenuItemDelete}
+          />
         </div>
       )}
     </div>

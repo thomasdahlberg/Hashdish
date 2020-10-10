@@ -1,14 +1,17 @@
 .container {
     display: flex;
     margin: 1.45rem;
+    flex-direction: column;
+    align-items: center;
 }
 
 .item {
+    margin: 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    max-width: 40%;
-    max-height: 30%;
+    width: 25%;
+    height: 30%;
     color: #211103;
     background-color: #F9F8F8;
     box-shadow: 2px 2px 2px #888888;
@@ -20,7 +23,7 @@
     justify-content: space-around;
 }
 
-.title h2{
+.title h3{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -41,6 +44,49 @@
     font-weight: 700;
 }
 
-.admin button{
-    margin-left: .5rem;
+.admin {
+    display: flex;
+}
+
+.admin button {
+    margin-left: 1rem;
+    border-radius: 10%;
+    font-size: 1rem;
+    padding: .5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #5CAB7D;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.category {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.del button {
+    margin-left: 1rem;
+    border-radius: 10%;
+    font-size: 1rem;
+    padding: .5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #A44A3F;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.admin button:active {
+    background-color: green;
+    box-shadow: none;
+}
+
+.del button:active {
+    background-color: red;
+    box-shadow: none;
+}
+
+.container button:focus {
+    outline: 0;
 }
