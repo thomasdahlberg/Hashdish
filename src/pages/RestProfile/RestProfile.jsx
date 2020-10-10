@@ -26,11 +26,12 @@ const Profile = (props) => {
                 {props.editProfPhoto ? 
                     <UpdatePhoto
                         handleFormToggle={props.handleFormToggle}
+                        handleGetKitchen={props.handleGetKitchen}
                         handleClick={props.handleClick}
                     />
                     :
                     <div className={styles.logo}>
-                        <img src="./art-box-logo.svg" alt="restaurant logo"/>
+                        <img src={`https://homecookimages.blob.core.windows.net/pictures/${props.myKitchen.pictureKey}.jpg`} alt="restaurant logo"/>
                         <div className={styles.edit}>
                             <button id="editProfPhoto" onClick={props.handleClick}>Edit</button>
                         </div>
