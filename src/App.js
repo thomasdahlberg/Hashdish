@@ -8,7 +8,7 @@ import Menu from './pages/RestMenu/RestMenu';
 import Login from './pages/Login/Login';
 
 // Components
-import Layout from './components/layout/layout';
+import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
