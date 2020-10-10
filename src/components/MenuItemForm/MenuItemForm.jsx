@@ -9,12 +9,13 @@ class MenuItemForm extends Component {
 
   getInitialState() {
     return {
-      category: '',
-      name: '',
-      price: '',
-      dietaryRestriction: '',
-      description: '',
-      optionDefinitions: '',
+      category: this.props.selectedMenuItem?.category,
+      name: this.props.selectedMenuItem?.name,
+      price: this.props.selectedMenuItem?.price,
+      dietaryRestriction: this.props.selectedMenuItem?.dietaryRestriction,
+      description: this.props.selectedMenuItem?.description || '',
+      optionDefinitions: this.props.selectedMenuItem?.optionDefinitions || '',
+      status: this.props.selectedMenuItem?.status || true,
       // image: '',
       error: '',
     };
@@ -26,8 +27,7 @@ class MenuItemForm extends Component {
       this.state.name &&
       this.state.price &&
       this.state.dietaryRestriction &&
-      this.state.description &&
-      this.state.optionDefinitions
+      this.state.description
     );
   };
 
@@ -43,14 +43,31 @@ class MenuItemForm extends Component {
     });
   };
 
+  handleCheckbox = (e) => {
+    console.log(e.target.checked)
+    this.setState({
+      [e.target.name]: !this.state[e.target.name],
+    });
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(this.state)
     try {
-      await API.post('/kitchen/menu', this.state).then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-        }
-      });
+      if (this.props.selectedMenuItem) {
+        await API.patch(`/kitchen/menu/${this.props.selectedMenuItem.menuId}`, this.state).then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+          }
+        });
+      }
+      else {
+        await API.post('/kitchen/menu', this.state).then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+          }
+        });
+      }      
     } catch (error) {
       this.setState({
         category: '',
@@ -134,6 +151,16 @@ class MenuItemForm extends Component {
           onChange={this.handleChange}
           value={this.state.optionDefinitions}
         />
+        <div>
+          <label htmlFor="status">Sold out</label>
+          <input
+            id="status"
+            name="status"
+            type="checkbox"
+            onChange={this.handleCheckbox}
+            checked={this.state.status}
+          />
+        </div>
         <div className={styles.buttons}>
           <button disabled={!this.isFormValid()} type="submit">
             Submit
