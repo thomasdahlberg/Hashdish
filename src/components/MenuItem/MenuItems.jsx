@@ -16,7 +16,9 @@ const MenuItems = (props) => {
                                     <section id={item.menuId} key={item.menuId}className={styles.item}>
                                         <div className={styles.title}>
                                             <h3>{item.name}</h3>
-                                            <img src={item.pictureKey} alt="menu item"/>
+                                            {item.pictureKey &&
+                                                <img src={`https://homecookimages.blob.core.windows.net/pictures/${item.pictureKey}.jpg`} alt="menu item"/>
+                                            }
                                         </div>
                                         <div className={styles.description}>
                                             <p>{item.description}</p>

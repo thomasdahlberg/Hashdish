@@ -16,7 +16,7 @@ class MenuItemForm extends Component {
             description: this.props.selectedMenuItem?.description || '',
             optionDefinitions: this.props.selectedMenuItem?.optionDefinitions || '',
             status: this.props.selectedMenuItem?.status || true,
-            // image: '',
+            image: (this.props.selectedMenuItem) ? `https://homecookimages.blob.core.windows.net/pictures/${this.props.selectedMenuItem?.pictureKey}.jpg` : null,
             error: '',
         };
     }
@@ -30,11 +30,37 @@ class MenuItemForm extends Component {
             this.state.description
         );
     };
+    
+    resizeImage = (file) => {
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            var reader = new FileReader();
+            // Set the image once loaded into file reader
+            reader.onloadend = (e) => {
+                var image = new Image();
+                image.onload = () => {
+                    var canvas = document.createElement("canvas");
+                    var MAX_WIDTH = 300;
+                    var MAX_HEIGHT = 300;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = MAX_HEIGHT;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(image, 0, 0, MAX_WIDTH, MAX_HEIGHT);
 
-    handleImageChange = (e) => {
-        this.setState({
-            image: e.target.files[0],
-        });
+                    let imageURL = canvas.toDataURL(file.type)
+                    this.setState({
+                        image: imageURL
+                    })
+                }
+                image.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+    }
+
+    handleImageChange = async (e) => {
+        this.resizeImage(e.target.files[0])
     };
 
     handleChange = (e) => {
@@ -52,19 +78,29 @@ class MenuItemForm extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state)
+        console.log(this.props.selectedMenuItem)
         try {
             if (this.props.selectedMenuItem) {
-                await API.patch(`/kitchen/menu/${this.props.selectedMenuItem.menuId}`, this.state).then((response) => {
+                await API.patch(`/kitchen/menu/${this.props.selectedMenuItem.menuId}`, this.state).then(async (response) => {
                     if (response.status === 200) {
                         console.log(response);
+                        await API.patch(`/kitchen/menu/picture/${this.props.selectedMenuItem.menuId}`, {data: this.state.image.split(',')[1]}).then((response) => {
+                            if (response.status === 200) {
+                                console.log(response);
+                            }
+                        });
                     }
                 });
             }
             else {
-                await API.post('/kitchen/menu', this.state).then((response) => {
+                await API.post('/kitchen/menu', this.state).then(async (response) => {
                     if (response.status === 200) {
                         console.log(response);
+                        await API.patch(`/kitchen/menu/picture/${this.props.selectedMenuItem.menuId}`, {data: this.state.image.split(',')[1]}).then((response) => {
+                            if (response.status === 200) {
+                                console.log(response);
+                            }
+                        });
                     }
                 });
             }
@@ -88,7 +124,10 @@ class MenuItemForm extends Component {
     render() {
         return (
             <form id="addMenuItem" onSubmit={this.handleSubmit} className={styles.container}>
-                <h2>Add A New Menu Item</h2>
+                <h2>Add A New Menu Item</h2>      
+                {this.state.image &&          
+                    <img src={this.state.image} alt="menu item"/>
+                }
                 <label htmlFor="image">Select Item Image:</label>
                 <input
                     id="image"
