@@ -8,7 +8,7 @@ const MenuItems = (props) => {
             {props.menuItems ?
                 <div className={styles.container}>
                     {props.menuCats.map((category, idx) => 
-                        <div className={styles.container}>
+                        <div key={category} className={styles.container}>
                             <h1>{category}</h1>
                         <div id={idx} key={category} className={styles.category}>
                             {props.menuItems.map((item, idx) => 
@@ -34,7 +34,9 @@ const MenuItems = (props) => {
                                         <div className={styles.price}>
                                             <p>{item.price}</p>
                                             <div className={styles.admin}>
-                                                <button>Edit</button>
+                                                <div className={styles.edit}>
+                                                    <button id={item.menuId} onClick={() => { props.handleMenuItemEdit(idx) }}>Edit</button>
+                                                </div>
                                                 <div className={styles.del}>
                                                     <button id={item.menuId} onClick={props.handleMenuItemDelete}>Delete</button>
                                                 </div>
