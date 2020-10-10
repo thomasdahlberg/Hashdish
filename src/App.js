@@ -42,7 +42,7 @@ class App extends Component {
       flags: data.flags,
       kitchenId: data.kitchenId,
       name: data.name,
-      openHours: data.openHours,
+      openHours: JSON.parse(data.openHoursDefinition).openHours,
       phoneNumber: data.phoneNumber,
       pictureKey: data.pictureKey,
     };
@@ -53,13 +53,9 @@ class App extends Component {
     });
   };
 
-  handleOpenHoursSort = (arr) => {
-    let weekArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    for (let i = 0; i < arr.length; i++) {
-      weekArray[weekArray.indexOf(arr[i].name)] = arr[i].openHours;
-    }
+  handleOpenHoursSort = (openHours) => {
     this.setState({
-      openHours: weekArray,
+      openHours,
     });
   };
 

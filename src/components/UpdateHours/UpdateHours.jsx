@@ -5,13 +5,7 @@ import kitchenInstance from '../../utils/axiosConfig';
 const API = kitchenInstance;
 
 function formatTime(time) {
-    if(time < 1000){
-      let newTime = [0,String(time).slice(0,1),":",String(time).slice(1)].join("");
-      return newTime;
-    } else {
-      let newTime = [String(time).slice(0,2),":",String(time).slice(2)].join("");
-      return newTime;
-    }
+    return [('0' + String(Math.floor(time / 100))).slice(-2),":",('0' + String(time % 100)).slice(-2)].join("");
 }
 
 function deformatTime(time) {
@@ -29,38 +23,11 @@ class UpdateHours extends Component {
     }
   
     getInitialState() {
-        let check = this.props.openHours;
         return {
-            open1: check[0][0] ? this.props.openHours[0][0] : null,
-            close1: check[0][0] ? this.props.openHours[0][1] : null,
-            open2: check[1][0] ? this.props.openHours[1][0] : null,
-            close2: check[1][0] ? this.props.openHours[1][1] : null,
-            open3: check[2][0] ? this.props.openHours[2][0] : null,
-            close3: check[2][0] ? this.props.openHours[2][1] : null,
-            open4: check[3][0] ? this.props.openHours[3][0] : null,
-            close4: check[3][0] ? this.props.openHours[3][1] : null,
-            open5: check[4][0] ? this.props.openHours[4][0] : null,
-            close5: check[4][0] ? this.props.openHours[4][1] : null,
-            open6: check[5][0] ? this.props.openHours[5][0] : null,
-            close6: check[5][0] ? this.props.openHours[5][1] : null,
-            open7: check[6][0] ? this.props.openHours[6][0] : null,
-            close7: check[6][0] ? this.props.openHours[6][1] : null,
+            openHourList: this.props.openHours,
         };
     }
   
-  
-    handleChange = (event) => {
-        if(event.target.name.includes("open") || event.target.name.includes("close")){
-            this.setState({
-                [event.target.name]: deformatTime(event.target.value)
-            });
-        } else {
-            this.setState({
-                [event.target.name]: event.target.value
-            });
-        }
-    };
-
     handleSubmit = async (event) => {
         event.preventDefault();
         let hourArray = [];
@@ -68,8 +35,8 @@ class UpdateHours extends Component {
             let element = this.state[`open${i}`] ? [this.state[`open${i}`], this.state[`close${i}`]] : [];
             hourArray.push(element);
         }
-        let jsonArray = JSON.stringify(hourArray);
-        let json = JSON.stringify({flags: "1", openHours: `{"openHours":${jsonArray}}`});
+        let jsonArray = JSON.stringify(this.state.openHourList);
+        let json = JSON.stringify({flags: "1", openHours: `{"country":"US","openHours":${jsonArray}}`});
         console.log(json);
 
         await API.patch(`/kitchen`, json, {
@@ -93,15 +60,51 @@ class UpdateHours extends Component {
         return(
             <section className={styles.container}>
                 <form onSubmit={this.handleSubmit}>
-                    <h3>Update Open Hours</h3>
-                    {days.map((day, idx) =>
-                        <div className ={styles.day} key={day}>
-                            <label>{day}</label>
-                            <label htmlFor={`$open${idx+1}`}>Open:</label>
-                            <input type="time" id={`open${idx+1}`} name={`open${idx+1}`} defaultValue={this.props.openHours[idx][0] ? formatTime(this.props.openHours[idx][0]) : null} onChange={this.handleChange}/>
-                            <label htmlFor={`close${idx+1}`}>Close:</label>
-                            <input type="time" id={`$close${idx+1}`} name={`close${idx+1}`} defaultValue={this.props.openHours[idx][0] ? formatTime(this.props.openHours[idx][1]) : null} onChange={this.handleChange}/>
-                        </div>    
+                    <h3>Update Open Hours</h3>                    
+                    {this.state.openHourList.map((blocks, idx) =>
+                        <div className ={styles.day} key={days[idx]}>
+                            <label>{days[idx]}</label>
+                            {blocks.map((block, idx2) =>
+                            <div key={idx2}>
+                                <label>Open:</label>
+                                <input
+                                    type="time"
+                                    value={formatTime(this.state.openHourList[idx][idx2][0])}
+                                    onChange={(e) => {
+                                        var arr = this.state.openHourList
+                                        arr[idx][idx2][0] = deformatTime(e.target.value)
+                                        this.setState({
+                                            openHourList: arr,
+                                        })   
+                                    }}/>
+                                <label>Close:</label>                                
+                                <input
+                                    type="time"
+                                    value={formatTime(this.state.openHourList[idx][idx2][1])}
+                                    onChange={(e) => {
+                                        var arr = this.state.openHourList
+                                        arr[idx][idx2][1] = deformatTime(e.target.value)
+                                        this.setState({
+                                            openHourList: arr,
+                                        })   
+                                    }}/>
+                                <button onClick={() => {
+                                    let arr = this.state.openHourList
+                                    arr[idx] = arr[idx].filter((item => item !== block))
+                                    this.setState({
+                                        openHourList: arr,
+                                    })
+                                }}>-</button>
+                            </div>
+                            )}
+                        <button onClick={() => {          
+                            let arr = this.state.openHourList
+                            arr[idx].push([0,0])
+                            this.setState({
+                                openHourList: arr,
+                            })
+                        }}>+</button>
+                        </div>
                     )}
                     <div className={styles.btns}>
                         <button type="submit">Update</button>
