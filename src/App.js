@@ -22,10 +22,10 @@ class App extends Component {
   getInitialState() {
     return {
       addMenuItem: false,
+      selectedMenuItem: null,
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
       menuItems: null,
-      menuItem: null,
       menuCats: null,
       openHours: [],
       editHours: false,
@@ -91,7 +91,7 @@ class App extends Component {
   handleMenuItemEdit = async (idx) => {
     this.setState({
       addMenuItem: true,
-      menuItem: this.state.menuItems[idx],
+      selectedMenuItem: this.state.menuItems[idx],
     });
   }
 
@@ -165,9 +165,9 @@ class App extends Component {
                 LocalStorageService.getAuthToken() ? (
                   <Menu
                     menuCats={this.state.menuCats}
-                    menuItems={this.state.menuItems}                    
+                    menuItems={this.state.menuItems}
                     menuItemForm={this.state.addMenuItem}
-                    selectedMenuItem={this.state.menuItem}
+                    selectedMenuItem={this.state.selectedMenuItem}
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
                     handleMenuItemEdit={this.handleMenuItemEdit}
