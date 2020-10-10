@@ -33,6 +33,7 @@
 
 .description {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
@@ -105,4 +106,9 @@
 
 .container button:focus {
     outline: 0;
+}
+
+.optionGroupTitle {
+    font-size: 1.3rem;
+    background-color: #5CAB7D;
 }
