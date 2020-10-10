@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import styles from './layout.module.css';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import styles from './Layout.module.css';
 
 const Layout = (props) => {
   return (
