@@ -77,6 +77,17 @@
     box-shadow: 2px 2px 2px #888888;
 }
 
+.edit button {
+    margin-left: 1rem;
+    border-radius: 10%;
+    font-size: 1rem;
+    padding: .5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #A44A3F;
+    box-shadow: 2px 2px 2px #888888;
+}
+
 .admin button:active {
     background-color: green;
     box-shadow: none;
@@ -84,6 +95,11 @@
 
 .del button:active {
     background-color: red;
+    box-shadow: none;
+}
+
+.edit button:active {
+    background-color: green;
     box-shadow: none;
 }
 

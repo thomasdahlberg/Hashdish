@@ -20,6 +20,7 @@ const Menu = (props) => {
           <div className={styles.form}>
             {props.menuItemForm ? (
               <MenuItemForm 
+                selectedMenuItem={props.selectedMenuItem}
                 handleGetKitchen={props.handleGetKitchen}
                 handleFormToggle={props.handleFormToggle}
                 handleClick={props.handleClick}
@@ -30,6 +31,7 @@ const Menu = (props) => {
           <MenuItems 
             menuItems={props.menuItems}
             menuCats={props.menuCats}
+            handleMenuItemEdit={props.handleMenuItemEdit}
             handleMenuItemDelete={props.handleMenuItemDelete}
           />
         </div>

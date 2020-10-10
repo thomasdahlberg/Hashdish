@@ -25,6 +25,7 @@ class App extends Component {
       user: LocalStorageService.getAuthToken() ? true : false,
       myKitchen: null,
       menuItems: null,
+      menuItem: null,
       menuCats: null,
       openHours: [],
       editHours: false,
@@ -76,7 +77,7 @@ class App extends Component {
     e.preventDefault();
     console.log(e.target.id);
     try {
-      await API.delete(`/kitchen/${e.target.id}`).then(response => {
+      await API.delete(`/kitchen/menu/${e.target.id}`).then(response => {
         if (response.status === 200) {
           console.log(response);
           this.handleGetKitchen();
@@ -85,6 +86,13 @@ class App extends Component {
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  handleMenuItemEdit = async (idx) => {
+    this.setState({
+      addMenuItem: true,
+      menuItem: this.state.menuItems[idx],
+    });
   }
 
   // DOM Handlers
@@ -157,10 +165,12 @@ class App extends Component {
                 LocalStorageService.getAuthToken() ? (
                   <Menu
                     menuCats={this.state.menuCats}
-                    menuItems={this.state.menuItems}
+                    menuItems={this.state.menuItems}                    
                     menuItemForm={this.state.addMenuItem}
+                    selectedMenuItem={this.state.menuItem}
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
+                    handleMenuItemEdit={this.handleMenuItemEdit}
                     handleMenuItemDelete={this.handleMenuItemDelete}
                     handleGetKitchen={this.handleGetKitchen}
                   />
