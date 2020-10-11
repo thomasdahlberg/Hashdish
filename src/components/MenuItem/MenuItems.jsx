@@ -238,9 +238,11 @@ class MenuItemEdit extends Component {
                     <div className={styles.edit}>
                         <button id={this.props.item.menuId} onClick={() => { this.props.handleMenuItemUpdate(this.props.idx, this.state) }}>Update</button>
                     </div>
+                    {/*
                     <div className={styles.del}>
                         <button id={this.props.item.menuId} onClick={this.props.handleMenuItemCancel}>Cancel</button>
                     </div>
+                    */}
                 </div>
             </div>
         </section>

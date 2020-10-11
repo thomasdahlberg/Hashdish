@@ -138,11 +138,6 @@ class App extends Component {
   };
 
   handleFormToggle = (id) => {
-    if (id === 'addMenuItem') {
-      this.setState({
-        selectedMenuItem: null
-      })
-    }
     if (this.state[id]) {
       this.setState({ [id]: false });
     } else {

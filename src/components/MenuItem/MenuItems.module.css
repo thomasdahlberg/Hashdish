@@ -112,34 +112,3 @@
     font-size: 1.3rem;
     background-color: #5CAB7D;
 }
-
-.textArea {
-    -webkit-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-    -webkit-flex-shrink: 1;
-    flex-shrink: 1;
-    font-family: Roboto,Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: .1px;
-    line-height: 24px;
-    background-color: transparent;
-    border: none;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-    caret-color: #1a73e8;
-    display: block;
-    height: 24px;
-    min-height: 24px;
-    margin: 0;
-    outline: none;
-    overflow-y: visible;
-    overflow-x: hidden;
-    padding: 16px;
-    resize: none;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    z-index: 1;
-}
