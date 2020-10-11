@@ -92,6 +92,8 @@ function renderEditOptions(title, optionGroups, handleChange) {
                     value={optionGroup.name}/>
                 <button onClick={() => { handleChange('backward', null, idx) }}>▲</button>
                 <button onClick={() => { handleChange('forward', null, idx) }}>▼</button>
+                <button onClick={() => { handleChange('delete', null, idx) }}>Delete</button>
+                <button onClick={() => { handleChange('add', null, idx) }}>Add Option</button>
             </div>
             {optionGroup.options.length > 0 &&
             <div>
@@ -131,6 +133,9 @@ function renderEditOptions(title, optionGroups, handleChange) {
                                         checked={(option.availability !== undefined) ? !option.availability : false}
                                         onChange={(e) => { handleChange('availability', !e.target.checked, idx, idx2) }}
                                     />
+                                </td>
+                                <td>
+                                    <button onClick={() => { handleChange('delete', null, idx, idx2) }}>Delete</button>
                                 </td>
                             </tr>                                                                
                         })}
@@ -225,12 +230,27 @@ class MenuItemEdit extends Component {
             </div>
             <div className={styles.optionTitle}>
                 <p>Required Options</p>
+                <button onClick={() => {
+                    this.state.optionDefinitions.required.unshift({
+                        name: '',
+                        option_type: 'checkbox',
+                        options: []
+                    })
+                    this.setState({
+                        optionDefinitions: this.state.optionDefinitions
+                    })
+                }}>Add</button>
             </div>
             <div className={styles.description}>
                 {renderEditOptions('required', this.state.optionDefinitions.required, (key, value, idx, idx2) => {
-                    if (idx2) {
-                        let obj = this.state.optionDefinitions.required[idx].options[idx2]
-                        obj[key] = value
+                    if (idx2 >= 0) {
+                        if (key === 'delete') {
+                            this.state.optionDefinitions.required[idx].options.splice(idx2, 1)
+                        }
+                        else {
+                            let obj = this.state.optionDefinitions.required[idx].options[idx2]
+                            obj[key] = value
+                        }
                     }
                     else {
                         if (key === 'title') {
@@ -248,6 +268,14 @@ class MenuItemEdit extends Component {
                             this.state.optionDefinitions.required[idx] = this.state.optionDefinitions.required[idx - 1]
                             this.state.optionDefinitions.required[idx - 1] = tmp
                         }
+                        else if (key === 'delete') {
+                            this.state.optionDefinitions.required.splice(idx, 1)
+                        }
+                        else if (key === 'add') {
+                            this.state.optionDefinitions.required[idx].options.push({
+                                name: ''
+                            })
+                        }
                         else {
                             let obj = this.state.optionDefinitions.required[idx]
                             obj[key] = value
@@ -260,15 +288,29 @@ class MenuItemEdit extends Component {
             </div>
             <div className={styles.optionTitle}>
                 <p>Optional Options</p>
+                <button onClick={() => {
+                    this.state.optionDefinitions.optional.unshift({
+                        name: '',
+                        option_type: 'checkbox',
+                        options: []
+                    })
+                    this.setState({
+                        optionDefinitions: this.state.optionDefinitions
+                    })
+                }}>Add</button>
             </div>
             <div className={styles.description}>
                 {renderEditOptions('optional', this.state.optionDefinitions.optional, (key, value, idx, idx2) => {
-                    if (idx2) {
-                        let obj = this.state.optionDefinitions.optional[idx].options[idx2]
-                        obj[key] = value
+                    if (idx2 >= 0) {
+                        if (key === 'delete') {
+                            this.state.optionDefinitions.optional[idx].options.splice(idx2, 1)
+                        }
+                        else {
+                            let obj = this.state.optionDefinitions.optional[idx].options[idx2]
+                            obj[key] = value
+                        }
                     }
                     else {
-                        console.log(key, idx)
                         if (key === 'title') {
                             let obj = this.state.optionDefinitions.optional[idx]
                             this.state.optionDefinitions.optional.splice(idx, 1)
@@ -283,6 +325,14 @@ class MenuItemEdit extends Component {
                             let tmp = this.state.optionDefinitions.optional[idx]
                             this.state.optionDefinitions.optional[idx] = this.state.optionDefinitions.optional[idx - 1]
                             this.state.optionDefinitions.optional[idx - 1] = tmp
+                        }
+                        else if (key === 'delete') {
+                            this.state.optionDefinitions.optional.splice(idx, 1)
+                        }
+                        else if (key === 'add') {
+                            this.state.optionDefinitions.optional[idx].options.push({
+                                name: ''
+                            })
                         }
                         else {
                             let obj = this.state.optionDefinitions.optional[idx]
