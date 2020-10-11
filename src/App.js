@@ -100,7 +100,7 @@ class App extends Component {
       name: state.name,
       description: state.description,
       price: state.price,
-      optionDefinition: JSON.stringify(state.optionDefinition),
+      optionDefinitions: JSON.stringify(state.optionDefinitions),
     })).then(async (response) => {
         if (response.status === 200) {
             console.log(response);

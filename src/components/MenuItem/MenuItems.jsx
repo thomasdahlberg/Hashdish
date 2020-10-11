@@ -78,7 +78,20 @@ function renderEditOptions(title, optionGroups, handleChange) {
     return optionGroups?.map((optionGroup, idx) => {
         return <div key={idx}>
             <div key={`${idx}`} className={styles.optionGroupTitle}>
-                <p>[{title}] {optionGroup.name} ({optionGroup.option_type})</p>
+                <select value={title} onChange={(e) => {handleChange('title', e.target.value, idx)}}>
+                    <option value='optional'>optional</option>
+                    <option value='required'>required</option>
+                </select>
+                <select vaule={optionGroup.option_type} onChange={(e) => {handleChange('option_type', e.target.value, idx)}}>
+                    <option value='radio'>radio</option>
+                    <option value='checkbox'>checkbox</option>
+                </select>
+                <input
+                    type='text'
+                    onChange={(e) => { handleChange('name', e.target.value, idx) }}
+                    value={optionGroup.name}/>
+                <button onClick={() => { handleChange('backward', null, idx) }}>▲</button>
+                <button onClick={() => { handleChange('forward', null, idx) }}>▼</button>
             </div>
             {optionGroup.options.length > 0 &&
             <div>
@@ -210,19 +223,72 @@ class MenuItemEdit extends Component {
                     onChange={(e) => { this.setState({description: e.target.value}) }}
                     value={this.state.description}/>
             </div>
+            <div className={styles.optionTitle}>
+                <p>Required Options</p>
+            </div>
             <div className={styles.description}>
-                {renderEditOptions('Required', this.state.optionDefinitions.required, (key, value, idx, idx2) => {
-                    let obj = this.state.optionDefinitions.required[idx].options[idx2]
-                    obj[key] = value
+                {renderEditOptions('required', this.state.optionDefinitions.required, (key, value, idx, idx2) => {
+                    if (idx2) {
+                        let obj = this.state.optionDefinitions.required[idx].options[idx2]
+                        obj[key] = value
+                    }
+                    else {
+                        if (key === 'title') {
+                            let obj = this.state.optionDefinitions.required[idx]
+                            this.state.optionDefinitions.required.splice(idx, 1)
+                            this.state.optionDefinitions.optional.push(obj)
+                        }
+                        else if (key === 'forward' && idx < this.state.optionDefinitions.required.length - 1) {
+                            let tmp = this.state.optionDefinitions.required[idx]
+                            this.state.optionDefinitions.required[idx] = this.state.optionDefinitions.required[idx + 1]
+                            this.state.optionDefinitions.required[idx + 1] = tmp
+                        }
+                        else if (key === 'backward' && idx > 0) {
+                            let tmp = this.state.optionDefinitions.required[idx]
+                            this.state.optionDefinitions.required[idx] = this.state.optionDefinitions.required[idx - 1]
+                            this.state.optionDefinitions.required[idx - 1] = tmp
+                        }
+                        else {
+                            let obj = this.state.optionDefinitions.required[idx]
+                            obj[key] = value
+                        }
+                    }
                     this.setState({
                         optionDefinitions: this.state.optionDefinitions
                     })
                 })}
             </div>
+            <div className={styles.optionTitle}>
+                <p>Optional Options</p>
+            </div>
             <div className={styles.description}>
-                {renderEditOptions('Optional', this.state.optionDefinitions.optional, (key, value, idx, idx2) => {
-                    let obj = this.state.optionDefinitions.optional[idx].options[idx2]
-                    obj[key] = value
+                {renderEditOptions('optional', this.state.optionDefinitions.optional, (key, value, idx, idx2) => {
+                    if (idx2) {
+                        let obj = this.state.optionDefinitions.optional[idx].options[idx2]
+                        obj[key] = value
+                    }
+                    else {
+                        console.log(key, idx)
+                        if (key === 'title') {
+                            let obj = this.state.optionDefinitions.optional[idx]
+                            this.state.optionDefinitions.optional.splice(idx, 1)
+                            this.state.optionDefinitions.required.push(obj)
+                        }
+                        else if (key === 'forward' && idx < this.state.optionDefinitions.optional.length - 1) {
+                            let tmp = this.state.optionDefinitions.optional[idx]
+                            this.state.optionDefinitions.optional[idx] = this.state.optionDefinitions.optional[idx + 1]
+                            this.state.optionDefinitions.optional[idx + 1] = tmp
+                        }
+                        else if (key === 'backward' && idx > 0) {
+                            let tmp = this.state.optionDefinitions.optional[idx]
+                            this.state.optionDefinitions.optional[idx] = this.state.optionDefinitions.optional[idx - 1]
+                            this.state.optionDefinitions.optional[idx - 1] = tmp
+                        }
+                        else {
+                            let obj = this.state.optionDefinitions.optional[idx]
+                            obj[key] = value
+                        }
+                    }
                     this.setState({
                         optionDefinitions: this.state.optionDefinitions
                     })
