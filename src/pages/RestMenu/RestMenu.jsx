@@ -28,11 +28,14 @@ const Menu = (props) => {
             ) : null}
           </div>
           <hr />
-          <MenuItems 
+          <MenuItems
+            selectedMenuItem={props.selectedMenuItem}
             menuItems={props.menuItems}
             menuCats={props.menuCats}
             handleMenuItemEdit={props.handleMenuItemEdit}
+            handleMenuItemUpdate={props.handleMenuItemUpdate}
             handleMenuItemDelete={props.handleMenuItemDelete}
+            handleMenuItemCancel={props.handleMenuItemCancel}
           />
         </div>
       )}
