@@ -18,11 +18,10 @@ jobs:
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '10.x'
 
     - name: npm install, build, and test
       run: |
-        npm install -g react-scripts
         npm install
         npm run build --if-present
         npm run test --if-present
@@ -32,5 +31,5 @@ jobs:
       with:
         app-name: 'hashdish-dev-admin'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2d7c91cff6cc411988b78d97908eb2d1 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e3e6beedc9fe4dfaba919ff0f6e8f890 }}
         package: .
