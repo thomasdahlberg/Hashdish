@@ -90,8 +90,37 @@ class App extends Component {
 
   handleMenuItemEdit = async (idx) => {
     this.setState({
-      addMenuItem: true,
       selectedMenuItem: this.state.menuItems[idx],
+    });
+  }
+
+  handleMenuItemUpdate = async (idx, state) => {
+    let menu = this.state.menuItems[idx]
+    await API.patch(`/kitchen/menu/${menu.menuId}`, Object.assign(menu, {
+      name: state.name,
+      description: state.description,
+      price: state.price,
+      optionDefinitions: JSON.stringify(state.optionDefinitions),
+    })).then(async (response) => {
+        if (response.status === 200) {
+            console.log(response);
+            if (state.image.startsWith('data:image/jpeg;base64')) {
+              await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {data: state.image.split(',')[1]}).then((response) => {
+                if (response.status === 200) {
+                    this.setState({
+                      selectedMenuItem: null,
+                    });
+                    console.log(response);
+                }
+              });
+            }            
+        }
+    });
+  }
+
+  handleMenuItemCancel = async (idx) => {
+    this.setState({
+      selectedMenuItem: null,
     });
   }
 
@@ -104,11 +133,6 @@ class App extends Component {
   };
 
   handleFormToggle = (id) => {
-    if (id === 'addMenuItem') {
-      this.setState({
-        selectedMenuItem: null
-      })
-    }
     if (this.state[id]) {
       this.setState({ [id]: false });
     } else {
@@ -176,7 +200,9 @@ class App extends Component {
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
                     handleMenuItemEdit={this.handleMenuItemEdit}
+                    handleMenuItemUpdate={this.handleMenuItemUpdate}
                     handleMenuItemDelete={this.handleMenuItemDelete}
+                    handleMenuItemCancel={this.handleMenuItemCancel}
                     handleGetKitchen={this.handleGetKitchen}
                   />
                 ) : (
