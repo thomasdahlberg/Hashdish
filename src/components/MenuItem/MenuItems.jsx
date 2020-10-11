@@ -134,7 +134,6 @@ class MenuItemEdit extends Component {
     state = this.getInitialState();
     
     getInitialState() {
-        console.log(this.props.item.name, this.props.item.pictureKey)
       return {
         name: this.props.item.name,
         description: this.props.item.description || '',

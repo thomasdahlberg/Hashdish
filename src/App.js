@@ -96,11 +96,6 @@ class App extends Component {
 
   handleMenuItemUpdate = async (idx, state) => {
     let menu = this.state.menuItems[idx]
-    console.log(Object.assign(menu, {
-      name: state.name,
-      price: state.price,
-      optionDefinitions: JSON.stringify(state.optionDefinitions),
-    }))
     await API.patch(`/kitchen/menu/${menu.menuId}`, Object.assign(menu, {
       name: state.name,
       description: state.description,
