@@ -24,7 +24,7 @@ axios.interceptors.response.use((response) => {
     return response
 }, function (error) {
     const originalRequest = error.config;
-    if (error.response.status === 401 && originalRequest.url === 'http://local.hashdish.com/v1.0/kitchen/refresh') {
+    if (error.response.status === 401 && originalRequest.url === 'https://dev.hashdish.com/v1.0/kitchen/refresh') {
     //    router.push('/login'); 
     // <Redirect to="/login" />
     return Promise.reject(error);
@@ -33,7 +33,7 @@ axios.interceptors.response.use((response) => {
     if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
     const refreshToken = localStorageService.getRefreshToken();
-    return axios.post('http://local.hashdish.com/v1.0/kitchen/refresh',
+    return axios.post('https://dev.hashdish.com/v1.0/kitchen/refresh',
         {
             "refreshToken": refreshToken
         })
@@ -49,7 +49,7 @@ return Promise.reject(error);
 });
 
 const kitchenInstance = axios.create({
-  baseURL:"http://local.hashdish.com/v1.0/"
+  baseURL:"https://dev.hashdish.com/v1.0/"
 });
 
 kitchenInstance.interceptors.request.use(
