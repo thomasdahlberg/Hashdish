@@ -34,7 +34,7 @@ function renderOptions(title, optionGroups) {
     })
 }
 
-class MenuItem extends Component {  
+class MenuItem extends Component { //eslint-disable-line no-unused-vars
     render() {
         let optionDefinitions = {}
         if (this.props.item.optionDefinitions) {
@@ -200,6 +200,52 @@ class MenuItemEdit extends Component {
         }
     }
 
+    handleChange(current) {
+        return (key, value, idx, idx2) => {
+            if (idx2 >= 0) {
+                if (key === 'delete') {
+                    current[idx].options.splice(idx2, 1)
+                }
+                else {
+                    let obj = current[idx].options[idx2]
+                    obj[key] = value
+                }
+            }
+            else {
+                if (key === 'title') {
+                    let obj = current[idx]
+                    current.splice(idx, 1)
+                    this.state.optionDefinitions[value].push(obj)
+                }
+                else if (key === 'forward' && idx < current.length - 1) {
+                    let tmp = current[idx]
+                    current[idx] = current[idx + 1]
+                    current[idx + 1] = tmp
+                }
+                else if (key === 'backward' && idx > 0) {
+                    let tmp = current[idx]
+                    current[idx] = current[idx - 1]
+                    current[idx - 1] = tmp
+                }
+                else if (key === 'delete') {
+                    current.splice(idx, 1)
+                }
+                else if (key === 'add') {
+                    current[idx].options.push({
+                        name: ''
+                    })
+                }
+                else {
+                    let obj = current[idx]
+                    obj[key] = value
+                }
+            }
+            this.setState({
+                optionDefinitions: this.state.optionDefinitions
+            })
+        }
+    }
+
     render() {
         return <section id={this.props.item.menuId} key={this.props.item.menuId} className={styles.item}>
             <div className={styles.title}>
@@ -242,49 +288,7 @@ class MenuItemEdit extends Component {
                 }}>Add</button>
             </div>
             <div className={styles.description}>
-                {renderEditOptions('required', this.state.optionDefinitions.required, (key, value, idx, idx2) => {
-                    if (idx2 >= 0) {
-                        if (key === 'delete') {
-                            this.state.optionDefinitions.required[idx].options.splice(idx2, 1)
-                        }
-                        else {
-                            let obj = this.state.optionDefinitions.required[idx].options[idx2]
-                            obj[key] = value
-                        }
-                    }
-                    else {
-                        if (key === 'title') {
-                            let obj = this.state.optionDefinitions.required[idx]
-                            this.state.optionDefinitions.required.splice(idx, 1)
-                            this.state.optionDefinitions.optional.push(obj)
-                        }
-                        else if (key === 'forward' && idx < this.state.optionDefinitions.required.length - 1) {
-                            let tmp = this.state.optionDefinitions.required[idx]
-                            this.state.optionDefinitions.required[idx] = this.state.optionDefinitions.required[idx + 1]
-                            this.state.optionDefinitions.required[idx + 1] = tmp
-                        }
-                        else if (key === 'backward' && idx > 0) {
-                            let tmp = this.state.optionDefinitions.required[idx]
-                            this.state.optionDefinitions.required[idx] = this.state.optionDefinitions.required[idx - 1]
-                            this.state.optionDefinitions.required[idx - 1] = tmp
-                        }
-                        else if (key === 'delete') {
-                            this.state.optionDefinitions.required.splice(idx, 1)
-                        }
-                        else if (key === 'add') {
-                            this.state.optionDefinitions.required[idx].options.push({
-                                name: ''
-                            })
-                        }
-                        else {
-                            let obj = this.state.optionDefinitions.required[idx]
-                            obj[key] = value
-                        }
-                    }
-                    this.setState({
-                        optionDefinitions: this.state.optionDefinitions
-                    })
-                })}
+                {renderEditOptions('required', this.state.optionDefinitions.required, this.handleChange(this.state.optionDefinitions.required))}
             </div>
             <div className={styles.optionTitle}>
                 <p>Optional Options</p>
@@ -300,49 +304,7 @@ class MenuItemEdit extends Component {
                 }}>Add</button>
             </div>
             <div className={styles.description}>
-                {renderEditOptions('optional', this.state.optionDefinitions.optional, (key, value, idx, idx2) => {
-                    if (idx2 >= 0) {
-                        if (key === 'delete') {
-                            this.state.optionDefinitions.optional[idx].options.splice(idx2, 1)
-                        }
-                        else {
-                            let obj = this.state.optionDefinitions.optional[idx].options[idx2]
-                            obj[key] = value
-                        }
-                    }
-                    else {
-                        if (key === 'title') {
-                            let obj = this.state.optionDefinitions.optional[idx]
-                            this.state.optionDefinitions.optional.splice(idx, 1)
-                            this.state.optionDefinitions.required.push(obj)
-                        }
-                        else if (key === 'forward' && idx < this.state.optionDefinitions.optional.length - 1) {
-                            let tmp = this.state.optionDefinitions.optional[idx]
-                            this.state.optionDefinitions.optional[idx] = this.state.optionDefinitions.optional[idx + 1]
-                            this.state.optionDefinitions.optional[idx + 1] = tmp
-                        }
-                        else if (key === 'backward' && idx > 0) {
-                            let tmp = this.state.optionDefinitions.optional[idx]
-                            this.state.optionDefinitions.optional[idx] = this.state.optionDefinitions.optional[idx - 1]
-                            this.state.optionDefinitions.optional[idx - 1] = tmp
-                        }
-                        else if (key === 'delete') {
-                            this.state.optionDefinitions.optional.splice(idx, 1)
-                        }
-                        else if (key === 'add') {
-                            this.state.optionDefinitions.optional[idx].options.push({
-                                name: ''
-                            })
-                        }
-                        else {
-                            let obj = this.state.optionDefinitions.optional[idx]
-                            obj[key] = value
-                        }
-                    }
-                    this.setState({
-                        optionDefinitions: this.state.optionDefinitions
-                    })
-                })}
+                {renderEditOptions('optional', this.state.optionDefinitions.optional, this.handleChange(this.state.optionDefinitions.optional))}
             </div>
             <div className={styles.price}>
                 <input
