@@ -1,0 +1,16 @@
+.section {
+  width: 20rem;
+  margin: 0 auto;
+}
+
+.section button {
+  width: 100%;
+  margin-top: 10px;
+  height: 2.5rem;
+  background-color: brown;
+  border-radius: 15px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
