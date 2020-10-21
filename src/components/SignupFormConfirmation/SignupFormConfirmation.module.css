@@ -1,6 +1,7 @@
 .section {
   width: 20rem;
   margin: 0 auto;
+  text-align: center;
 }
 
 .section input {
@@ -23,12 +24,6 @@
   font-size: 1.2rem;
 }
 
-.section p {
-  color: red;
-  font-weight: 700;
-  text-align: center;
-}
-
 .section ul li {
   list-style: none;
   padding: 3px 12px 12px 0px;
@@ -36,4 +31,10 @@
 
 .section label {
   font-weight: 800;
+}
+
+.error {
+  color: red;
+  font-weight: 700;
+  text-align: center;
 }

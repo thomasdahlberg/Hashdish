@@ -58,6 +58,13 @@ class SignupFormRest extends Component {
           placeholder={'Cuisine'}
           type="text"
         />
+        <label htmlFor="phoneNumber">Phone Number</label>
+        <input
+          onChange={handleChange('phoneNumber')}
+          defaultValue={values.phoneNumber}
+          placeholder={'Phone Number'}
+          type="tel"
+        />
         <label htmlFor="address">Restaurant Address</label>
         <input
           onChange={handleAddressChange('address')}

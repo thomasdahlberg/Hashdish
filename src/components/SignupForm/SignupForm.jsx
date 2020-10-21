@@ -13,13 +13,14 @@ class SignupForm extends Component {
     name: '',
     password: '',
     passwordConfirmation: '',
+    phoneNumber: '',
     email: '',
     cuisine: '',
     latitude: '',
     longitude: '',
     address: '',
     googlePlaceId: '',
-    timezone: '',
+    timezone: 'America/Los_Angeles',
     minimumPreparingMinutes: '',
     openHours: '',
     predictions: [],
@@ -90,6 +91,7 @@ class SignupForm extends Component {
       password,
       name,
       cuisine,
+      phoneNumber,
       flags,
       minimumPreparingMinutes,
       latitude,
@@ -105,6 +107,7 @@ class SignupForm extends Component {
       password,
       name,
       cuisine,
+      phoneNumber,
       flags,
       minimumPreparingMinutes,
       latitude,
@@ -117,24 +120,11 @@ class SignupForm extends Component {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          this.continue();
+          this.nextStep();
         }
       })
       .catch((error) => {
         this.setState({
-          name: '',
-          password: '',
-          passwordConfirmation: '',
-          email: '',
-          cuisine: '',
-          latitude: '',
-          longitude: '',
-          address: '',
-          googlePlaceId: '',
-          timezone: '',
-          minimumPreparingMinutes: '',
-          openHours: '',
-          flags: '',
           error: error.message,
         });
       });
@@ -148,6 +138,7 @@ class SignupForm extends Component {
       passwordConfirmation,
       email,
       cuisine,
+      phoneNumber,
       latitude,
       longitude,
       address,
@@ -165,6 +156,7 @@ class SignupForm extends Component {
       passwordConfirmation,
       email,
       cuisine,
+      phoneNumber,
       latitude,
       longitude,
       address,

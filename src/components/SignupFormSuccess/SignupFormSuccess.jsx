@@ -6,10 +6,10 @@ class SignupFormSuccess extends Component {
   render() {
     return (
       <section className={styles.section}>
-        <h1>Success</h1>
-
-        <Link to="/">
-          <button>Go Home</button>
+        <h1>Sign Up Complete!</h1>
+        <p>Click the button below to log in.</p>
+        <Link to="/login">
+          <button>Log In</button>
         </Link>
       </section>
     );
