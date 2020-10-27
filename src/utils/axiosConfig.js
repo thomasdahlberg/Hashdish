@@ -20,6 +20,7 @@ axios.interceptors.request.use(
 );
 
 var API_URL = 'https://dev.hashdish.com/'
+
 if (process.env.ENVIRONMENT === 'prod') {
   API_URL = 'https://api.hashdish.com/'
 }
