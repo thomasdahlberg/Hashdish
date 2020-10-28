@@ -13,7 +13,6 @@
 .logo {
     display: flex;
     flex-direction: column;
-    width: 25vw;
     background-color: #F9F8F8;
     box-shadow: 2px 2px 2px #888888;
     padding: 1.45rem;

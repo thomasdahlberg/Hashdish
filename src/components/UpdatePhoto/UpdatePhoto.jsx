@@ -28,8 +28,17 @@ class UpdatePhoto extends Component {
                 var image = new Image();
                 image.onload = () => {
                     var canvas = document.createElement("canvas");
-                    var MAX_WIDTH = 300;
-                    var MAX_HEIGHT = 300;
+                    var MAX_WIDTH;
+                    var MAX_HEIGHT;
+                    var ratio = image.width / image.height
+                    if (1 > ratio) {
+                        MAX_WIDTH = 300
+                        MAX_HEIGHT = 300 / ratio
+                    }
+                    else {
+                        MAX_WIDTH = 300 * ratio
+                        MAX_HEIGHT = 300
+                    }
                     canvas.width = MAX_WIDTH;
                     canvas.height = MAX_HEIGHT;
                     var ctx = canvas.getContext("2d");
@@ -49,7 +58,9 @@ class UpdatePhoto extends Component {
     }
 
     handleImageChange = async (e) => { 
-        this.resizeImage(e.target.files[0])
+        if (e.target.files.length > 0) {
+            this.resizeImage(e.target.files[0])
+        }
     }
 
     handleSubmit = async (e) => {
