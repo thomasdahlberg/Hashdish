@@ -34,6 +34,11 @@ function renderOptions(title, optionGroups) {
     })
 }
 
+var STORAGE_URL = 'https://homecookimages.blob.core.windows.net/'
+if (process.env.NODE_ENV === 'production') {
+    STORAGE_URL = 'https://hashdish.blob.core.windows.net/'
+}
+
 class MenuItem extends Component { //eslint-disable-line no-unused-vars
     render() {
         let optionDefinitions = {}
@@ -47,7 +52,7 @@ class MenuItem extends Component { //eslint-disable-line no-unused-vars
             <div className={styles.title}>
                 <h3>{this.props.item.name}</h3>
                 {this.props.item.pictureKey &&
-                    <img src={`https://homecookimages.blob.core.windows.net/pictures/${this.props.item.pictureKey}.jpg`} alt="menu item"/>
+                    <img src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`} alt="menu item"/>
                 }
             </div>
             <div className={styles.description}>
@@ -157,7 +162,7 @@ class MenuItemEdit extends Component {
         description: this.props.item.description || '',
         price: this.props.item.price,
         optionDefinitions: this.parseOptionDefinition(),
-        image: (this.props.item.pictureKey) ? `https://homecookimages.blob.core.windows.net/pictures/${this.props.item.pictureKey}.jpg` : null,
+        image: (this.props.item.pictureKey) ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg` : null,
       };
     }
 
