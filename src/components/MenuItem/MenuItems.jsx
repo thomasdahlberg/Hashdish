@@ -190,12 +190,12 @@ class MenuItemEdit extends Component {
                         var MAX_HEIGHT;
                         var ratio = image.width / image.height
                         if (1 > ratio) {
-                            MAX_WIDTH = 300
-                            MAX_HEIGHT = 300 / ratio
+                            MAX_WIDTH = 500
+                            MAX_HEIGHT = 500 / ratio
                         }
                         else {
-                            MAX_WIDTH = 300 * ratio
-                            MAX_HEIGHT = 300
+                            MAX_WIDTH = 500 * ratio
+                            MAX_HEIGHT = 500
                         }
                         canvas.width = MAX_WIDTH;
                         canvas.height = MAX_HEIGHT;
