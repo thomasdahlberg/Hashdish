@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import styles from './LoginForm.module.css';
 import kitchenInstance from '../../utils/axiosConfig';
-import LocalStorageService from "../../utils/localStorageService";
+import LocalStorageService from '../../utils/localStorageService';
 
 const API = kitchenInstance;
 
 class LoginForm extends Component {
-  
   state = this.getInitialState();
-  
+
   getInitialState() {
     return {
       email: '',
@@ -35,14 +34,15 @@ class LoginForm extends Component {
         if (response.status === 200) {
           LocalStorageService.setToken(response.data);
         }
-        alert('Successfully logged in');
       })
       .catch(function (error) {
         console.log(error);
         alert('Failed to login');
       });
     this.props.handleSignupOrLogin();
-    LocalStorageService.getAuthToken() ? this.props.history.push('/') : this.props.history.push('/login');
+    LocalStorageService.getAuthToken()
+      ? this.props.history.push('/')
+      : this.props.history.push('/login');
   };
 
   render() {

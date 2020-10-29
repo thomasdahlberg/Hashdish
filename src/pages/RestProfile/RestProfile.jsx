@@ -16,6 +16,11 @@ function profileTime(timeArr) {
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+var STORAGE_URL = 'https://homecookimages.blob.core.windows.net/'
+if (process.env.NODE_ENV === 'production') {
+    STORAGE_URL = 'https://hashdish.blob.core.windows.net/'
+}
+
 const Profile = (props) => {
     return(
         <div>
@@ -30,7 +35,7 @@ const Profile = (props) => {
                     />
                     :
                     <div className={styles.logo}>
-                        <img src={`https://homecookimages.blob.core.windows.net/pictures/${props.myKitchen.pictureKey}.jpg`} alt="restaurant logo"/>
+                        <img src={`${STORAGE_URL}pictures/${props.myKitchen.pictureKey}.jpg`} alt="restaurant logo"/>
                         <div className={styles.edit}>
                             <button id="editProfPhoto" onClick={props.handleClick}>Edit</button>
                         </div>

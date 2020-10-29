@@ -34,6 +34,11 @@ function renderOptions(title, optionGroups) {
     })
 }
 
+var STORAGE_URL = 'https://homecookimages.blob.core.windows.net/'
+if (process.env.NODE_ENV === 'production') {
+    STORAGE_URL = 'https://hashdish.blob.core.windows.net/'
+}
+
 class MenuItem extends Component { //eslint-disable-line no-unused-vars
     render() {
         let optionDefinitions = {}
@@ -47,7 +52,7 @@ class MenuItem extends Component { //eslint-disable-line no-unused-vars
             <div className={styles.title}>
                 <h3>{this.props.item.name}</h3>
                 {this.props.item.pictureKey &&
-                    <img src={`https://homecookimages.blob.core.windows.net/pictures/${this.props.item.pictureKey}.jpg`} alt="menu item"/>
+                    <img src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`} alt="menu item"/>
                 }
             </div>
             <div className={styles.description}>
@@ -157,7 +162,7 @@ class MenuItemEdit extends Component {
         description: this.props.item.description || '',
         price: this.props.item.price,
         optionDefinitions: this.parseOptionDefinition(),
-        image: (this.props.item.pictureKey) ? `https://homecookimages.blob.core.windows.net/pictures/${this.props.item.pictureKey}.jpg` : null,
+        image: (this.props.item.pictureKey) ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg` : null,
       };
     }
 
@@ -173,28 +178,39 @@ class MenuItemEdit extends Component {
 
     handleImageChange = (e) => {
         if (window.File && window.FileReader && window.FileList && window.Blob) {
-            var file = e.target.files[0]
-            var reader = new FileReader();
-            // Set the image once loaded into file reader
-            reader.onloadend = (e) => {
-                var image = new Image();
-                image.onload = () => {
-                    var canvas = document.createElement("canvas");
-                    var MAX_WIDTH = 300;
-                    var MAX_HEIGHT = 300;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = MAX_HEIGHT;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(image, 0, 0, MAX_WIDTH, MAX_HEIGHT);
+            if (e.target.files.length > 0) {
+                var file = e.target.files[0]
+                var reader = new FileReader();
+                // Set the image once loaded into file reader
+                reader.onloadend = (e) => {
+                    var image = new Image();
+                    image.onload = () => {
+                        var canvas = document.createElement("canvas");
+                        var MAX_WIDTH;
+                        var MAX_HEIGHT;
+                        var ratio = image.width / image.height
+                        if (1 > ratio) {
+                            MAX_WIDTH = 500
+                            MAX_HEIGHT = 500 / ratio
+                        }
+                        else {
+                            MAX_WIDTH = 500 * ratio
+                            MAX_HEIGHT = 500
+                        }
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = MAX_HEIGHT;
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(image, 0, 0, MAX_WIDTH, MAX_HEIGHT);
 
-                    let imageURL = canvas.toDataURL(file.type)
-                    this.setState({
-                        image: imageURL
-                    })
+                        let imageURL = canvas.toDataURL(file.type)
+                        this.setState({
+                            image: imageURL
+                        })
+                    }
+                    image.src = e.target.result;
                 }
-                image.src = e.target.result;
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
         } else {
             alert('The File APIs are not fully supported in this browser.');
         }

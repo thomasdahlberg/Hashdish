@@ -13,6 +13,7 @@ import Layout from './components/Layout/Layout';
 // Utilities
 import LocalStorageService from './utils/localStorageService';
 import kitchenInstance from './utils/axiosConfig';
+import Signup from './pages/Signup/Signup';
 
 const API = kitchenInstance;
 
@@ -63,36 +64,36 @@ class App extends Component {
   handleGetMenuItems = async (id) => {
     let response = await API.get(`menus/${id}`);
     let data = response.data;
-    this.setState({ menuItems: data});
+    this.setState({ menuItems: data });
     this.handleGetMenuCategories(data);
-  }
+  };
 
   handleGetMenuCategories = (arr) => {
-    let catArr = arr.map(el => el.category);
+    let catArr = arr.map((el) => el.category);
     let uniqueCatsArr = [...new Set(catArr)];
-    this.setState({ menuCats: uniqueCatsArr});
-  }
+    this.setState({ menuCats: uniqueCatsArr });
+  };
 
   handleMenuItemDelete = async (e) => {
     e.preventDefault();
     console.log(e.target.id);
     try {
-      await API.delete(`/kitchen/menu/${e.target.id}`).then(response => {
+      await API.delete(`/kitchen/menu/${e.target.id}`).then((response) => {
         if (response.status === 200) {
           console.log(response);
           this.handleGetKitchen();
         }
-      })
+      });
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   handleMenuItemEdit = async (idx) => {
     this.setState({
       selectedMenuItem: this.state.menuItems[idx],
     });
-  }
+  };
 
   handleMenuItemUpdate = async (idx, state) => {
     let menu = this.state.menuItems[idx]
@@ -215,6 +216,16 @@ class App extends Component {
               path="/login"
               render={({ history }) => (
                 <Login
+                  history={history}
+                  handleSignupOrLogin={this.handleSignupOrLogin}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={({ history }) => (
+                <Signup
                   history={history}
                   handleSignupOrLogin={this.handleSignupOrLogin}
                 />
