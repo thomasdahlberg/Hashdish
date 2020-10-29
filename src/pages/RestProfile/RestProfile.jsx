@@ -45,7 +45,7 @@ const Profile = (props) => {
                         <div className={styles.title}>
                             <h1>{props.myKitchen.name}</h1>
                             <h2>{props.myKitchen.address}</h2>
-                            <h2>{props.myKitchen.phoneNumber}</h2>
+                            <h2>tel: {props.myKitchen.phoneNumber}</h2>
                         </div>
                     {props.editHours ? 
                         <UpdateHours

@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
+import Media from 'react-media';
+import Dropdown from '../Dropdown/Dropdown'
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 
+
 const Header = (props) => {
+
   let nav = props.user ? (
     <Fragment>
       <li>
@@ -28,7 +32,7 @@ const Header = (props) => {
     </Fragment>
   );
 
-  return (
+    return (
     <header className={styles.container}>
       <div className={styles.title}>
         <Link to="/">
@@ -38,9 +42,22 @@ const Header = (props) => {
           <h2>Restaurant Manager</h2>
         </em>
       </div>
-      <ul className={styles.nav}>{nav}</ul>
+        <Media queries={{ small: "(max-width: 799px)"}}>
+          {matches =>
+            matches.small ? (
+              <Dropdown 
+                user={props.user}
+                handleLogout={props.handleLogout}
+              />
+            ) : (
+              <ul className={styles.nav}>
+                {nav}
+              </ul>
+            )
+            }
+        </Media>
     </header>
   );
-};
+}
 
 export default Header;

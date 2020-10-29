@@ -107,8 +107,7 @@ class UpdateHours extends Component {
                         </div>
                     )}
                     <div className={styles.btns}>
-                        <button type="submit">Update</button>
-                        <button className={styles.cancel} id="editHours" onClick={this.props.handleClick}>Cancel</button>
+                        <button className={styles.cancel} id="editHours" onClick={this.props.handleClick}>Done</button>
                     </div>
                 </form>
             </section>
