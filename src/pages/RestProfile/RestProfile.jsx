@@ -26,8 +26,7 @@ const Profile = (props) => {
         <div>
             {props.myKitchen === null ?  <Redirect to="/" />
             :
-            <div className={styles.container}>
-                <section className={styles.header}>
+            <section className={styles.container}>
                 {props.editProfPhoto ? 
                     <UpdatePhoto
                         handleFormToggle={props.handleFormToggle}
@@ -42,29 +41,31 @@ const Profile = (props) => {
                         </div>
                     </div>
                 }
-                    <div className={styles.title}>
-                        <h1>{props.myKitchen.name}</h1>
-                        <h2>{props.myKitchen.address}</h2>
-                        <h2>{props.myKitchen.phoneNumber}</h2>
-                    </div>
-                </section>
-                {props.editHours ? 
-                    <UpdateHours
-                        openHours={props.openHours} 
-                        handleClick={props.handleClick}
-                        handleFormToggle={props.handleFormToggle}
-                    />
-                    :
-                    <section className={styles.info}>
-                        {DAYS.map((DAY, idx) => 
-                            <p key={idx}>{DAY}: {props.openHours[idx]?.length > 0 ? `${profileTime(props.openHours[idx])}` : "Closed"}</p>
-                        )}
-                        <div className={styles.edit}>
-                            <button id="editHours" onClick={props.handleClick}>Edit</button>
+                    <div className={styles.infocont}>
+                        <div className={styles.title}>
+                            <h1>{props.myKitchen.name}</h1>
+                            <h2>{props.myKitchen.address}</h2>
+                            <h2>tel: {props.myKitchen.phoneNumber}</h2>
                         </div>
-                    </section>
-                }
-            </div>
+                    {props.editHours ? 
+                        <UpdateHours
+                            openHours={props.openHours} 
+                            handleClick={props.handleClick}
+                            handleFormToggle={props.handleFormToggle}
+                        />
+                        :
+                        <div className={styles.info}>
+                            {DAYS.map((DAY, idx) => 
+                                <p key={idx}>{DAY}: {props.openHours[idx]?.length > 0 ? `${profileTime(props.openHours[idx])}` : "Closed"}</p>
+                            )}
+                            <div className={styles.edit}>
+                                <button id="editHours" onClick={props.handleClick}>Edit</button>
+                            </div>
+                        </div>
+                    
+                    }
+                    </div>
+            </section>
             }
         </div>
     )

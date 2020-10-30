@@ -13,7 +13,7 @@
     width: 25%;
     height: 30%;
     color: #211103;
-    background-color: #F9F8F8;
+    background-color: red;
     box-shadow: 2px 2px 2px #888888;
 }
 
@@ -31,7 +31,7 @@
     max-width: 25%;
 }
 
-.description {
+.table {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

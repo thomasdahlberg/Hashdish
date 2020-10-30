@@ -1,11 +1,13 @@
 .container {
     display: flex;
     width: 100vw;
+    max-height: 8vh;
     justify-content: space-between;
     background-color: #F8E16C;
     color: #211103;
     box-shadow: 3px 3px 3px #888888;
-}
+    overflow: visible;
+} 
 
 .title {
     display: flex;
@@ -44,7 +46,7 @@
     background-color: #211103;
 }
 
-/* .nav a:active{
+.nav a:active{
     color: #F9F8F8;
     background-color: #6B717E;
-} */
+}
