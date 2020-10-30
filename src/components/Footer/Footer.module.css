@@ -3,9 +3,9 @@
     justify-content: center;
     align-items: center;
     bottom: 0px;
-    position: fixed;
-    overflow: hide;
-    width: 100vw;
+    position: absolute;
+    width: 100%;
     background-color: #F8E16C;
-    color: #211103
+    color: #211103;
+    height: 2.5rem;
 }

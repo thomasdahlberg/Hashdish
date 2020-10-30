@@ -27,17 +27,18 @@ class UpdateHours extends Component {
             openHourList: this.props.openHours,
         };
     }
+
+    handleCancel = (event) => {
+        event.preventDefault();
+        this.setState({ openHourList: this.props.openHours })
+        // this.props.handleClick(event);
+        // this.props.handleGetKitchen();
+    }
   
     handleSubmit = async (event) => {
         event.preventDefault();
-        let hourArray = [];
-        for(let i = 1; i < 8; i++){
-            let element = this.state[`open${i}`] ? [this.state[`open${i}`], this.state[`close${i}`]] : [];
-            hourArray.push(element);
-        }
         let jsonArray = JSON.stringify(this.state.openHourList);
         let json = JSON.stringify({flags: "1", openHours: `{"country":"US","openHours":${jsonArray}}`});
-        console.log(json);
 
         await API.patch(`/kitchen`, json, {
             headers: {
@@ -52,7 +53,7 @@ class UpdateHours extends Component {
           .catch(function (error) {
             console.log(error);
           });
-        this.props.handleFormToggle();
+        this.props.handleFormToggle("editHours");
         };
 
     render() {
@@ -63,7 +64,7 @@ class UpdateHours extends Component {
                     <h3>Update Open Hours</h3>                    
                     {this.state.openHourList.map((blocks, idx) =>
                         <div className ={styles.day} key={days[idx]}>
-                            <label>{days[idx]}</label>
+                            <p>{days[idx]}</p>
                             {blocks.map((block, idx2) =>
                             <div key={idx2}>
                                 <label>Open:</label>
@@ -88,7 +89,7 @@ class UpdateHours extends Component {
                                             openHourList: arr,
                                         })   
                                     }}/>
-                                <button onClick={() => {
+                                <button className={styles.del} onClick={() => {
                                     let arr = this.state.openHourList
                                     arr[idx] = arr[idx].filter((item => item !== block))
                                     this.setState({
@@ -96,20 +97,26 @@ class UpdateHours extends Component {
                                     })
                                 }}>-</button>
                             </div>
-                            )}
-                        <button onClick={() => {          
-                            let arr = this.state.openHourList
-                            arr[idx].push([0,0])
-                            this.setState({
-                                openHourList: arr,
-                            })
-                        }}>+</button>
+                            )
+                            }
+                            {blocks.length === 0 ?
+                                <button className={styles.add} onClick={() => {          
+                                    let arr = this.state.openHourList
+                                    arr[idx].push([0,0])
+                                    this.setState({
+                                        openHourList: arr,
+                                    })
+                                }}>+</button>
+                                :
+                                null
+                            }
                         </div>
                     )}
                     <div className={styles.btns}>
-                        <button className={styles.cancel} id="editHours" onClick={this.props.handleClick}>Done</button>
+                        <button>Update</button>
                     </div>
                 </form>
+                {/* <button className={styles.cancel} id="editHours" onClick={() => this.props.handleGetKitchen()}>Cancel</button> */}
             </section>
         )
     }  
