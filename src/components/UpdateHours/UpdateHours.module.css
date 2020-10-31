@@ -1,22 +1,37 @@
 .container {
+    min-width: 25rem;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1.5rem;
     color: #211103;
     background-color: #F9F8F8;
     box-shadow: 2px 2px 2px #888888;
-    align-items: center;
+    align-items: flex-start;
     margin: .5rem;
 }
+
+.container input {
+    /* width: 100%; */
+    margin: 0.5rem 0 0.5rem 0;
+    border-radius: 3px;
+    height: 1.7rem;
+    background-color: #F9F8F8;
+    color: #211103;
+  }
 
 .container h3 {
     font-size: 1.5rem;
 }
 
 .day {
+    border: solid #E0E2DB 2px;
+    border-radius: 10px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;  
 }
 
 .del {
@@ -88,5 +103,26 @@
 
 .container button:focus {
     outline: 0;
+}
+
+.blockcont {
+    display: flex;
+    flex-direction: column;
+  }
+
+.blockcont label {
+    margin-right: .25rem;
+  }
+  
+.blockcont input {
+    margin-right: 1rem;
+}  
+  
+
+.hourflex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 

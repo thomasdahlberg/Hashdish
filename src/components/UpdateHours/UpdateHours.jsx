@@ -60,46 +60,53 @@ class UpdateHours extends Component {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' , 'Saturday'];
         return(
             <section className={styles.container}>
-                <form onSubmit={this.handleSubmit}>
+                <div>
                     <h3>Update Open Hours</h3>                    
                     {this.state.openHourList.map((blocks, idx) =>
                         <div className ={styles.day} key={days[idx]}>
                             <p>{days[idx]}</p>
+                            <div className={styles.blockcont}>
                             {blocks.map((block, idx2) =>
-                            <div key={idx2}>
-                                <label>Open:</label>
-                                <input
-                                    type="time"
-                                    value={formatTime(this.state.openHourList[idx][idx2][0])}
-                                    onChange={(e) => {
-                                        var arr = this.state.openHourList
-                                        arr[idx][idx2][0] = deformatTime(e.target.value)
+                                <div className={styles.hourflex} key={idx2}>
+                                    <div>
+                                        <div className={styles.open}>
+                                            <label>Open:</label>
+                                            <input
+                                                type="time"
+                                                value={formatTime(this.state.openHourList[idx][idx2][0])}
+                                                onChange={(e) => {
+                                                    var arr = this.state.openHourList
+                                                    arr[idx][idx2][0] = deformatTime(e.target.value)
+                                                    this.setState({
+                                                        openHourList: arr,
+                                                    })   
+                                            }}/>
+                                        </div>
+                                        <div className={styles.close}>
+                                            <label>Close:</label>                                
+                                            <input
+                                                type="time"
+                                                value={formatTime(this.state.openHourList[idx][idx2][1])}
+                                                onChange={(e) => {
+                                                    var arr = this.state.openHourList
+                                                    arr[idx][idx2][1] = deformatTime(e.target.value)
+                                                    this.setState({
+                                                        openHourList: arr,
+                                                    })   
+                                            }}/>
+                                        </div>
+                                    </div>
+                                    <button className={styles.del} onClick={() => {
+                                        let arr = this.state.openHourList
+                                        arr[idx] = arr[idx].filter((item => item !== block))
                                         this.setState({
                                             openHourList: arr,
-                                        })   
-                                    }}/>
-                                <label>Close:</label>                                
-                                <input
-                                    type="time"
-                                    value={formatTime(this.state.openHourList[idx][idx2][1])}
-                                    onChange={(e) => {
-                                        var arr = this.state.openHourList
-                                        arr[idx][idx2][1] = deformatTime(e.target.value)
-                                        this.setState({
-                                            openHourList: arr,
-                                        })   
-                                    }}/>
-                                <button className={styles.del} onClick={() => {
-                                    let arr = this.state.openHourList
-                                    arr[idx] = arr[idx].filter((item => item !== block))
-                                    this.setState({
-                                        openHourList: arr,
-                                    })
-                                }}>-</button>
+                                        })
+                                    }}>-</button>
+                                </div>
+                                )
+                                }
                             </div>
-                            )
-                            }
-                            {blocks.length === 0 ?
                                 <button className={styles.add} onClick={() => {          
                                     let arr = this.state.openHourList
                                     arr[idx].push([0,0])
@@ -107,15 +114,12 @@ class UpdateHours extends Component {
                                         openHourList: arr,
                                     })
                                 }}>+</button>
-                                :
-                                null
-                            }
                         </div>
                     )}
                     <div className={styles.btns}>
-                        <button>Update</button>
+                        <button onClick={this.handleSubmit}>Update</button>
                     </div>
-                </form>
+                </div>
                 {/* <button className={styles.cancel} id="editHours" onClick={() => this.props.handleGetKitchen()}>Cancel</button> */}
             </section>
         )
