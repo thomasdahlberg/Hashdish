@@ -1,36 +1,39 @@
 .container {
+    height: 75vh;
     width: 90vw;
     padding: 1rem;
     display: flex;
-    flex-direction: row;
     margin: 1.45rem;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .infocont {
-    /* border: blue solid 2px; */
-    height: 55vh;
     display: flex;
     flex-direction: column;
-    /* margin: 1.45rem; */
-    justify-content: flex-start;
+    background-color: #F9F8F8;
+    box-shadow: 2px 2px 2px #888888;
     align-items: center;
+    padding: 2rem;
+    margin: .5rem;
 }
 
 .logo {
     display: flex;
     flex-direction: column;
     background-color: #F9F8F8;
-    box-shadow: 2px 2px 2px #888888;
+    /* box-shadow: 2px 2px 2px #888888; */
     padding: 1.45rem;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
 }
 
 .logo img {
     max-width: 50vw;
     max-height: 50vh;
+}
+.title {
+    /* border: solid black 2px; */
 }
 
 .title h1 {
@@ -38,19 +41,40 @@
 }
 
 .info {
-    /* border: solid black 2px; */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
+    padding: 2rem;
+    align-items: flex-start;
+    color: #211103;
+    background-color: #F9F8F8;
+    box-shadow: 2px 2px 2px #888888;
+    margin: .5rem;
 }
-.info p {
+.info {
+    font-weight: 900;
     margin: .2rem;
     font-size: 1rem;
     margin-bottom: 0;
 }
 
+.hours {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.info h3 {
+    font-size: 1.5rem;
+}
+
+.day {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .edit {
+    width: 100%;
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
@@ -58,7 +82,7 @@
 
 .edit button {
     margin-left: 1rem;
-    border-radius: 10%;
+    border-radius: 10px;
     font-size: 1rem;
     padding: .5rem;
     border: none;
@@ -67,7 +91,7 @@
     box-shadow: 2px 2px 2px #888888;
 }
 
-.container button:active {
+.edit button:active {
     background-color: green;
     box-shadow: none;
 }

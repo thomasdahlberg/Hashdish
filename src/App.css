@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.App-Outer-Container {
+  padding-bottom: 2.5rem;
+}

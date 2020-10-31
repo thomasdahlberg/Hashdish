@@ -63,47 +63,46 @@ class SignupFormRestDetails extends Component {
 
     return (
       <div className={styles.section}>
-        <label htmlFor="minimumPreparingMinutes">
-          Minimum Preparaing Minutes
-        </label>
-        <input
-          onChange={handleChange('minimumPreparingMinutes')}
-          defaultValue={values.minimumPreparingMinutes}
-          placeholder={'Minimum Preparing Minutes'}
-          type="number"
-        />
-        <label htmlFor="openHours">Open Hours</label>
+        <h2 htmlFor="openHours">Open Hours</h2>
         <section>
           <form>
             {this.state.openHourList.map((blocks, idx) => (
               <div className={styles.openHours} key={days[idx]}>
-                <label>{days[idx]}</label>
+                <p className={styles.days}>{days[idx]}</p>
+                <div className={styles.blockcont}>
                 {blocks.map((block, idx2) => (
-                  <div key={idx2}>
-                    <label>Open:</label>
-                    <input
-                      type="time"
-                      value={formatTime(this.state.openHourList[idx][idx2][0])}
-                      onChange={(e) => {
-                        var arr = this.state.openHourList;
-                        arr[idx][idx2][0] = deformatTime(e.target.value);
-                        this.setState({
-                          openHourList: arr,
-                        });
-                      }}
-                    />
-                    <label>Close:</label>
-                    <input
-                      type="time"
-                      value={formatTime(this.state.openHourList[idx][idx2][1])}
-                      onChange={(e) => {
-                        var arr = this.state.openHourList;
-                        arr[idx][idx2][1] = deformatTime(e.target.value);
-                        this.setState({
-                          openHourList: arr,
-                        });
-                      }}
-                    />
+                  <div className={styles.hourflex} key={idx2}>
+                    <div>
+                      <div className={styles.open}>
+                        <label>Open:</label>
+                        <input
+                          type="time"
+                          value={formatTime(this.state.openHourList[idx][idx2][0])}
+                          onChange={(e) => {
+                            var arr = this.state.openHourList;
+                            arr[idx][idx2][0] = deformatTime(e.target.value);
+                            this.setState({
+                              openHourList: arr,
+                            });
+                          }}
+                        />
+                      </div>
+                      <div className={styles.close}>
+                        <label>Close:</label>
+                        <input
+                          type="time"
+                          value={formatTime(this.state.openHourList[idx][idx2][1])}
+                          onChange={(e) => {
+                            var arr = this.state.openHourList;
+                            arr[idx][idx2][1] = deformatTime(e.target.value);
+                            this.setState({
+                              openHourList: arr,
+                            });
+                          }}
+                        />
+                      </div>
+
+                    </div>
                     <button
                       type="button"
                       onClick={() => {
@@ -118,6 +117,7 @@ class SignupFormRestDetails extends Component {
                     </button>
                   </div>
                 ))}
+                </div>
                 <button
                   type="button"
                   onClick={() => {
@@ -134,8 +134,21 @@ class SignupFormRestDetails extends Component {
             ))}
           </form>
         </section>
-        <button onClick={this.continue}>Continue</button>
-        <button onClick={this.back}>Back</button>
+        <div className={styles.prep}>
+          <label htmlFor="minimumPreparingMinutes">
+            Minimum Wait Time
+          </label>
+          <input
+            onChange={handleChange('minimumPreparingMinutes')}
+            defaultValue={values.minimumPreparingMinutes}
+            placeholder={'Minimum Prep in Mins'}
+            type="number"
+          />
+        </div>
+        <div className={styles.navbtns}>
+          <button onClick={this.continue}>Continue</button>
+          <button onClick={this.back}>Back</button>
+        </div>
       </div>
     );
   }

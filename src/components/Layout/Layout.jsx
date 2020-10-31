@@ -8,7 +8,7 @@ const Layout = (props) => {
     <div className={styles.container}>
       <Header handleLogout={props.handleLogout} user={props.user} />
       <div className={styles.content}>{props.children}</div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
