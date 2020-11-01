@@ -54,34 +54,35 @@ class SignupFormConfirmation extends Component {
     const openHours = JSON.parse(values.openHours);
     return (
       <section className={styles.section}>
+        <h2>Restaurant Account Info</h2>
         {values.error && <p className={styles.error}>{values.error}</p>}
-        <ul>
-          <label>Email</label>
-          <li>{values.email}</li>
-          <label>Restaurant Name</label>
-          <li>{values.name}</li>
-          <label>Cuisine</label>
-          <li>{values.cuisine}</li>
-          <label>Phone Number</label>
-          <li>{values.phoneNumber}</li>
-          <label>Restaurant Address</label>
-          <li>{values.address}</li>
-          <label>Minimum Preparing Minutes</label>
-          <li>{values.minimumPreparingMinutes}</li>
-          <label>Open Hours</label>
-          <div>
-            {DAYS.map((DAY, idx) => (
-              <p key={idx}>
-                {DAY}:{' '}
-                {openHours.openHours[idx]?.length > 0
-                  ? `${profileTime(openHours.openHours[idx])}`
-                  : 'Closed'}
-              </p>
-            ))}
-          </div>
+        <ul className={styles.container}>
+          <li>Email:  <span>{values.email}</span></li>
+          <li>Restaurant Name:  <span>{values.name}</span></li>
+          <li>Cuisine:  <span>{values.cuisine}</span></li>
+          <li>Phone Number:  <span>{values.phoneNumber}</span></li>
+          <li>Restaurant Address:  <span>{values.address}</span></li>
+          <li>Minimum Preparing Minutes:  <span>{values.minimumPreparingMinutes}</span></li>
         </ul>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={this.back}>Back</button>
+        <h2>Open Hours</h2>
+        <div className={styles.openHours}>
+          <ul>
+          {DAYS.map((DAY, idx) => (
+            <li key={idx}>
+              {DAY}:{' '}
+              <span>
+                {openHours.openHours[idx]?.length > 0
+                ? `${profileTime(openHours.openHours[idx])}`
+                : 'Closed'}
+              </span>
+            </li>
+          ))}
+          </ul>
+        </div>
+        <div className={styles.navbtns}>
+          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={this.back}>Back</button>
+        </div>
       </section>
     );
   }
