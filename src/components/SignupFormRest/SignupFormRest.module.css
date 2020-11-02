@@ -43,7 +43,7 @@
 }
 
 .section button:disabled {
-  background-color: grey;
+  background-color:#888888;
 }
 
 .suggestions {

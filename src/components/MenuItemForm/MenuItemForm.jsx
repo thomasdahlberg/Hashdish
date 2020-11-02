@@ -54,7 +54,7 @@ class MenuItemForm extends Component {
     render() {
         return (
             <form id="addMenuItem" onSubmit={this.handleSubmit} className={styles.container}>
-                <h2>Add A New Menu Item</h2>      
+                <h2>New Menu Item</h2>      
                 {this.state.image &&          
                     <img src={this.state.image} alt="menu item"/>
                 }
@@ -86,9 +86,7 @@ class MenuItemForm extends Component {
                     placeholder="Ex) 9.99"
                 />
                 <div className={styles.buttons}>
-                    <button disabled={!this.isFormValid()} type="submit">
-                        Submit
-                    </button>
+                    <button disabled={!this.isFormValid()} type="submit">Add</button>
                     <button id="addMenuItem" onClick={this.props.handleClick}>Cancel</button>
                 </div>
             </form>

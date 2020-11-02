@@ -1,4 +1,4 @@
-.container {
+.item {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -8,24 +8,27 @@
     box-shadow: 2px 2px 2px #888888;
     align-items: flex-start;
     margin: .5rem;
-}
+  }
 
-.container label {
-    margin-bottom: .25rem;
-}
+  .title {
+      display: flex;
+      flex-direction: column;
+  }
 
-.container input, textarea, select {
-    margin-bottom: 1rem;
-}
+  .title label {
+      margin-right: 1rem;
+  }
 
-.buttons {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
+  .admin {
+      display: flex;
+      justify-content: flex-end;
+  }
 
-.buttons button {
-    margin-left: 1rem;
+  .admin div {
+      margin-left: .25rem;
+  }
+
+  .admin button {
     border-radius: 10px;
     font-size: 1rem;
     padding: .5rem;
@@ -33,24 +36,22 @@
     color: #F9F8F8;
     background-color: #5CAB7D;
     box-shadow: 2px 2px 2px #888888;
-}
+  }
 
-.buttons button:disabled {
-    background-color: #888888;
-    box-shadow: none;
-}
-
-.buttons button:focus {
-    outline:0;
-}
-  
-
-.buttons button:active {
+  .admin button:active {
     background-color: green;
     box-shadow: none;
-}
+  }
 
-.buttons button:nth-child(2) {
+  .price {
+      width: 100%;
+  }
+
+  .price p {
+      font-weight: 900;
+  }
+
+  .del button {
     margin-left: 1rem;
     border-radius: 10px;
     font-size: 1rem;
@@ -59,9 +60,9 @@
     color: #F9F8F8;
     background-color: #A44A3F;
     box-shadow: 2px 2px 2px #888888;
-  }
-  
-.buttons button:nth-child(2):active {
+}
+
+.del button:active {
     background-color: #BF1A2F;
     box-shadow: none;
 }
