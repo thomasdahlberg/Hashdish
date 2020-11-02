@@ -80,6 +80,11 @@
   justify-content: flex-end;
 }
 
+.navbtns button {
+  padding: .5rem;
+  width: 100%;
+}
+
 .navbtns button:nth-child(2) {
   background-color:  #DD7373;
 }

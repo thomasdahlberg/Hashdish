@@ -33,7 +33,7 @@ class Dropdown extends Component {
                     <a href="#" onClick={this.handleDropdown}><i class="fa fa-bars"></i></a>
                 </div>
                 <div className={styles.list} ref={this.dropdown} >
-                {this.state.user ? (
+                {this.props.user ? (
                     <Fragment>
                             <Link to="/menu">Menu</Link>
                             <Link to="/profile">Profile</Link>

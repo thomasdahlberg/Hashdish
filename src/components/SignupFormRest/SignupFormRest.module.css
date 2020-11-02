@@ -1,6 +1,13 @@
 .section {
-  width: 20rem;
-  margin: 0 auto;
+  min-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  color: #211103;
+  background-color: #F9F8F8;
+  box-shadow: 2px 2px 2px #888888;
+  align-items: flex-start;
+  margin: .5rem;
 }
 
 .section input {
