@@ -21,10 +21,9 @@
 
 .header button {
     margin-left: 3rem;
-    border-radius: 10%;
-    font-size: 1.25rem;
-    padding: 1rem;
-    /* width: 5rem; */
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: .5rem;
     border: none;
     color: #F9F8F8;
     background-color: #5CAB7D;
