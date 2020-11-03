@@ -50,10 +50,10 @@ class MenuItemForm extends Component {
         this.props.handleFormToggle("addMenuItem");
         this.props.handleGetKitchen();
     };
-
+    
     render() {
         return (
-            <form id="addMenuItem" onSubmit={this.handleSubmit} className={styles.container}>
+            <form onSubmit={this.handleSubmit} className={styles.container}>
                 <h2>New Menu Item</h2>      
                 {this.state.image &&          
                     <img src={this.state.image} alt="menu item"/>

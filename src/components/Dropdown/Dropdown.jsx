@@ -26,18 +26,27 @@ class Dropdown extends Component {
         }
     }
 
+    handleDropdownClick = (e) => {
+        e.preventDefault();
+        if(e.target.id === "logout") {
+            this.props.handleLogout();
+        }
+        let listNode = this.dropdown.current;
+        listNode.style.display = 'none';
+    }
+
     render() {
         return(
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <a href="#" onClick={this.handleDropdown}><i class="fa fa-bars"></i></a>
+                    <button href="#" onClick={this.handleDropdown}><i class="fa fa-bars"></i></button>
                 </div>
                 <div className={styles.list} ref={this.dropdown} >
                 {this.props.user ? (
                     <Fragment>
                             <Link to="/menu">Menu</Link>
                             <Link to="/profile">Profile</Link>
-                            <Link to="/" onClick={this.props.handleLogout}>Log Out</Link>
+                            <Link to="/" id="logout" onClick={this.props.handleLogout}>Log Out</Link>
                     </Fragment>
                 ) : (
                     <Fragment>

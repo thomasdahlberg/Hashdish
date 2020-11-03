@@ -6,7 +6,7 @@ const STORAGE_URL = process.env.NODE_ENV === 'production' ?
     :
     'https://homecookimages.blob.core.windows.net/';
 
-class MenuItemView extends Component { //eslint-disable-line no-unused-vars
+class MenuItemView extends Component { 
     renderOptions(title, optionGroups) {
         return optionGroups?.map((optionGroup, idx) => {
             return <div key={idx}>
@@ -37,6 +37,11 @@ class MenuItemView extends Component { //eslint-disable-line no-unused-vars
                 }
             </div>
         })
+    }
+
+    componentWillUnmount = () => {
+        let closeDel = { target: { id: ""}}
+        this.props.handleDelMenu(closeDel);
     }
 
     render() {
