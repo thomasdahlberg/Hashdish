@@ -189,6 +189,10 @@ class MenuItemEdit extends Component {
         })
     }
 
+    componentWillUnmount = () => {
+        this.props.handleMenuItemCancel(null);
+    }
+
     render() {
         return (
             <section id={this.props.item.menuId} key={this.props.item.menuId} className={styles.item}>
@@ -220,42 +224,45 @@ class MenuItemEdit extends Component {
                 </div>
                 <div className={styles.description}>
                     <label>Item Description</label>
-                    <input
+                    <textarea
                         type='text'
+                        rows={3}
                         onChange={(e) => { this.setState({description: e.target.value}) }}
                         value={this.state.description}/>
                 </div>
-                <div className={styles.optionTitle}>
-                    <p>Required Options</p>
-                    <button onClick={() => {
-                        this.state.optionDefinitions.required.unshift({
-                            name: '',
-                            option_type: 'checkbox',
-                            options: []
-                        })
-                        this.setState({
-                            optionDefinitions: this.state.optionDefinitions
-                        })
-                    }}>Add</button>
-                </div>
-                <div className={styles.description}>
-                    {this.renderEditOptions('required', this.state.optionDefinitions.required, this.handleChange(this.state.optionDefinitions.required))}
-                </div>
-                <div className={styles.optionTitle}>
-                    <p>Optional Options</p>
-                    <button onClick={() => {
-                        this.state.optionDefinitions.optional.unshift({
-                            name: '',
-                            option_type: 'checkbox',
-                            options: []
-                        })
-                        this.setState({
-                            optionDefinitions: this.state.optionDefinitions
-                        })
-                    }}>Add</button>
-                </div>
-                <div className={styles.description}>
-                    {this.renderEditOptions('optional', this.state.optionDefinitions.optional, this.handleChange(this.state.optionDefinitions.optional))}
+                <div className={styles.options}>
+                    <div className={styles.optionTitle}>
+                        <p>Required Options</p>
+                        <button onClick={() => {
+                            this.state.optionDefinitions.required.unshift({
+                                name: '',
+                                option_type: 'checkbox',
+                                options: []
+                            })
+                            this.setState({
+                                optionDefinitions: this.state.optionDefinitions
+                            })
+                        }}>+</button>
+                    </div>
+                    <div className={styles.optrender}>
+                        {this.renderEditOptions('required', this.state.optionDefinitions.required, this.handleChange(this.state.optionDefinitions.required))}
+                    </div>
+                    <div className={styles.optionTitle}>
+                        <p>Optional Options</p>
+                        <button onClick={() => {
+                            this.state.optionDefinitions.optional.unshift({
+                                name: '',
+                                option_type: 'checkbox',
+                                options: []
+                            })
+                            this.setState({
+                                optionDefinitions: this.state.optionDefinitions
+                            })
+                        }}>+</button>
+                    </div>
+                    <div className={styles.optrender}>
+                        {this.renderEditOptions('optional', this.state.optionDefinitions.optional, this.handleChange(this.state.optionDefinitions.optional))}
+                    </div>
                 </div>
                 <div className={styles.price}>
                     <label>Item Price</label>
@@ -263,14 +270,14 @@ class MenuItemEdit extends Component {
                         type='text'
                         onChange={(e) => { this.setState({price: e.target.value}) }}
                         value={this.state.price}/>
-                    <div className={styles.admin}>
+                </div>
+                <div className={styles.admin}>
                         <div className={styles.edit}>
                             <button id={this.props.item.menuId} onClick={() => { this.props.handleMenuItemUpdate(this.props.idx, this.state) }}>Update</button>
                         </div>
                         <div className={styles.del}>
                             <button id={this.props.item.menuId} onClick={this.props.handleMenuItemCancel}>Cancel</button>
                         </div>   
-                    </div>
                 </div>
             </section>
         )
