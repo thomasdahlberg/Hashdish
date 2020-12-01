@@ -32,6 +32,7 @@ class LoginForm extends Component {
     await API.post(`/kitchen/authorize?email=${email}&password=${password}`)
       .then(function (response) {
         if (response.status === 200) {
+          console.log(response.data);
           LocalStorageService.setToken(response.data);
         }
       })
