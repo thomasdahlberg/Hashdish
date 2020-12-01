@@ -96,34 +96,39 @@ class App extends Component {
   };
 
   handleMenuItemUpdate = async (idx, state) => {
-    let menu = this.state.menuItems[idx]
-    await API.patch(`/kitchen/menu/${menu.menuId}`, Object.assign(menu, {
-      name: state.name,
-      description: state.description,
-      price: state.price,
-      optionDefinitions: JSON.stringify(state.optionDefinitions),
-    })).then(async (response) => {
-        if (response.status === 200) {
-            console.log(response);
-            if (state.image.startsWith('data:image/jpeg;base64')) {
-              await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {data: state.image.split(',')[1]}).then((response) => {
-                if (response.status === 200) {
-                    this.setState({
-                      selectedMenuItem: null,
-                    });
-                    console.log(response);
-                }
+    let menu = this.state.menuItems[idx];
+    await API.patch(
+      `/kitchen/menu/${menu.menuId}`,
+      Object.assign(menu, {
+        name: state.name,
+        description: state.description,
+        price: state.price,
+        optionDefinitions: JSON.stringify(state.optionDefinitions),
+      })
+    ).then(async (response) => {
+      if (response.status === 200) {
+        console.log(response);
+        if (state.image.startsWith('data:image/jpeg;base64')) {
+          await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {
+            data: state.image.split(',')[1],
+          }).then((response) => {
+            if (response.status === 200) {
+              this.setState({
+                selectedMenuItem: null,
               });
-            }            
+              console.log(response);
+            }
+          });
         }
+      }
     });
-  }
+  };
 
   handleMenuItemCancel = async (idx) => {
     this.setState({
       selectedMenuItem: null,
     });
-  }
+  };
 
   // DOM Handlers
   handleClick = (e) => {
@@ -160,7 +165,7 @@ class App extends Component {
   // Lifecycle Hooks
 
   componentDidMount = async () => {
-    await this.handleGetKitchen();
+    // await this.handleGetKitchen();
   };
 
   render() {
