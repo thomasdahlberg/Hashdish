@@ -86,8 +86,18 @@ class MenuItemForm extends Component {
                     placeholder="Ex) 9.99"
                 />
                 <div className={styles.buttons}>
-                    <button disabled={!this.isFormValid()} type="submit">Add</button>
-                    <button id="addMenuItem" onClick={this.props.handleClick}>Cancel</button>
+                    <button 
+                        disabled={!this.isFormValid()} 
+                        type="submit"
+                    >
+                        Add
+                    </button>
+                    <button 
+                        id="addMenuItem"
+                        onClick={this.props.handleClick}
+                    >
+                        Cancel
+                    </button>
                 </div>
             </form>
         );
