@@ -106,7 +106,7 @@ class App extends Component {
     })).then(async (response) => {
         if (response.status === 200) {
             console.log(response);
-            if (state.image.startsWith('data:image/jpeg;base64')) {
+            if (state.image && state.image.startsWith('data:image/jpeg;base64')) {
               await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {data: state.image.split(',')[1]}).then((response) => {
                 if (response.status === 200) {
                     this.setState({
