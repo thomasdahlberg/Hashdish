@@ -39,7 +39,7 @@ class Dropdown extends Component {
         return(
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <button href="#" onClick={this.handleDropdown}><i class="fa fa-bars"></i></button>
+                    <button href="#" onClick={this.handleDropdown}><i className="fa fa-bars"></i></button>
                 </div>
                 <div className={styles.list} ref={this.dropdown} >
                 {this.props.user ? (
