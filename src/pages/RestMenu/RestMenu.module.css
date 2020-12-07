@@ -1,45 +1,56 @@
 .container {
-    display: flex;
-    flex-direction: column;
-}
-
-.container hr {
-    width: 100vw;
-    border-top: solid #888888 2px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 1.45rem;
 }
 
 .header {
-    margin: 1.45rem;
-    display: flex;
-    justify-content: center;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border: #211103 solid 2px;
+  border-radius: 50px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+  align-items: center;
+  background-color: #f8e16c;
+  color: #211103;
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 900;
-}
-
-.header button {
-    margin-left: 3rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: .5rem;
-    border: none;
-    color: #F9F8F8;
-    background-color: #5CAB7D;
-    box-shadow: 2px 2px 2px #888888;
+.addItem {
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  margin: auto;
+  padding: 0.5rem 1rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #b7990d;
 }
 
 .header button:active {
-    background-color: green;
-    box-shadow: none;
+  background-color: green;
+  box-shadow: none;
 }
 
 .header button:focus {
-    outline: 0;
+  outline: 0;
 }
 
-.form {
-    display: flex;
-    justify-content: center;
+.content {
+  width: 85%;
+}
+
+.content h1 {
+  font-size: 1.75rem;
+  font-style: italic;
+  font-weight: 900;
 }

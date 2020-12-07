@@ -175,8 +175,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
             <Route
-              exact
-              path="/profile"
+              exact path="/profile"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Profile
@@ -194,8 +193,7 @@ class App extends Component {
               }
             />
             <Route
-              exact
-              path="/menu"
+              exact path="/menu"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Menu
@@ -219,8 +217,7 @@ class App extends Component {
               }
             />
             <Route
-              exact
-              path="/login"
+              exact path="/login"
               render={({ history }) => (
                 <Login
                   history={history}
@@ -229,8 +226,7 @@ class App extends Component {
               )}
             />
             <Route
-              exact
-              path="/signup"
+              exact path="/signup"
               render={({ history }) => (
                 <Signup
                   history={history}
