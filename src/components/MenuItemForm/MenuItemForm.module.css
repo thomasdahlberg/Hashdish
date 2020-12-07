@@ -1,67 +1,69 @@
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    padding: 1.5rem;
-    color: #211103;
-    background-color: #F6F4D2;
-    box-shadow: 2px 2px 2px #888888;
-    align-items: flex-start;
-    margin: .5rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 1.25rem;
+  color: #211103;
+  background-color: #f9f8f8;
+  box-shadow: 2px 2px 2px #b7990d;
+  border-radius: 5px;
+  align-items: flex-start;
+  margin: 0.5rem;
 }
 
 .container label {
-    margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
-.container input, textarea, select {
-    margin-bottom: 1rem;
+.container input,
+textarea,
+select {
+  margin-bottom: 1rem;
 }
 
 .buttons {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .buttons button {
-    margin-left: 1rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: .5rem;
-    border: none;
-    color: #F9F8F8;
-    background-color: #5CAB7D;
-    box-shadow: 2px 2px 2px #888888;
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
 }
 
 .buttons button:disabled {
-    background-color: #888888;
-    box-shadow: none;
+  background-color: #888888;
+  box-shadow: none;
 }
 
 .buttons button:focus {
-    outline:0;
+  outline: 0;
 }
-  
 
 .buttons button:active {
-    background-color: green;
-    box-shadow: none;
+  background-color: green;
+  box-shadow: none;
 }
 
 .buttons button:nth-child(2) {
-    margin-left: 1rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: .5rem;
-    border: none;
-    color: #F9F8F8;
-    background-color: #A44A3F;
-    box-shadow: 2px 2px 2px #888888;
-  }
-  
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #a44a3f;
+  box-shadow: 2px 2px 2px #888888;
+}
+
 .buttons button:nth-child(2):active {
-    background-color: #BF1A2F;
-    box-shadow: none;
+  background-color: #bf1a2f;
+  box-shadow: none;
 }

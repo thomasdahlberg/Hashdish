@@ -7,7 +7,7 @@ import styles from './RestMenu.module.css';
 class Menu extends Component {
   
   componentWillUnmount = () => {
-    if(this.props.menuItemForm){
+    if (this.props.menuItemForm) {
       this.props.handleFormToggle("addMenuItem");
     }
   }
@@ -20,15 +20,7 @@ class Menu extends Component {
         ) : (
           <div className={styles.container}>
             <div className={styles.header}>
-              <h1>Menu Admin</h1>
-              { !this.props.menuItemForm ? 
-                <button onClick={()=>this.props.handleFormToggle("addMenuItem")}>Add New Item</button>
-                :
-                null
-              }
-            </div>
-            <div className={styles.form}>
-              {this.props.menuItemForm ? (
+              { this.props.menuItemForm ? 
                 <MenuItemForm
                   menuItemForm={this.props.menuItemForm} 
                   selectedMenuItem={this.props.selectedMenuItem}
@@ -36,21 +28,30 @@ class Menu extends Component {
                   handleFormToggle={this.props.handleFormToggle}
                   handleClick={this.props.handleClick}
                 />
-              ) : null}
+                :
+                <button 
+                  className={styles.addItem}
+                  onClick={ () =>
+                    this.props.handleFormToggle("addMenuItem")
+                  }
+                >+</button>  
+              }
             </div>
-            <hr />
-            <MenuItems
-              delMenu={this.props.delMenu}
-              selectedMenuItem={this.props.selectedMenuItem}
-              menuItems={this.props.menuItems}
-              menuCats={this.props.menuCats}
-              handleDelMenu={this.props.handleDelMenu}
-              handleClick={this.props.handleClick}
-              handleMenuItemEdit={this.props.handleMenuItemEdit}
-              handleMenuItemUpdate={this.props.handleMenuItemUpdate}
-              handleMenuItemDelete={this.props.handleMenuItemDelete}
-              handleMenuItemCancel={this.props.handleMenuItemCancel}
-            />
+            <div className={styles.content}>
+              <h1>Menu Admin</h1>
+              <MenuItems
+                delMenu={this.props.delMenu}
+                selectedMenuItem={this.props.selectedMenuItem}
+                menuItems={this.props.menuItems}
+                menuCats={this.props.menuCats}
+                handleDelMenu={this.props.handleDelMenu}
+                handleClick={this.props.handleClick}
+                handleMenuItemEdit={this.props.handleMenuItemEdit}
+                handleMenuItemUpdate={this.props.handleMenuItemUpdate}
+                handleMenuItemDelete={this.props.handleMenuItemDelete}
+                handleMenuItemCancel={this.props.handleMenuItemCancel}
+              />
+            </div>
           </div>
         )}
       </div>
