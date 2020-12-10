@@ -12,10 +12,10 @@ import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
-import kitchenInstance from './utils/axiosConfig';
+import axiosApiInstance from './utils/axiosConfig';
 import Signup from './pages/Signup/Signup';
 
-const API = kitchenInstance;
+const API = axiosApiInstance;
 
 class App extends Component {
   state = this.getInitialState();
