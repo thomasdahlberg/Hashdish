@@ -1,46 +1,62 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
-import MenuItems from '../../components/MenuItem/MenuItems';
+import MenuItems from '../../components/MenuItems/MenuItems';
 import styles from './RestMenu.module.css';
 
-const Menu = (props) => {
-  return (
-    <div>
-      {props.myKitchen === null ? (
-        <Redirect to="/" />
-      ) : (
-        <div className={styles.container}>
-          <div className={styles.header}>
-            <h1>Menu Admin</h1>
-            <button id="addMenuItem" onClick={props.handleClick}>
-              Add New Item
-            </button>
-          </div>
-          <div className={styles.form}>
-            {props.menuItemForm ? (
-              <MenuItemForm 
-                selectedMenuItem={props.selectedMenuItem}
-                handleGetKitchen={props.handleGetKitchen}
-                handleFormToggle={props.handleFormToggle}
-                handleClick={props.handleClick}
+class Menu extends Component {
+  
+  componentWillUnmount = () => {
+    if (this.props.menuItemForm) {
+      this.props.handleFormToggle("addMenuItem");
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.myKitchen === null ? (
+          <Redirect to="/" />
+        ) : (
+          <div className={styles.container}>
+            <div className={styles.header}>
+              { this.props.menuItemForm ? 
+                <MenuItemForm
+                  menuItemForm={this.props.menuItemForm} 
+                  selectedMenuItem={this.props.selectedMenuItem}
+                  handleGetKitchen={this.props.handleGetKitchen}
+                  handleFormToggle={this.props.handleFormToggle}
+                  handleClick={this.props.handleClick}
+                />
+                :
+                <button 
+                  className={styles.addItem}
+                  onClick={ () =>
+                    this.props.handleFormToggle("addMenuItem")
+                  }
+                >+</button>  
+              }
+            </div>
+            <div className={styles.content}>
+              <h1>Menu Admin</h1>
+              <MenuItems
+                delMenu={this.props.delMenu}
+                selectedMenuItem={this.props.selectedMenuItem}
+                menuItems={this.props.menuItems}
+                menuCats={this.props.menuCats}
+                handleDelMenu={this.props.handleDelMenu}
+                handleClick={this.props.handleClick}
+                handleMenuItemEdit={this.props.handleMenuItemEdit}
+                handleMenuItemUpdate={this.props.handleMenuItemUpdate}
+                handleMenuItemDelete={this.props.handleMenuItemDelete}
+                handleMenuItemCancel={this.props.handleMenuItemCancel}
               />
-            ) : null}
+            </div>
           </div>
-          <hr />
-          <MenuItems
-            selectedMenuItem={props.selectedMenuItem}
-            menuItems={props.menuItems}
-            menuCats={props.menuCats}
-            handleMenuItemEdit={props.handleMenuItemEdit}
-            handleMenuItemUpdate={props.handleMenuItemUpdate}
-            handleMenuItemDelete={props.handleMenuItemDelete}
-            handleMenuItemCancel={props.handleMenuItemCancel}
-          />
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
+  }
 };
 
 export default Menu;

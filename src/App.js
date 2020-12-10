@@ -31,6 +31,7 @@ class App extends Component {
       openHours: [],
       editHours: false,
       editProfPhoto: false,
+      delMenu: '',
     };
   }
   // Data Handlers
@@ -146,6 +147,10 @@ class App extends Component {
     }
   };
 
+  handleDelMenu = (e) => {
+    this.setState({ delMenu: e.target.id });
+  };
+
   // Login/Logout Handlers
   handleLogout = () => {
     LocalStorageService.clearToken();
@@ -202,7 +207,9 @@ class App extends Component {
                     menuCats={this.state.menuCats}
                     menuItems={this.state.menuItems}
                     menuItemForm={this.state.addMenuItem}
+                    delMenu={this.state.delMenu}
                     selectedMenuItem={this.state.selectedMenuItem}
+                    handleDelMenu={this.handleDelMenu}
                     handleClick={this.handleClick}
                     handleFormToggle={this.handleFormToggle}
                     handleMenuItemEdit={this.handleMenuItemEdit}

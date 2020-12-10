@@ -1,6 +1,13 @@
 .section {
-  width: 20rem;
-  margin: 0 auto;
+  min-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  color: #211103;
+  background-color: #F9F8F8;
+  box-shadow: 2px 2px 2px #888888;
+  align-items: flex-start;
+  margin: .5rem;
 }
 
 .section input {
@@ -8,19 +15,35 @@
   margin: 0.5rem 0 0.5rem 0;
   border-radius: 3px;
   height: 1.7rem;
-  background-color: aliceblue;
+  background-color: #F9F8F8;
+  color: #211103;
 }
 
 .section button {
+  margin-top: 1rem;
+  border: none;
   width: 100%;
-  margin-top: 10px;
   height: 2.5rem;
-  background-color: brown;
-  border-radius: 15px;
-  color: #ffffff;
+  background-color: #5CAB7D;
+  border-radius: 10px;
+  color: #F9F8F8;
+  box-shadow: 2px 2px 2px #888888;
   text-transform: uppercase;
   font-weight: 600;
   font-size: 1.2rem;
+}
+
+.section button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.section button:focus {
+  outline:0;
+}
+
+.section button:disabled {
+  background-color:#888888;
 }
 
 .suggestions {

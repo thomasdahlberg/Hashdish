@@ -1,0 +1,113 @@
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 1.5rem;
+    color: #211103;
+    background-color: #F6F4D2;
+    box-shadow: 2px 2px 2px #888888;
+    align-items: flex-start;
+    margin: .5rem;
+  }
+
+  .title {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .title label {
+      margin-right: 1rem;
+  }
+
+  .title div {
+      margin-bottom: .5rem;
+  }
+
+  .description {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: .5rem;
+  }
+
+  .description label {
+      margin-bottom: .5rem;
+  }
+
+  .options {
+    width: 90%;
+    border: solid #888888 2px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  .options button {
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: .4rem .55rem;
+    font-weight: 900;
+    border: none;
+    color: #F9F8F8;
+    background-color: #5CAB7D;
+    box-shadow: 2px 2px 2px #888888;
+  }
+
+  .options button:active {
+    background-color: green;
+    box-shadow: none;
+  }
+
+  .admin {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+  }
+
+  .admin div {
+      margin-left: .25rem;
+  }
+
+  .admin button {
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: .5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #5CAB7D;
+    box-shadow: 2px 2px 2px #888888;
+  }
+
+  .admin button:active {
+    background-color: green;
+    box-shadow: none;
+  }
+
+  .price {
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+
+  .price label {
+      margin-right: 1rem;
+  }
+
+  .price p {
+      font-weight: 900;
+  }
+
+  .del button {
+    margin-left: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: .5rem;
+    border: none;
+    color: #F9F8F8;
+    background-color: #A44A3F;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.del button:active {
+    background-color: #BF1A2F;
+    box-shadow: none;
+}

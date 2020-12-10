@@ -1,34 +1,45 @@
 .section {
-    width: 15rem;
+    width: 20rem;
     margin: 0 auto;
   }
   
-  .section input {
-    width: 100%;
-    margin: 0.5rem 0 0.5rem 0;
-    border-radius: 3px;
-    height: 1.7rem;
-    background-color: aliceblue;
-  }
-  
-  .section button {
-    width: 100%;
-    height: 2.5rem;
-    background-color: brown;
-    border-radius: 15px;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
-  
-  .section button:disabled {
-    background-color: grey;
-  }
-  
-  .section p {
-    color: red;
-    font-weight: 700;
-    text-align: center;
-  }
-  
+.section input {
+  width: 100%;
+  margin: 0.5rem 0 0.5rem 0;
+  border-radius: 3px;
+  height: 1.7rem;
+  background-color: #F9F8F8;
+  color: #211103;
+}
+
+.section button {
+  border: none;
+  width: 100%;
+  height: 2.5rem;
+  background-color: #5CAB7D;
+  border-radius: 10px;
+  color: #F9F8F8;
+  box-shadow: 2px 2px 2px #888888;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.section button:disabled {
+  background-color: grey;
+}
+
+.section p {
+  color: red;
+  font-weight: 700;
+  text-align: center;
+}
+
+.section button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.section button:focus {
+  outline:0;
+}

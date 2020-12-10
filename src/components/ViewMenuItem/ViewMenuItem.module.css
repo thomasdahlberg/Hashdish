@@ -1,0 +1,95 @@
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 1.5rem;
+  color: #211103;
+  background-color: #f9f8f8;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #888888;
+  align-items: flex-start;
+  margin: 0.5rem;
+  max-width: 33%;
+}
+
+.admin {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.admindel {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f6f4d2;
+  padding: 1rem;
+  border: solid #e0e2db 2px;
+  border-radius: 10px;
+}
+
+.admindel p {
+  margin-right: 2rem;
+}
+
+.admin div {
+  margin-left: 0.25rem;
+}
+
+.admin button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.admin button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.admindel button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.admindel button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.price {
+  width: 100%;
+}
+
+.price p {
+  font-weight: 900;
+}
+
+.del button {
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #a44a3f;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.del button:active {
+  background-color: #bf1a2f;
+  box-shadow: none;
+}
+
+.title img {
+  max-width: 100%;
+}
