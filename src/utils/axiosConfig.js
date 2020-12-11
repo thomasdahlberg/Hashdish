@@ -6,7 +6,7 @@ const localStorageService = LocalStorageService.getService();
 let API_URL;
 process.env.NODE_ENV === 'production'
   ? (API_URL = 'https://api.hashdish.com/')
-  : (API_URL = 'http://local.hashdish.com/');
+  : (API_URL = 'https://dev.hashdish.com/');
 
 const axiosApiInstance = axios.create({
   baseURL: `${API_URL}v1.0/`,
