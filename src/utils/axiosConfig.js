@@ -1,25 +1,21 @@
 import axios from 'axios';
 import LocalStorageService from './localStorageService';
 
-// LocalstorageService
 const localStorageService = LocalStorageService.getService();
 
-// var API_URL = 'https://dev.hashdish.com/';
-var API_URL = 'http://local.hashdish.com/';
-if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://api.hashdish.com/';
-}
+let API_URL;
+process.env.NODE_ENV === 'production'
+  ? (API_URL = 'https://api.hashdish.com/')
+  : (API_URL = 'http://local.hashdish.com/');
 
-const kitchenInstance = axios.create({
+const axiosApiInstance = axios.create({
   baseURL: `${API_URL}v1.0/`,
 });
 
-// Add a response interceptor
-kitchenInstance.interceptors.request.use(
+axiosApiInstance.interceptors.request.use(
   (config) => {
-    console.log('Axios Request');
-    // if (config.url === 'https://dev.hashdish.com/v1.0/kitchen/refresh') {
-    if (config.url === 'http://local.hashdish.com/v1.0/kitchen/refresh') {
+    console.log('Axios Request Interceptor');
+    if (config.url === `${API_URL}v1.0/kitchen/refresh`) {
       const refreshToken = localStorageService.getRefreshToken();
       config.headers['Authorization'] = 'Bearer ' + refreshToken;
     } else {
@@ -33,13 +29,12 @@ kitchenInstance.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
-kitchenInstance.interceptors.response.use(
+axiosApiInstance.interceptors.response.use(
   (response) => {
-    console.log('Axios Response');
+    console.log('Axios Response Interceptor');
     return response;
   },
-  function (error) {
+  (error) => {
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&
@@ -51,7 +46,7 @@ kitchenInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorageService.getRefreshToken();
-      return kitchenInstance
+      return axiosApiInstance
         .post(`${API_URL}v1.0/kitchen/refresh`, {
           refreshToken: refreshToken,
         })
@@ -60,9 +55,9 @@ kitchenInstance.interceptors.response.use(
           console.log(res.status);
           if (res.status === 200) {
             localStorageService.setToken(res.data);
-            kitchenInstance.defaults.headers.common['Authorization'] =
+            axiosApiInstance.defaults.headers.common['Authorization'] =
               'Bearer ' + localStorageService.getAuthToken();
-            return axios(originalRequest);
+            return axiosApiInstance(originalRequest);
           }
         });
     }
@@ -70,4 +65,4 @@ kitchenInstance.interceptors.response.use(
   }
 );
 
-export default kitchenInstance;
+export default axiosApiInstance;
