@@ -170,7 +170,7 @@ class App extends Component {
   // Lifecycle Hooks
 
   componentDidMount = async () => {
-    // await this.handleGetKitchen();
+    await this.handleGetKitchen();
   };
 
   render() {
