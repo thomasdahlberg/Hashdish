@@ -3,9 +3,9 @@ import SignupFormRest from '../SignupFormRest/SignupFormRest';
 import SignupFormRestDetails from '../SignupFormRestDetails/SignupFormRestDetails';
 import SignupFormConfirmation from '../SignupFormConfirmation/SignupFormConfirmation';
 import SignupFormSuccess from '../SignupFormSuccess/SignupFormSuccess';
-import kitchenInstance from '../../utils/axiosConfig';
+import axiosApiInstance from '../../utils/axiosConfig';
 
-const API = kitchenInstance;
+const API = axiosApiInstance;
 
 class SignupForm extends Component {
   state = {
