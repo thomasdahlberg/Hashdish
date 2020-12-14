@@ -69,7 +69,7 @@ class SignupFormRest extends Component {
         <input
           onChange={handleAddressChange('address')}
           defaultValue={values.address}
-          placeholder={'Restaurant Address'}
+          placeholder={'Enter your restaurant name to choose a valid address. Ex) HashDish'}
           id="autocomplete"
           type="text"
         />
