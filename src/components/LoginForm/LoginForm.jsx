@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styles from './LoginForm.module.css';
-import kitchenInstance from '../../utils/axiosConfig';
+import axiosApiInstance from '../../utils/axiosConfig';
 import LocalStorageService from '../../utils/localStorageService';
 
-const API = kitchenInstance;
+const API = axiosApiInstance;
 
 class LoginForm extends Component {
   state = this.getInitialState();
@@ -32,6 +32,7 @@ class LoginForm extends Component {
     await API.post(`/kitchen/authorize?email=${email}&password=${password}`)
       .then(function (response) {
         if (response.status === 200) {
+          console.log(response.data);
           LocalStorageService.setToken(response.data);
         }
       })

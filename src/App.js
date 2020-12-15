@@ -12,10 +12,10 @@ import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
-import kitchenInstance from './utils/axiosConfig';
+import axiosApiInstance from './utils/axiosConfig';
 import Signup from './pages/Signup/Signup';
 
-const API = kitchenInstance;
+const API = axiosApiInstance;
 
 class App extends Component {
   state = this.getInitialState();
@@ -31,7 +31,7 @@ class App extends Component {
       openHours: [],
       editHours: false,
       editProfPhoto: false,
-      delMenu: "",
+      delMenu: '',
     };
   }
   // Data Handlers
@@ -97,34 +97,39 @@ class App extends Component {
   };
 
   handleMenuItemUpdate = async (idx, state) => {
-    let menu = this.state.menuItems[idx]
-    await API.patch(`/kitchen/menu/${menu.menuId}`, Object.assign(menu, {
-      name: state.name,
-      description: state.description,
-      price: state.price,
-      optionDefinitions: JSON.stringify(state.optionDefinitions),
-    })).then(async (response) => {
-        if (response.status === 200) {
-            console.log(response);
-            if (state.image && state.image.startsWith('data:image/jpeg;base64')) {
-              await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {data: state.image.split(',')[1]}).then((response) => {
-                if (response.status === 200) {
-                    this.setState({
-                      selectedMenuItem: null,
-                    });
-                    console.log(response);
-                }
+    let menu = this.state.menuItems[idx];
+    await API.patch(
+      `/kitchen/menu/${menu.menuId}`,
+      Object.assign(menu, {
+        name: state.name,
+        description: state.description,
+        price: state.price,
+        optionDefinitions: JSON.stringify(state.optionDefinitions),
+      })
+    ).then(async (response) => {
+      if (response.status === 200) {
+        console.log(response);
+        if (state.image.startsWith('data:image/jpeg;base64')) {
+          await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {
+            data: state.image.split(',')[1],
+          }).then((response) => {
+            if (response.status === 200) {
+              this.setState({
+                selectedMenuItem: null,
               });
-            }            
+              console.log(response);
+            }
+          });
         }
+      }
     });
-  }
+  };
 
   handleMenuItemCancel = async (idx) => {
     this.setState({
       selectedMenuItem: null,
     });
-  }
+  };
 
   // DOM Handlers
   handleClick = (e) => {
@@ -143,8 +148,8 @@ class App extends Component {
   };
 
   handleDelMenu = (e) => {
-    this.setState({ delMenu: e.target.id})
-  }
+    this.setState({ delMenu: e.target.id });
+  };
 
   // Login/Logout Handlers
   handleLogout = () => {
@@ -175,7 +180,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
             <Route
-              exact path="/profile"
+              exact
+              path="/profile"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Profile
@@ -193,7 +199,8 @@ class App extends Component {
               }
             />
             <Route
-              exact path="/menu"
+              exact
+              path="/menu"
               render={() =>
                 LocalStorageService.getAuthToken() ? (
                   <Menu
@@ -217,7 +224,8 @@ class App extends Component {
               }
             />
             <Route
-              exact path="/login"
+              exact
+              path="/login"
               render={({ history }) => (
                 <Login
                   history={history}
@@ -226,7 +234,8 @@ class App extends Component {
               )}
             />
             <Route
-              exact path="/signup"
+              exact
+              path="/signup"
               render={({ history }) => (
                 <Signup
                   history={history}
