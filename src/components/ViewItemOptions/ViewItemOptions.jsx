@@ -4,7 +4,7 @@ import styles from './ViewItemOptions.module.css';
 const ViewItemOptions = (props) => {
     return (
         <Fragment>
-            { props.optionGroups?.map((optionGroup, optionGroupidx) => 
+            { props.optionsGroups?.map((optionGroup, optionGroupidx) => 
                 <div key={optionGroupidx}>
                     <div key={`${optionGroupidx}`} className={styles.optionGroupTitle}>
                         <p>[{props.title}] {optionGroup.name} ({optionGroup.option_type})</p>
