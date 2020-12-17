@@ -35,8 +35,7 @@ class UpdateHours extends Component {
   handleCancel = (event) => {
     event.preventDefault();
     this.setState({ openHourList: this.props.openHours });
-    // this.props.handleClick(event);
-    // this.props.handleGetKitchen();
+    this.props.handleFormToggle('editHours');
   };
 
   handleSubmit = async (event) => {
@@ -147,10 +146,10 @@ class UpdateHours extends Component {
             </div>
           ))}
           <div className={styles.btns}>
-            <button onClick={this.handleSubmit}>Update</button>
+            <button className={styles.update} onClick={this.handleSubmit}>Update</button>
+            <button className={styles.cancel} id="editHours" onClick={this.handleCancel}>Cancel</button>
           </div>
         </div>
-        {/* <button className={styles.cancel} id="editHours" onClick={() => this.props.handleGetKitchen()}>Cancel</button> */}
       </section>
     );
   }
