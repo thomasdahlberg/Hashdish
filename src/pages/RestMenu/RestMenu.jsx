@@ -5,12 +5,11 @@ import MenuItems from '../../components/MenuItems/MenuItems';
 import styles from './RestMenu.module.css';
 
 class Menu extends Component {
-  
   componentWillUnmount = () => {
     if (this.props.menuItemForm) {
-      this.props.handleFormToggle("addMenuItem");
+      this.props.handleFormToggle('addMenuItem');
     }
-  }
+  };
 
   render() {
     return (
@@ -20,22 +19,24 @@ class Menu extends Component {
         ) : (
           <div className={styles.container}>
             <div className={styles.header}>
-              { this.props.menuItemForm ? 
+              {this.props.menuItemForm ? (
                 <MenuItemForm
-                  menuItemForm={this.props.menuItemForm} 
+                  menuItemForm={this.props.menuItemForm}
                   selectedMenuItem={this.props.selectedMenuItem}
                   handleGetKitchen={this.props.handleGetKitchen}
                   handleFormToggle={this.props.handleFormToggle}
                   handleClick={this.props.handleClick}
                 />
-                :
-                <button 
+              ) : (
+                <button
                   className={styles.addItem}
-                  onClick={ () =>
-                    this.props.handleFormToggle("addMenuItem")
+                  onClick={() =>
+                    this.props.handleFormToggle('addMenuItem')
                   }
-                >+</button>  
-              }
+                >
+                  +
+                </button>
+              )}
             </div>
             <div className={styles.content}>
               <h1>Menu Admin</h1>
@@ -57,6 +58,6 @@ class Menu extends Component {
       </div>
     );
   }
-};
+}
 
 export default Menu;
