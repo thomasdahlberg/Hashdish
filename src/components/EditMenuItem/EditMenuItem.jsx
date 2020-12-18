@@ -86,11 +86,11 @@ class EditMenuItem extends Component {
         break;
       case 'forward':
         console.log('Forward!');
-        this.moveOptionForward(e.target);
+        this.moveOptCatForward(e.target);
         break;
       case 'backward':
         console.log('Backward!');
-        this.moveOptionBackward(e.target);
+        this.moveOptCatBackward(e.target);
         break;
       case 'deleteOptCat':
         this.deleteOptionCategory(e.target);
@@ -146,16 +146,36 @@ class EditMenuItem extends Component {
     // })
   };
 
-  moveOptCatForward = (optionObj) => {
-    // let tempStorage = optionObj[idx]
-    // optionObj[idx] = optionObj[idx + 1]
-    // optionObj[idx + 1] = tempStorage
+  moveOptCatForward = ({ parentNode: { id, title } }) => {
+    const idx = Number(id);
+    let newArray =
+      title === 'requiredOptions'
+        ? [...this.state.requiredOptions]
+        : [...this.state.optionalOptions];
+
+    let tempStorage = newArray[idx];
+    newArray[idx] = newArray[idx + 1];
+    newArray[idx + 1] = tempStorage;
+
+    title === 'requiredOptions'
+      ? this.setState({ requiredOptions: newArray })
+      : this.setState({ optionalOptions: newArray });
   };
 
-  moveOptCatBackward = (optionObj) => {
-    // let tempStorage = optionObj[idx]
-    // optionObj[idx] = optionObj[idx - 1]
-    // optionObj[idx - 1] = tempStorage
+  moveOptCatBackward = ({ parentNode: { id, title } }) => {
+    const idx = Number(id);
+    let newArray =
+      title === 'requiredOptions'
+        ? [...this.state.requiredOptions]
+        : [...this.state.optionalOptions];
+
+    let tempStorage = newArray[idx];
+    newArray[idx] = newArray[idx - 1];
+    newArray[idx - 1] = tempStorage;
+
+    title === 'requiredOptions'
+      ? this.setState({ requiredOptions: newArray })
+      : this.setState({ optionalOptions: newArray });
   };
 
   changeOptionTitle = (optionObj) => {
@@ -185,7 +205,7 @@ class EditMenuItem extends Component {
           handleImageChange={this.handleImageChange}
         />
         <EditItemOptions
-          headerText="Required Option"
+          headerText="Required Selections"
           optionCategory="requiredOptions"
           optionsGroups={this.state.requiredOptions}
           handleOptionChange={this.handleOptionChange}
