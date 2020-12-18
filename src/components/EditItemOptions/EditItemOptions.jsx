@@ -94,10 +94,11 @@ const EditItemOptions = (props) => {
                     </tr>
                     {optionGroup.options.map((option, optionIdx) => (
                       <EditItemOption
+                        optionCategory={props.optionCategory}
                         option={option}
                         optionGroupIdx={optionGroupIdx}
                         optionIdx={optionIdx}
-                        handleChange={props.handleChange}
+                        handleOptionChange={props.handleOptionChange}
                       />
                     ))}
                   </tbody>

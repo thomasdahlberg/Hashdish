@@ -85,19 +85,19 @@ class EditMenuItem extends Component {
         this.changeOptionTitle(e.target);
         break;
       case 'forward':
-        console.log('Forward!');
         this.moveOptCatForward(e.target);
         break;
       case 'backward':
-        console.log('Backward!');
         this.moveOptCatBackward(e.target);
         break;
       case 'deleteOptCat':
         this.deleteOptionCategory(e.target);
         break;
       case 'addOption':
-        console.log('Add!');
         this.addOption(e.target);
+        break;
+      case 'deleteOption':
+        this.deleteOption(e.target);
         break;
       default:
         console.log(`Option Change Error: ${e.target}`);
@@ -140,10 +140,23 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOption = (optionObj) => {
-    // optionObj[idx].options.push({
-    //     name: ''
-    // })
+  addOption = ({ parentNode: { id, title } }) => {
+    const idx = Number(id);
+    const newOption = {
+      default: false,
+      name: '',
+      price: 0,
+    };
+
+    let newArray =
+      title === 'requiredOptions'
+        ? [...this.state.requiredOptions]
+        : [...this.state.optionalOptions];
+    newArray[idx].options.push(newOption);
+
+    title === 'requiredOptions'
+      ? this.setState({ requiredOptions: newArray })
+      : this.setState({ optionalOptions: newArray });
   };
 
   moveOptCatForward = ({ parentNode: { id, title } }) => {
@@ -172,6 +185,22 @@ class EditMenuItem extends Component {
     let tempStorage = newArray[idx];
     newArray[idx] = newArray[idx - 1];
     newArray[idx - 1] = tempStorage;
+
+    title === 'requiredOptions'
+      ? this.setState({ requiredOptions: newArray })
+      : this.setState({ optionalOptions: newArray });
+  };
+
+  deleteOption = ({ id: idx, parentNode: { id: idx2, title } }) => {
+    const optIdx = Number(idx);
+    const grpIdx = Number(idx2);
+
+    let newArray =
+      title === 'requiredOptions'
+        ? [...this.state.requiredOptions]
+        : [...this.state.optionalOptions];
+
+    newArray[grpIdx].options.splice(optIdx, 1);
 
     title === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
