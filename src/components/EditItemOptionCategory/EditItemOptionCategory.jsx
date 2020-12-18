@@ -2,14 +2,15 @@ import React from 'react';
 import EditItemOption from '../EditItemOption/EditItemOption';
 import styles from './EditItemOptions.module.css';
 
-const EditItemOptions = (props) => {
+const EditItemOptionCategory = (props) => {
   return (
     <div className={styles.options}>
       <div className={styles.optionTitle}>
         <p>{props.headerText}</p>
         <button
           id={props.optionCategory}
-          onClick={props.addOptionCategory}
+          name="addOptCat"
+          onClick={props.handleOptionChange}
         >
           New Option Category
         </button>
@@ -25,46 +26,29 @@ const EditItemOptions = (props) => {
               title={props.optionCategory}
             >
               <select
-                id={optionGroupIdx}
-                name="title"
-                value={props.title}
-                onChange={props.handleOptionChange}
-              >
-                <option value="optional">optional</option>
-                <option value="required">required</option>
-              </select>
-              <select
+                id="option_type"
+                name="editOptCat"
                 value={optionGroup.option_type}
-                onChange={(e) => {
-                  props.handleChange(
-                    'option_type',
-                    e.target.value,
-                    optionGroupIdx,
-                  );
-                }}
+                onChange={props.handleOptionChange}
               >
                 <option value="radio">radio</option>
                 <option value="checkbox">checkbox</option>
               </select>
               <input
+                id="name"
+                name="editOptCat"
                 type="text"
                 value={optionGroup.name}
-                onChange={(e) => {
-                  props.handleChange(
-                    'name',
-                    e.target.value,
-                    optionGroupIdx,
-                  );
-                }}
+                onChange={props.handleOptionChange}
               />
               <button
-                name="backward"
+                name="moveOptCatBackward"
                 onClick={props.handleOptionChange}
               >
                 ▲
               </button>
               <button
-                name="forward"
+                name="moveOptCatForward"
                 onClick={props.handleOptionChange}
               >
                 ▼
@@ -112,4 +96,4 @@ const EditItemOptions = (props) => {
   );
 };
 
-export default EditItemOptions;
+export default EditItemOptionCategory;

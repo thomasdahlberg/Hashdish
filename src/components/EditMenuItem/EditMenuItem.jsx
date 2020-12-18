@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AdminButtons from '../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
-import EditItemOptions from '../EditItemOptions/EditItemOptions';
+import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
 import styles from './EditMenuItem.module.css';
 
 const STORAGE_URL =
@@ -74,24 +74,27 @@ class EditMenuItem extends Component {
     }
   };
 
-  updateOptionsState = (change) => {
-    return change;
-  };
-
   handleOptionChange = (e) => {
     switch (e.target.name) {
       case 'title':
         console.log('Title!');
         this.changeOptionTitle(e.target);
         break;
-      case 'forward':
+      case 'moveOptCatForward':
         this.moveOptCatForward(e.target);
         break;
-      case 'backward':
+      case 'moveOptCatBackward':
         this.moveOptCatBackward(e.target);
         break;
+      case 'addOptCat':
+        this.addOptCat(e.target);
+        break;
       case 'deleteOptCat':
-        this.deleteOptionCategory(e.target);
+        this.deleteOptCat(e.target);
+        break;
+      case 'editOptCat':
+        console.log('editOptCat');
+        this.editOptCat(e.target);
         break;
       case 'addOption':
         this.addOption(e.target);
@@ -99,70 +102,19 @@ class EditMenuItem extends Component {
       case 'deleteOption':
         this.deleteOption(e.target);
         break;
+      case 'editOption':
+        this.editOption(e.target);
+        break;
       default:
         console.log(`Option Change Error: ${e.target}`);
         break;
     }
   };
 
-  addOptionCategory = (event) => {
-    const optionCategory = event.target.id;
-    const newCategory = {
-      name: '',
-      option_type: 'checkbox',
-      options: [],
-    };
-
-    if (optionCategory === 'requiredOptions') {
-      this.setState({
-        requiredOptions: [newCategory, ...this.state.requiredOptions],
-      });
-    } else {
-      this.setState({
-        optionalOptions: [newCategory, ...this.state.optionalOptions],
-      });
-    }
-  };
-
-  deleteOptionCategory = ({ parentNode: { id, title } }) => {
-    if (title === 'requiredOptions') {
-      this.setState({
-        requiredOptions: this.state.requiredOptions.filter(
-          (item, idx) => idx !== Number(id),
-        ),
-      });
-    } else {
-      this.setState({
-        optionalOptions: this.state.optionalOptions.filter(
-          (item, idx) => idx !== Number(id),
-        ),
-      });
-    }
-  };
-
-  addOption = ({ parentNode: { id, title } }) => {
-    const idx = Number(id);
-    const newOption = {
-      default: false,
-      name: '',
-      price: 0,
-    };
-
-    let newArray =
-      title === 'requiredOptions'
-        ? [...this.state.requiredOptions]
-        : [...this.state.optionalOptions];
-    newArray[idx].options.push(newOption);
-
-    title === 'requiredOptions'
-      ? this.setState({ requiredOptions: newArray })
-      : this.setState({ optionalOptions: newArray });
-  };
-
-  moveOptCatForward = ({ parentNode: { id, title } }) => {
+  moveOptCatForward = ({ parentNode: { id, title: optionType } }) => {
     const idx = Number(id);
     let newArray =
-      title === 'requiredOptions'
+      optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
@@ -170,15 +122,17 @@ class EditMenuItem extends Component {
     newArray[idx] = newArray[idx + 1];
     newArray[idx + 1] = tempStorage;
 
-    title === 'requiredOptions'
+    optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  moveOptCatBackward = ({ parentNode: { id, title } }) => {
+  moveOptCatBackward = ({
+    parentNode: { id, title: optionType },
+  }) => {
     const idx = Number(id);
     let newArray =
-      title === 'requiredOptions'
+      optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
@@ -186,25 +140,124 @@ class EditMenuItem extends Component {
     newArray[idx] = newArray[idx - 1];
     newArray[idx - 1] = tempStorage;
 
-    title === 'requiredOptions'
+    optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  deleteOption = ({ id: idx, parentNode: { id: idx2, title } }) => {
+  addOptCat = ({ id: optionType }) => {
+    const newCategory = {
+      name: '',
+      option_type: 'checkbox',
+      options: [],
+    };
+
+    optionType === 'requiredOptions'
+      ? this.setState({
+          requiredOptions: [
+            newCategory,
+            ...this.state.requiredOptions,
+          ],
+        })
+      : this.setState({
+          optionalOptions: [
+            newCategory,
+            ...this.state.optionalOptions,
+          ],
+        });
+  };
+
+  deleteOptCat = ({
+    parentNode: { id: optCatIdx, title: optionType },
+  }) => {
+    if (optionType === 'requiredOptions') {
+      this.setState({
+        requiredOptions: this.state.requiredOptions.filter(
+          (item, idx) => idx !== Number(optCatIdx),
+        ),
+      });
+    } else {
+      this.setState({
+        optionalOptions: this.state.optionalOptions.filter(
+          (item, idx) => idx !== Number(optCatIdx),
+        ),
+      });
+    }
+  };
+
+  editOptCat = ({
+    id: optCatKey,
+    value,
+    parentNode: { id: optCatIdx, title: optionType },
+  }) => {
+    let newCatObj =
+      optionType === 'requiredOptions'
+        ? {
+            ...this.state.requiredOptions[Number(optCatIdx)],
+          }
+        : {
+            ...this.state.optionalOptions[Number(optCatIdx)],
+          };
+
+    optCatKey === 'name'
+      ? (newCatObj.name = value)
+      : (newCatObj.option_type = value);
+
+    if (optionType === 'requiredOptions') {
+      this.setState({
+        requiredOptions: this.state.requiredOptions.map((item, idx) =>
+          idx === Number(optCatIdx) ? newCatObj : item,
+        ),
+      });
+    } else {
+      this.setState({
+        optionalOptions: this.state.optionalOptions.map((item, idx) =>
+          idx === Number(optCatIdx) ? newCatObj : item,
+        ),
+      });
+    }
+  };
+
+  addOption = ({ parentNode: { id: idx, title: optionType } }) => {
+    const grpIdx = Number(idx);
+    const newOption = {
+      default: false,
+      name: '',
+      price: 0,
+    };
+
+    let newArray =
+      optionType === 'requiredOptions'
+        ? [...this.state.requiredOptions]
+        : [...this.state.optionalOptions];
+    newArray[grpIdx].options.push(newOption);
+
+    optionType === 'requiredOptions'
+      ? this.setState({ requiredOptions: newArray })
+      : this.setState({ optionalOptions: newArray });
+  };
+
+  deleteOption = ({
+    id: idx,
+    parentNode: { id: idx2, title: optionCategory },
+  }) => {
     const optIdx = Number(idx);
     const grpIdx = Number(idx2);
 
     let newArray =
-      title === 'requiredOptions'
+      optionCategory === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
     newArray[grpIdx].options.splice(optIdx, 1);
 
-    title === 'requiredOptions'
+    optionCategory === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
+  };
+
+  editOption = ({ id: optionKey, value }) => {
+    return;
   };
 
   changeOptionTitle = (optionObj) => {
@@ -233,19 +286,17 @@ class EditMenuItem extends Component {
           handleChange={this.handleDescriptionChange}
           handleImageChange={this.handleImageChange}
         />
-        <EditItemOptions
+        <EditItemOptionCategory
           headerText="Required Selections"
           optionCategory="requiredOptions"
           optionsGroups={this.state.requiredOptions}
           handleOptionChange={this.handleOptionChange}
-          addOptionCategory={this.addOptionCategory}
         />
-        <EditItemOptions
+        <EditItemOptionCategory
           headerText="Add-on Options"
           optionCategory="optionalOptions"
           optionsGroups={this.state.optionalOptions}
           handleOptionChange={this.handleOptionChange}
-          addOptionCategory={this.addOptionCategory}
         />
         <AdminButtons
           submitId={this.props.item.menuId}
