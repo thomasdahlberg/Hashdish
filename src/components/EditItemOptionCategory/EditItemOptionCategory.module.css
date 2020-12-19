@@ -1,0 +1,68 @@
+.options {
+  width: 90%;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.options button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.4rem 0.55rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.options button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+.title h3 {
+  margin-right: 2rem;
+}
+
+.title button {
+  height: 50%;
+}
+
+.category {
+  display: flex;
+}
+
+.category button {
+  height: 50%;
+  margin: 0.35rem;
+}
+
+.field {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+  margin-right: 0.5rem;
+  justify-content: center;
+}
+
+.field label {
+  margin-bottom: 0.25rem;
+}
+
+.optrender {
+  padding: 0.5rem;
+}
+
+.container {
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: solid #888888 2px;
+}
+
+.arrow {
+  background-color: #bf1a2f;
+}

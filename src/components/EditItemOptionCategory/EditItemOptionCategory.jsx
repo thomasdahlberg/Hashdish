@@ -1,59 +1,80 @@
 import React from 'react';
 import EditItemOption from '../EditItemOption/EditItemOption';
-import styles from './EditItemOptions.module.css';
+import styles from './EditItemOptionCategory.module.css';
 
 const EditItemOptionCategory = (props) => {
   return (
     <div className={styles.options}>
-      <div className={styles.optionTitle}>
-        <p>{props.headerText}</p>
+      <div className={styles.title}>
+        <h3>{props.headerText}</h3>
         <button
           id={props.optionCategory}
           name="addOptCat"
           onClick={props.handleOptionChange}
         >
-          New Option Category
+          Add Option Category
         </button>
       </div>
       <div className={styles.optrender}>
         {props.optionsGroups?.map((optionGroup, optionGroupIdx) => (
-          <div key={optionGroupIdx}>
+          <div className={styles.container} key={optionGroupIdx}>
             <div
               key={`${optionGroupIdx}`}
               id={optionGroupIdx}
               name={props.optionCategory}
-              className={styles.optionGroupTitle}
+              className={styles.category}
               title={props.optionCategory}
             >
-              <select
-                id="option_type"
-                name="editOptCat"
-                value={optionGroup.option_type}
-                onChange={props.handleOptionChange}
+              <div
+                className={styles.field}
+                key={`${optionGroupIdx}`}
+                id={optionGroupIdx}
+                name={props.optionCategory}
+                title={props.optionCategory}
               >
-                <option value="radio">radio</option>
-                <option value="checkbox">checkbox</option>
-              </select>
-              <input
-                id="name"
-                name="editOptCat"
-                type="text"
-                value={optionGroup.name}
-                onChange={props.handleOptionChange}
-              />
+                <label>Category Name</label>
+                <input
+                  id="name"
+                  name="editOptCat"
+                  type="text"
+                  value={optionGroup.name}
+                  onChange={props.handleOptionChange}
+                />
+              </div>
+              <div
+                className={styles.field}
+                key={`${optionGroupIdx}`}
+                id={optionGroupIdx}
+                name={props.optionCategory}
+                title={props.optionCategory}
+              >
+                <label>Option Type</label>
+                <select
+                  id="option_type"
+                  name="editOptCat"
+                  value={optionGroup.option_type}
+                  onChange={props.handleOptionChange}
+                >
+                  <option value="radio">radio</option>
+                  <option value="checkbox">checkbox</option>
+                </select>
+              </div>
               <button
+                className={styles.arrow}
                 name="moveOptCatBackward"
                 onClick={props.handleOptionChange}
               >
                 ▲
               </button>
               <button
+                className={styles.arrow}
                 name="moveOptCatForward"
                 onClick={props.handleOptionChange}
               >
                 ▼
               </button>
               <button
+                className={styles.delete}
                 name="deleteOptCat"
                 onClick={props.handleOptionChange}
               >

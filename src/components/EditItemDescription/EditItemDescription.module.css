@@ -1,0 +1,36 @@
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.title label {
+  margin-right: 1rem;
+}
+
+.title div {
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.description label {
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.price label {
+  margin-right: 1rem;
+}
+
+.price p {
+  font-weight: 900;
+}
