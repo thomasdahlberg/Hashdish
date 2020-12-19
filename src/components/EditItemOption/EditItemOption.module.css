@@ -1,8 +1,9 @@
 .delete button {
+  font-weight: 900;
   margin-left: 1rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0.5rem;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
   border: none;
   color: #f9f8f8;
   background-color: #a44a3f;

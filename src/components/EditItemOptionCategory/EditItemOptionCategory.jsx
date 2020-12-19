@@ -78,9 +78,10 @@ const EditItemOptionCategory = (props) => {
                 name="deleteOptCat"
                 onClick={props.handleOptionChange}
               >
-                Delete
+                Delete Category
               </button>
               <button
+                className={styles.add}
                 name="addOption"
                 onClick={props.handleOptionChange}
               >

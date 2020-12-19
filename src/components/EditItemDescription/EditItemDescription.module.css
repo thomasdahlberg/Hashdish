@@ -1,36 +1,37 @@
 .title {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-}
-
-.title label {
-  margin-right: 1rem;
-}
-
-.title div {
-  margin-bottom: 0.5rem;
+  justify-content: space-between;
 }
 
 .description {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  margin-top: 0.5rem;
+  margin-right: 1rem;
+  justify-content: space-between;
 }
 
-.description label {
+.field {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 0.5rem;
 }
 
-.price {
-  width: 100%;
-  margin-bottom: 1rem;
+.field label {
+  margin-bottom: 0.25rem;
 }
 
-.price label {
-  margin-right: 1rem;
+.image {
+  display: flex;
+  flex-direction: column;
 }
 
-.price p {
-  font-weight: 900;
+.image label {
+  margin-bottom: 0.25rem;
+}
+
+.image img {
+  max-width: 300px;
+  margin-bottom: 0.5rem;
 }

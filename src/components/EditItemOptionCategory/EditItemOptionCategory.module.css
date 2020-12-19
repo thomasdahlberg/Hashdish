@@ -1,10 +1,9 @@
 .options {
-  width: 90%;
+  width: 100%;
   margin-bottom: 1rem;
-  padding: 1rem;
 }
 
-.options button {
+.title button {
   border-radius: 10px;
   font-size: 1rem;
   padding: 0.4rem 0.55rem;
@@ -12,9 +11,14 @@
   color: #f9f8f8;
   background-color: #5cab7d;
   box-shadow: 2px 2px 2px #888888;
+  outline: none;
 }
 
-.options button:active {
+.title button:focus {
+  outline: none;
+}
+
+.title button:active {
   background-color: green;
   box-shadow: none;
 }
@@ -64,5 +68,54 @@
 }
 
 .arrow {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #63adf2;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.arrow:active {
+  background-color: blue;
+  box-shadow: none;
+  outline: none;
+  border: none;
+}
+
+.delete {
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #a44a3f;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.delete:active {
   background-color: #bf1a2f;
+  box-shadow: none;
+}
+
+.add {
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+  outline: none;
+}
+
+.add:focus {
+  outline: none;
+}
+
+.add:active {
+  background-color: green;
+  box-shadow: none;
 }
