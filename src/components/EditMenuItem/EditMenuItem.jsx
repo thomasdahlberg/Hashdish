@@ -103,6 +103,7 @@ class EditMenuItem extends Component {
         this.deleteOption(e.target);
         break;
       case 'editOption':
+        console.log('editOption');
         this.editOption(e.target);
         break;
       default:
@@ -256,14 +257,35 @@ class EditMenuItem extends Component {
       : this.setState({ optionalOptions: newArray });
   };
 
-  editOption = ({ id: optionKey, value }) => {
-    return;
-  };
+  editOption = ({
+    id: optionIdx,
+    title: optionKey,
+    value,
+    parentNode: { id: optCatIdx, title: optionType },
+  }) => {
+    let newCatObj =
+      optionType === 'requiredOptions'
+        ? {
+            ...this.state.requiredOptions[Number(optCatIdx)],
+          }
+        : {
+            ...this.state.optionalOptions[Number(optCatIdx)],
+          };
+    newCatObj.options[optionIdx][optionKey] = value;
 
-  changeOptionTitle = (optionObj) => {
-    // let obj = optionObj[idx]
-    // optionObj.splice(idx, 1)
-    // this.state.optionDefinitions[value].push(obj)
+    if (optionType === 'requiredOptions') {
+      this.setState({
+        requiredOptions: this.state.requiredOptions.map((item, idx) =>
+          idx === Number(optCatIdx) ? newCatObj : item,
+        ),
+      });
+    } else {
+      this.setState({
+        optionalOptions: this.state.optionalOptions.map((item, idx) =>
+          idx === Number(optCatIdx) ? newCatObj : item,
+        ),
+      });
+    }
   };
 
   componentWillUnmount = () => {
