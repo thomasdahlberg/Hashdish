@@ -76,10 +76,6 @@ class EditMenuItem extends Component {
 
   handleOptionChange = (e) => {
     switch (e.target.name) {
-      case 'title':
-        console.log('Title!');
-        this.changeOptionTitle(e.target);
-        break;
       case 'moveOptCatForward':
         this.moveOptCatForward(e.target);
         break;
@@ -112,41 +108,48 @@ class EditMenuItem extends Component {
     }
   };
 
-  moveOptCatForward = ({ parentNode: { id, title: optionType } }) => {
-    const idx = Number(id);
+  moveOptCatForward = (target) => {
+    const optCatIdx = Number(
+      target.getAttribute('data-category-idx'),
+    );
+    const optionType = target.getAttribute('data-opt-type');
+
     let newArray =
       optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
-    let tempStorage = newArray[idx];
-    newArray[idx] = newArray[idx + 1];
-    newArray[idx + 1] = tempStorage;
+    let tempStorage = newArray[optCatIdx];
+    newArray[optCatIdx] = newArray[optCatIdx + 1];
+    newArray[optCatIdx + 1] = tempStorage;
 
     optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  moveOptCatBackward = ({
-    parentNode: { id, title: optionType },
-  }) => {
-    const idx = Number(id);
+  moveOptCatBackward = (target) => {
+    const optCatIdx = Number(
+      target.getAttribute('data-category-idx'),
+    );
+    const optionType = target.getAttribute('data-opt-type');
+
     let newArray =
       optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
-    let tempStorage = newArray[idx];
-    newArray[idx] = newArray[idx - 1];
-    newArray[idx - 1] = tempStorage;
+    let tempStorage = newArray[optCatIdx];
+    newArray[optCatIdx] = newArray[optCatIdx - 1];
+    newArray[optCatIdx - 1] = tempStorage;
 
     optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  addOptCat = ({ id: optionType }) => {
+  addOptCat = (target) => {
+    const optionType = target.getAttribute('data-opt-type');
     const newCategory = {
       name: '',
       option_type: 'checkbox',
@@ -168,9 +171,10 @@ class EditMenuItem extends Component {
         });
   };
 
-  deleteOptCat = ({
-    parentNode: { id: optCatIdx, title: optionType },
-  }) => {
+  deleteOptCat = (target) => {
+    const optCatIdx = target.getAttribute('data-category-idx');
+    const optionType = target.getAttribute('data-opt-type');
+
     if (optionType === 'requiredOptions') {
       this.setState({
         requiredOptions: this.state.requiredOptions.filter(
@@ -186,11 +190,11 @@ class EditMenuItem extends Component {
     }
   };
 
-  editOptCat = ({
-    id: optCatKey,
-    value,
-    parentNode: { id: optCatIdx, title: optionType },
-  }) => {
+  editOptCat = (target) => {
+    const optCatKey = target.getAttribute('data-prop-name');
+    const optCatIdx = target.getAttribute('data-category-idx');
+    const optionType = target.getAttribute('data-opt-type');
+
     let newCatObj =
       optionType === 'requiredOptions'
         ? {
@@ -201,8 +205,8 @@ class EditMenuItem extends Component {
           };
 
     optCatKey === 'name'
-      ? (newCatObj.name = value)
-      : (newCatObj.option_type = value);
+      ? (newCatObj.name = target.value)
+      : (newCatObj.option_type = target.value);
 
     if (optionType === 'requiredOptions') {
       this.setState({
@@ -219,8 +223,11 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOption = ({ parentNode: { id: idx, title: optionType } }) => {
-    const grpIdx = Number(idx);
+  addOption = (target) => {
+    const optCatIdx = Number(
+      target.getAttribute('data-category-idx'),
+    );
+    const optionType = target.getAttribute('data-opt-type');
     const newOption = {
       default: false,
       name: '',
@@ -231,38 +238,39 @@ class EditMenuItem extends Component {
       optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
-    newArray[grpIdx].options.push(newOption);
+
+    newArray[optCatIdx].options.push(newOption);
 
     optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  deleteOption = ({
-    id: idx,
-    parentNode: { id: idx2, title: optionCategory },
-  }) => {
-    const optIdx = Number(idx);
-    const grpIdx = Number(idx2);
+  deleteOption = (target) => {
+    const optCatIdx = Number(
+      target.getAttribute('data-category-idx'),
+    );
+    const optionIdx = Number(target.getAttribute('data-opt-idx'));
+    const optionType = target.getAttribute('data-opt-type');
 
     let newArray =
-      optionCategory === 'requiredOptions'
+      optionType === 'requiredOptions'
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
-    newArray[grpIdx].options.splice(optIdx, 1);
+    newArray[optCatIdx].options.splice(optionIdx, 1);
 
-    optionCategory === 'requiredOptions'
+    optionType === 'requiredOptions'
       ? this.setState({ requiredOptions: newArray })
       : this.setState({ optionalOptions: newArray });
   };
 
-  editOption = ({
-    id: optionIdx,
-    title: optionKey,
-    value,
-    parentNode: { id: optCatIdx, title: optionType },
-  }) => {
+  editOption = (target) => {
+    const optionKey = target.getAttribute('data-prop-name');
+    const optCatIdx = target.getAttribute('data-category-idx');
+    const optionIdx = target.getAttribute('data-opt-idx');
+    const optionType = target.getAttribute('data-opt-type');
+
     let newCatObj =
       optionType === 'requiredOptions'
         ? {
@@ -271,7 +279,8 @@ class EditMenuItem extends Component {
         : {
             ...this.state.optionalOptions[Number(optCatIdx)],
           };
-    newCatObj.options[optionIdx][optionKey] = value;
+
+    newCatObj.options[optionIdx][optionKey] = target.value;
 
     if (optionType === 'requiredOptions') {
       this.setState({
@@ -310,14 +319,14 @@ class EditMenuItem extends Component {
         />
         <EditItemOptionCategory
           headerText="Required Selections"
-          optionCategory="requiredOptions"
-          optionsGroups={this.state.requiredOptions}
+          optionType="requiredOptions"
+          optionsCategories={this.state.requiredOptions}
           handleOptionChange={this.handleOptionChange}
         />
         <EditItemOptionCategory
           headerText="Add-on Options"
-          optionCategory="optionalOptions"
-          optionsGroups={this.state.optionalOptions}
+          optionType="optionalOptions"
+          optionsCategories={this.state.optionalOptions}
           handleOptionChange={this.handleOptionChange}
         />
         <AdminButtons

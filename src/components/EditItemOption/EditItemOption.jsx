@@ -3,16 +3,13 @@ import styles from './EditItemOption.module.css';
 
 const EditItemOption = (props) => {
   return (
-    <tr
-      className={styles.container}
-      key={props.optionIdx}
-      title={props.optionCategory}
-      id={props.optionGroupIdx}
-    >
+    <tr className={styles.container} key={props.optionIdx}>
       <td>
         <input
-          id={props.optionIdx}
-          title="name"
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
+          data-prop-name="name"
           name="editOption"
           type="text"
           value={props.option.name}
@@ -21,8 +18,10 @@ const EditItemOption = (props) => {
       </td>
       <td>
         <input
-          id={props.optionIdx}
-          title="price"
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
+          data-prop-name="price"
           name="editOption"
           type="text"
           value={`${props.option.price || ''}`}
@@ -31,8 +30,10 @@ const EditItemOption = (props) => {
       </td>
       <td>
         <input
-          id={props.optionIdx}
-          title="default"
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
+          data-prop-name="default"
           name="editOption"
           type="checkbox"
           checked={props.option.default || false}
@@ -41,8 +42,10 @@ const EditItemOption = (props) => {
       </td>
       <td>
         <input
-          id={props.optionIdx}
-          title="availability"
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
+          data-prop-name="availability"
           name="editOption"
           type="checkbox"
           checked={
@@ -53,14 +56,12 @@ const EditItemOption = (props) => {
           onChange={props.handleOptionChange}
         />
       </td>
-      <td
-        className={styles.delete}
-        title={props.optionCategory}
-        id={props.optionGroupIdx}
-      >
+      <td className={styles.delete}>
         <button
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
           name="deleteOption"
-          id={props.optionIdx}
           onClick={props.handleOptionChange}
         >
           -
