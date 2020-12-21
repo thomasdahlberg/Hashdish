@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styles from './UpdatePhoto.module.css';
-import axiosApiInstance from '../../utils/axiosConfig';
-
-const API = axiosApiInstance;
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 class UpdatePhoto extends Component {
   constructor(props) {
@@ -21,7 +19,12 @@ class UpdatePhoto extends Component {
   };
 
   resizeImage = (file) => {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
+    if (
+      window.File &&
+      window.FileReader &&
+      window.FileList &&
+      window.Blob
+    ) {
       var reader = new FileReader();
       // Set the image once loaded into file reader
       reader.onloadend = (e) => {

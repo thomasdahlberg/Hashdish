@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styles from './UpdateHours.module.css';
-import axiosApiInstance from '../../utils/axiosConfig';
-
-const API = axiosApiInstance;
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 function formatTime(time) {
   return [
@@ -88,11 +86,13 @@ class UpdateHours extends Component {
                         <input
                           type="time"
                           value={formatTime(
-                            this.state.openHourList[idx][idx2][0]
+                            this.state.openHourList[idx][idx2][0],
                           )}
                           onChange={(e) => {
                             var arr = this.state.openHourList;
-                            arr[idx][idx2][0] = deformatTime(e.target.value);
+                            arr[idx][idx2][0] = deformatTime(
+                              e.target.value,
+                            );
                             this.setState({
                               openHourList: arr,
                             });
@@ -104,11 +104,13 @@ class UpdateHours extends Component {
                         <input
                           type="time"
                           value={formatTime(
-                            this.state.openHourList[idx][idx2][1]
+                            this.state.openHourList[idx][idx2][1],
                           )}
                           onChange={(e) => {
                             var arr = this.state.openHourList;
-                            arr[idx][idx2][1] = deformatTime(e.target.value);
+                            arr[idx][idx2][1] = deformatTime(
+                              e.target.value,
+                            );
                             this.setState({
                               openHourList: arr,
                             });
@@ -120,7 +122,9 @@ class UpdateHours extends Component {
                       className={styles.del}
                       onClick={() => {
                         let arr = this.state.openHourList;
-                        arr[idx] = arr[idx].filter((item) => item !== block);
+                        arr[idx] = arr[idx].filter(
+                          (item) => item !== block,
+                        );
                         this.setState({
                           openHourList: arr,
                         });

@@ -1,0 +1,40 @@
+.admin {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin div {
+  margin-left: 0.25rem;
+}
+
+.admin button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.admin button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.del button {
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #a44a3f;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.del button:active {
+  background-color: #bf1a2f;
+  box-shadow: none;
+}

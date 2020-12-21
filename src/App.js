@@ -12,16 +12,18 @@ import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
-import axiosApiInstance from './utils/axiosConfig';
+import { axiosApiInstance, cancelTokenSource } from './utils/axiosConfig';
 import Signup from './pages/Signup/Signup';
 
 const API = axiosApiInstance;
 
 class App extends Component {
   state = this.getInitialState();
-
+  cancelSignal = cancelTokenSource;
+  
   getInitialState() {
     return {
+      isLoading: false,
       addMenuItem: false,
       selectedMenuItem: null,
       user: LocalStorageService.getAuthToken() ? true : false,
@@ -36,24 +38,37 @@ class App extends Component {
   }
   // Data Handlers
   handleGetKitchen = async () => {
-    let response = await API.get('/kitchen/me');
-    let data = response.data;
-    let kitchen = {
-      address: data.address,
-      cuisine: data.cuisine,
-      email: data.email,
-      flags: data.flags,
-      kitchenId: data.kitchenId,
-      name: data.name,
-      openHours: JSON.parse(data.openHoursDefinition).openHours,
-      phoneNumber: data.phoneNumber,
-      pictureKey: data.pictureKey,
-    };
-    this.handleOpenHoursSort(kitchen.openHours);
-    this.handleGetMenuItems(kitchen.kitchenId);
-    this.setState({
-      myKitchen: kitchen,
-    });
+    try {
+      this.setState({isLoading: true});
+      const response = await API.get('/kitchen/me', {
+        cancelToken: this.cancelSignal.token
+      });
+      const data = response.data;
+      const kitchen = {
+        address: data.address,
+        cuisine: data.cuisine,
+        email: data.email,
+        flags: data.flags,
+        kitchenId: data.kitchenId,
+        name: data.name,
+        openHours: JSON.parse(data.openHoursDefinition).openHours,
+        phoneNumber: data.phoneNumber,
+        pictureKey: data.pictureKey,
+      };
+      this.setState({
+				myKitchen: kitchen,
+				isLoading: true
+      });
+      this.handleOpenHoursSort(kitchen.openHours);
+      this.handleGetMenuItems(kitchen.kitchenId);
+      
+    } catch (error) {
+			if (API.isCancel(error)) {
+        console.log('Error: ', error.message);
+      } else {
+        this.setState({ isLoading: false });
+      }
+    }
   };
 
   handleOpenHoursSort = (openHours) => {
@@ -96,6 +111,7 @@ class App extends Component {
     });
   };
 
+<<<<<<< HEAD
   handleMenuItemUpdate = async (idx, state) => {
     let menu = this.state.menuItems[idx];
     await API.patch(
@@ -125,6 +141,8 @@ class App extends Component {
     });
   };
 
+=======
+>>>>>>> tommy-options-defs
   handleMenuItemCancel = async (idx) => {
     this.setState({
       selectedMenuItem: null,
