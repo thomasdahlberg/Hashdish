@@ -42,26 +42,28 @@ class EditMenuItem extends Component {
         price: this.state.price,
         optionDefinitions: stringifiedOptionDefs,
       }),
-    ).then(async (response) => {
-      if (response.status === 200) {
-        console.log(response);
-        if (
-          this.state.image &&
-          this.state.image.startsWith('data:image/jpeg;base64')
-        ) {
-          await API.patch(`/kitchen/menu/picture/${item.menuId}`, {
-            data: this.state.image.split(',')[1],
-          }).then((response) => {
-            if (response.status === 200) {
-              this.setState({
-                selectedMenuItem: null,
-              });
-              console.log(response);
-            }
-          });
+    )
+      .then(async (response) => {
+        if (response.status === 200) {
+          console.log(response);
+          if (
+            this.state.image &&
+            this.state.image.startsWith('data:image/jpeg;base64')
+          ) {
+            await API.patch(`/kitchen/menu/picture/${item.menuId}`, {
+              data: this.state.image.split(',')[1],
+            }).then((response) => {
+              if (response.status === 200) {
+                console.log(response);
+              }
+            });
+          }
         }
-      }
-    });
+      })
+      .then(async (response) => {
+        this.props.handleMenuItemCancel();
+        this.props.handleGetKitchen();
+      });
   };
 
   handleDescriptionChange = (e) => {
@@ -128,7 +130,6 @@ class EditMenuItem extends Component {
         this.deleteOptCat(e.target);
         break;
       case 'editOptCat':
-        console.log('editOptCat');
         this.editOptCat(e.target);
         break;
       case 'addOption':
@@ -138,7 +139,6 @@ class EditMenuItem extends Component {
         this.deleteOption(e.target);
         break;
       case 'editOption':
-        console.log('editOption');
         this.editOption(e.target);
         break;
       default:
@@ -337,7 +337,7 @@ class EditMenuItem extends Component {
   };
 
   componentWillUnmount = () => {
-    this.props.handleMenuItemCancel(null);
+    this.props.handleMenuItemCancel();
   };
 
   render() {

@@ -12,14 +12,11 @@ import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
-import { axiosApiInstance, cancelTokenSource } from './utils/axiosConfig';
+import { axiosApiInstance as API } from './utils/axiosConfig';
 import Signup from './pages/Signup/Signup';
-
-const API = axiosApiInstance;
 
 class App extends Component {
   state = this.getInitialState();
-  cancelSignal = cancelTokenSource;
   
   getInitialState() {
     return {
@@ -39,10 +36,7 @@ class App extends Component {
   // Data Handlers
   handleGetKitchen = async () => {
     try {
-      this.setState({isLoading: true});
-      const response = await API.get('/kitchen/me', {
-        cancelToken: this.cancelSignal.token
-      });
+      const response = await API.get('/kitchen/me');
       const data = response.data;
       const kitchen = {
         address: data.address,
@@ -57,17 +51,12 @@ class App extends Component {
       };
       this.setState({
 				myKitchen: kitchen,
-				isLoading: true
       });
       this.handleOpenHoursSort(kitchen.openHours);
       this.handleGetMenuItems(kitchen.kitchenId);
       
     } catch (error) {
-			if (API.isCancel(error)) {
         console.log('Error: ', error.message);
-      } else {
-        this.setState({ isLoading: false });
-      }
     }
   };
 
@@ -111,39 +100,7 @@ class App extends Component {
     });
   };
 
-<<<<<<< HEAD
-  handleMenuItemUpdate = async (idx, state) => {
-    let menu = this.state.menuItems[idx];
-    await API.patch(
-      `/kitchen/menu/${menu.menuId}`,
-      Object.assign(menu, {
-        name: state.name,
-        description: state.description,
-        price: state.price,
-        optionDefinitions: JSON.stringify(state.optionDefinitions),
-      })
-    ).then(async (response) => {
-      if (response.status === 200) {
-        console.log(response);
-        this.handleMenuItemCancel()
-        if (state.image.startsWith('data:image/jpeg;base64')) {
-          await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {
-            data: state.image.split(',')[1],
-          }).then((response) => {
-            if (response.status === 200) {
-              console.log(response);
-              this.handleGetKitchen()
-              this.handleMenuItemCancel()
-            }
-          });
-        }
-      }
-    });
-  };
-
-=======
->>>>>>> tommy-options-defs
-  handleMenuItemCancel = async (idx) => {
+  handleMenuItemCancel = async () => {
     this.setState({
       selectedMenuItem: null,
     });

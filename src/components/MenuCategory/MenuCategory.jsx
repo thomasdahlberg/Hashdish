@@ -22,6 +22,7 @@ const MenuCategory = (props) => {
               handleMenuItemUpdate={props.handleMenuItemUpdate}
               handleMenuItemDelete={props.handleMenuItemDelete}
               handleMenuItemCancel={props.handleMenuItemCancel}
+              handleGetKitchen={props.handleGetKitchen}
             />
           ) : null,
         )}

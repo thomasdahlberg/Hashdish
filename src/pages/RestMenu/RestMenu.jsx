@@ -51,6 +51,7 @@ class Menu extends Component {
                 handleMenuItemUpdate={this.props.handleMenuItemUpdate}
                 handleMenuItemDelete={this.props.handleMenuItemDelete}
                 handleMenuItemCancel={this.props.handleMenuItemCancel}
+                handleGetKitchen={this.props.handleGetKitchen}
               />
             </div>
           </div>

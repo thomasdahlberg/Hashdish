@@ -20,6 +20,7 @@ const MenuItems = (props) => {
               handleMenuItemCancel={props.handleMenuItemCancel}
               handleClick={props.handleClick}
               handleDelMenu={props.handleDelMenu}
+              handleGetKitchen={props.handleGetKitchen}
             />
           ))}
         </div>
