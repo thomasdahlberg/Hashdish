@@ -10,6 +10,7 @@ const MenuCategory = (props) => {
         {props.menuItems.map((item, idx) =>
           item.category === props.category && item.status === 1 ? (
             <MenuItemContainer
+              key={idx}
               item={item}
               idx={idx}
               category={props.category}

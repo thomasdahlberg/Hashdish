@@ -43,6 +43,12 @@ class MenuItemContainer extends Component {
           key={this.props.idx}
           item={this.props.item}
           idx={this.props.idx}
+          itemOptionalOptionDefs={
+            this.state.parsedItemOptionDefs.optional
+          }
+          itemRequiredOptionDefs={
+            this.state.parsedItemOptionDefs.required
+          }
           delMenu={this.props.delMenu}
           handleDelMenu={this.props.handleDelMenu}
           handleClick={this.props.handleClick}

@@ -2,6 +2,7 @@ import axios from 'axios';
 import LocalStorageService from './localStorageService';
 
 const localStorageService = LocalStorageService.getService();
+const cancelTokenSource = axios.CancelToken.source()
 
 let API_URL;
 process.env.NODE_ENV === 'production'
@@ -65,4 +66,7 @@ axiosApiInstance.interceptors.response.use(
   }
 );
 
-export default axiosApiInstance;
+export {
+  axiosApiInstance,
+  cancelTokenSource,
+};

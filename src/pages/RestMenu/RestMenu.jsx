@@ -5,11 +5,11 @@ import MenuItems from '../../components/MenuItems/MenuItems';
 import styles from './RestMenu.module.css';
 
 class Menu extends Component {
-  componentWillUnmount = () => {
-    if (this.props.menuItemForm) {
-      this.props.handleFormToggle('addMenuItem');
-    }
-  };
+  // componentWillUnmount = () => {
+  //   if (this.props.menuItemForm) {
+  //     this.props.handleFormToggle('addMenuItem');
+  //   }
+  // };
 
   render() {
     return (

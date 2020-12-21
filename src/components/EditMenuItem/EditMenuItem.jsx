@@ -3,6 +3,7 @@ import AdminButtons from '../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
 import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
 import styles from './EditMenuItem.module.css';
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 const STORAGE_URL =
   process.env.NODE_ENV === 'production'
@@ -24,6 +25,44 @@ class EditMenuItem extends Component {
         : null,
     };
   }
+
+  handleMenuItemUpdate = async () => {
+    const item = { ...this.props.item };
+    const optionDefs = {
+      required: this.state.requiredOptions,
+      optional: this.state.optionalOptions,
+    };
+    const stringifiedOptionDefs = JSON.stringify(optionDefs);
+
+    await API.patch(
+      `/kitchen/menu/${item.menuId}`,
+      Object.assign(item, {
+        name: this.state.name,
+        description: this.state.description,
+        price: this.state.price,
+        optionDefinitions: stringifiedOptionDefs,
+      }),
+    ).then(async (response) => {
+      if (response.status === 200) {
+        console.log(response);
+        if (
+          this.state.image &&
+          this.state.image.startsWith('data:image/jpeg;base64')
+        ) {
+          await API.patch(`/kitchen/menu/picture/${item.menuId}`, {
+            data: this.state.image.split(',')[1],
+          }).then((response) => {
+            if (response.status === 200) {
+              this.setState({
+                selectedMenuItem: null,
+              });
+              console.log(response);
+            }
+          });
+        }
+      }
+    });
+  };
 
   handleDescriptionChange = (e) => {
     this.setState({
@@ -334,7 +373,7 @@ class EditMenuItem extends Component {
           submitTitle="Update"
           cancelId={this.props.item.menuId}
           cancelTitle="Cancel"
-          // submitFunction={this.props.handleMenuItemUpdate(props.idx, state)}
+          submitFunction={this.handleMenuItemUpdate}
           cancelFunction={this.props.handleMenuItemCancel}
         />
       </section>

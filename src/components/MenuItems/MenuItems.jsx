@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './MenuItems.module.css';
 import { Redirect } from 'react-router-dom';
 import MenuCategory from '../MenuCategory/MenuCategory';
 
