@@ -18,8 +18,12 @@ class EditMenuItem extends Component {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
-      optionalOptions: this.props.itemOptionalOptionDefs,
-      requiredOptions: this.props.itemRequiredOptionDefs,
+      optionalOptions: this.props.itemOptionalOptionDefs
+        ? this.props.itemOptionalOptionDefs
+        : [],
+      requiredOptions: this.props.itemRequiredOptionDefs
+        ? this.props.itemRequiredOptionDefs
+        : [],
       image: this.props.item.pictureKey
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
@@ -160,13 +164,17 @@ class EditMenuItem extends Component {
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
-    let tempStorage = newArray[optCatIdx];
-    newArray[optCatIdx] = newArray[optCatIdx + 1];
-    newArray[optCatIdx + 1] = tempStorage;
+    if (optCatIdx < newArray.length - 1) {
+      let tempStorage = newArray[optCatIdx];
+      newArray[optCatIdx] = newArray[optCatIdx + 1];
+      newArray[optCatIdx + 1] = tempStorage;
 
-    optionType === 'requiredOptions'
-      ? this.setState({ requiredOptions: newArray })
-      : this.setState({ optionalOptions: newArray });
+      optionType === 'requiredOptions'
+        ? this.setState({ requiredOptions: newArray })
+        : this.setState({ optionalOptions: newArray });
+    } else {
+      return;
+    }
   };
 
   moveOptCatBackward = (target) => {
@@ -180,13 +188,17 @@ class EditMenuItem extends Component {
         ? [...this.state.requiredOptions]
         : [...this.state.optionalOptions];
 
-    let tempStorage = newArray[optCatIdx];
-    newArray[optCatIdx] = newArray[optCatIdx - 1];
-    newArray[optCatIdx - 1] = tempStorage;
+    if (optCatIdx > 0) {
+      let tempStorage = newArray[optCatIdx];
+      newArray[optCatIdx] = newArray[optCatIdx - 1];
+      newArray[optCatIdx - 1] = tempStorage;
 
-    optionType === 'requiredOptions'
-      ? this.setState({ requiredOptions: newArray })
-      : this.setState({ optionalOptions: newArray });
+      optionType === 'requiredOptions'
+        ? this.setState({ requiredOptions: newArray })
+        : this.setState({ optionalOptions: newArray });
+    } else {
+      return;
+    }
   };
 
   addOptCat = (target) => {
@@ -322,7 +334,6 @@ class EditMenuItem extends Component {
         : {
             ...this.state.optionalOptions[Number(optCatIdx)],
           };
-    console.log(target.checked);
 
     newCatObj.options[optionIdx][optionKey] = value;
 

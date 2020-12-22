@@ -16,7 +16,7 @@ const EditItemOptionCategory = (props) => {
         </button>
       </div>
       <div className={styles.optrender}>
-        {props.optionsCategories.map((optionCategory, optCatIdx) => (
+        {props.optionsCategories?.map((optionCategory, optCatIdx) => (
           <div className={styles.container} key={optCatIdx}>
             <div className={styles.category}>
               <div className={styles.field}>
