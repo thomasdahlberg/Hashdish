@@ -12,16 +12,15 @@ import Layout from './components/Layout/Layout';
 
 // Utilities
 import LocalStorageService from './utils/localStorageService';
-import axiosApiInstance from './utils/axiosConfig';
+import { axiosApiInstance as API } from './utils/axiosConfig';
 import Signup from './pages/Signup/Signup';
-
-const API = axiosApiInstance;
 
 class App extends Component {
   state = this.getInitialState();
-
+  
   getInitialState() {
     return {
+      isLoading: false,
       addMenuItem: false,
       selectedMenuItem: null,
       user: LocalStorageService.getAuthToken() ? true : false,
@@ -36,24 +35,29 @@ class App extends Component {
   }
   // Data Handlers
   handleGetKitchen = async () => {
-    let response = await API.get('/kitchen/me');
-    let data = response.data;
-    let kitchen = {
-      address: data.address,
-      cuisine: data.cuisine,
-      email: data.email,
-      flags: data.flags,
-      kitchenId: data.kitchenId,
-      name: data.name,
-      openHours: JSON.parse(data.openHoursDefinition).openHours,
-      phoneNumber: data.phoneNumber,
-      pictureKey: data.pictureKey,
-    };
-    this.handleOpenHoursSort(kitchen.openHours);
-    this.handleGetMenuItems(kitchen.kitchenId);
-    this.setState({
-      myKitchen: kitchen,
-    });
+    try {
+      const response = await API.get('/kitchen/me');
+      const data = response.data;
+      const kitchen = {
+        address: data.address,
+        cuisine: data.cuisine,
+        email: data.email,
+        flags: data.flags,
+        kitchenId: data.kitchenId,
+        name: data.name,
+        openHours: JSON.parse(data.openHoursDefinition).openHours,
+        phoneNumber: data.phoneNumber,
+        pictureKey: data.pictureKey,
+      };
+      this.setState({
+				myKitchen: kitchen,
+      });
+      this.handleOpenHoursSort(kitchen.openHours);
+      this.handleGetMenuItems(kitchen.kitchenId);
+      
+    } catch (error) {
+        console.log('Error: ', error.message);
+    }
   };
 
   handleOpenHoursSort = (openHours) => {
@@ -96,36 +100,7 @@ class App extends Component {
     });
   };
 
-  handleMenuItemUpdate = async (idx, state) => {
-    let menu = this.state.menuItems[idx];
-    await API.patch(
-      `/kitchen/menu/${menu.menuId}`,
-      Object.assign(menu, {
-        name: state.name,
-        description: state.description,
-        price: state.price,
-        optionDefinitions: JSON.stringify(state.optionDefinitions),
-      })
-    ).then(async (response) => {
-      if (response.status === 200) {
-        console.log(response);
-        this.handleMenuItemCancel()
-        if (state.image.startsWith('data:image/jpeg;base64')) {
-          await API.patch(`/kitchen/menu/picture/${menu.menuId}`, {
-            data: state.image.split(',')[1],
-          }).then((response) => {
-            if (response.status === 200) {
-              console.log(response);
-              this.handleGetKitchen()
-              this.handleMenuItemCancel()
-            }
-          });
-        }
-      }
-    });
-  };
-
-  handleMenuItemCancel = async (idx) => {
+  handleMenuItemCancel = async () => {
     this.setState({
       selectedMenuItem: null,
     });

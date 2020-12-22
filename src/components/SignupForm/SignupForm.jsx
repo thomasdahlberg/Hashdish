@@ -3,9 +3,7 @@ import SignupFormRest from '../SignupFormRest/SignupFormRest';
 import SignupFormRestDetails from '../SignupFormRestDetails/SignupFormRestDetails';
 import SignupFormConfirmation from '../SignupFormConfirmation/SignupFormConfirmation';
 import SignupFormSuccess from '../SignupFormSuccess/SignupFormSuccess';
-import axiosApiInstance from '../../utils/axiosConfig';
-
-const API = axiosApiInstance;
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 class SignupForm extends Component {
   state = {
@@ -49,7 +47,7 @@ class SignupForm extends Component {
   handleAddressChange = (input) => async (e) => {
     this.setState({ [input]: e.target.value });
     await API.get(
-      `/google/place/autocomplete?text=${e.target.value}&types=establishment`
+      `/google/place/autocomplete?text=${e.target.value}&types=establishment`,
     )
       .then((response) => {
         this.setState({ predictions: response.data.predictions });
@@ -61,22 +59,31 @@ class SignupForm extends Component {
 
   handlePlaceChange = async (e) => {
     window.document.getElementById(
-      'autocomplete'
+      'autocomplete',
     ).value = e.target.innerText.slice(0, -5);
     await API.get(
-      `/google/place/autocomplete?text=${e.target.innerText}&types=establishment`
+      `/google/place/autocomplete?text=${e.target.innerText}&types=establishment`,
     ).then((response) => {
-      this.setState({ googlePlaceId: response.data.predictions[0].place_id });
+      this.setState({
+        googlePlaceId: response.data.predictions[0].place_id,
+      });
     });
 
-    await API.get(`google/place/details?place_id=${this.state.googlePlaceId}`)
+    await API.get(
+      `google/place/details?place_id=${this.state.googlePlaceId}`,
+    )
       .then((response) => {
-        this.setState({ latitude: response.data.result.geometry.location.lat });
+        this.setState({
+          latitude: response.data.result.geometry.location.lat,
+        });
         this.setState({
           longitude: response.data.result.geometry.location.lng,
         });
         this.setState({
-          address: response.data.result.formatted_address.slice(0, -5),
+          address: response.data.result.formatted_address.slice(
+            0,
+            -5,
+          ),
         });
       })
       .catch((error) => {

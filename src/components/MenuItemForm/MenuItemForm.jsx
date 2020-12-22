@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styles from './MenuItemForm.module.css';
-import axiosApiInstance from '../../utils/axiosConfig';
-
-const API = axiosApiInstance;
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 class MenuItemForm extends Component {
   state = this.getInitialState();
@@ -29,11 +27,13 @@ class MenuItemForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post('/kitchen/menu', this.state).then(async (response) => {
-        if (response.status === 200) {
-          console.log(response);
-        }
-      });
+      await API.post('/kitchen/menu', this.state).then(
+        async (response) => {
+          if (response.status === 200) {
+            console.log(response);
+          }
+        },
+      );
     } catch (error) {
       this.setState({
         category: '',
@@ -51,7 +51,9 @@ class MenuItemForm extends Component {
     return (
       <form onSubmit={this.handleSubmit} className={styles.container}>
         <h2>New Item</h2>
-        {this.state.image && <img src={this.state.image} alt="menu item" />}
+        {this.state.image && (
+          <img src={this.state.image} alt="menu item" />
+        )}
         <label htmlFor="name">Menu Item Category:</label>
         <input
           id="category"
