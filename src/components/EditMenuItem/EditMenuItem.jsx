@@ -26,6 +26,8 @@ class EditMenuItem extends Component {
     };
   }
 
+  handleCheckbox = (e) => {};
+
   handleMenuItemUpdate = async () => {
     const item = { ...this.props.item };
     const optionDefs = {
@@ -309,6 +311,8 @@ class EditMenuItem extends Component {
     const optCatIdx = target.getAttribute('data-category-idx');
     const optionIdx = target.getAttribute('data-opt-idx');
     const optionType = target.getAttribute('data-opt-type');
+    const value =
+      target.type === 'checkbox' ? target.checked : target.value;
 
     let newCatObj =
       optionType === 'requiredOptions'
@@ -318,8 +322,9 @@ class EditMenuItem extends Component {
         : {
             ...this.state.optionalOptions[Number(optCatIdx)],
           };
+    console.log(target.checked);
 
-    newCatObj.options[optionIdx][optionKey] = target.value;
+    newCatObj.options[optionIdx][optionKey] = value;
 
     if (optionType === 'requiredOptions') {
       this.setState({

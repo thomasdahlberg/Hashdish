@@ -36,7 +36,7 @@ const EditItemOption = (props) => {
           data-prop-name="default"
           name="editOption"
           type="checkbox"
-          checked={props.option.default || false}
+          checked={props.option.default}
           onChange={props.handleOptionChange}
         />
       </td>
@@ -50,7 +50,7 @@ const EditItemOption = (props) => {
           type="checkbox"
           checked={
             props.option.availability !== undefined
-              ? !props.option.availability
+              ? props.option.availability
               : false
           }
           onChange={props.handleOptionChange}
