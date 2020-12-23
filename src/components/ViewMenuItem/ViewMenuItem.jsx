@@ -33,45 +33,43 @@ class ViewMenuItem extends Component {
         <div className={styles.description}>
           <p>{this.props.item.description}</p>
         </div>
-        <div className={styles.description}>
+        <div className={styles.price}>
+          <p>{this.props.item.price}</p>
+        </div>
+        <div className={styles.options}>
           <ViewItemOptions
             title="Required"
             optionsCategories={this.props.itemRequiredOptionDefs}
           />
-        </div>
-        <div className={styles.description}>
           <ViewItemOptions
             title="Optional"
             optionsCategories={this.props.itemOptionalOptionDefs}
           />
         </div>
-        <div className={styles.price}>
-          <p>{this.props.item.price}</p>
-          {this.props.delMenu === String(this.props.item.menuId) ? (
-            <div className={styles.admindel}>
-              <p>Are you sure you want to delete this item?</p>
-              <AdminButtons
-                submitId=""
-                submitTitle="Cancel"
-                cancelId={this.props.item.menuId}
-                cancelTitle="Yes, Delete"
-                submitFunction={this.props.handleDelMenu}
-                cancelFunction={this.props.handleMenuItemDelete}
-              />
-            </div>
-          ) : (
+        {this.props.delMenu === String(this.props.item.menuId) ? (
+          <div className={styles.admindel}>
+            <p>Are you sure you want to delete this item?</p>
             <AdminButtons
-              submitId={this.props.item.menuId}
-              submitTitle="Edit"
+              submitId=""
+              submitTitle="Cancel"
               cancelId={this.props.item.menuId}
-              cancelTitle="Delete"
-              submitFunction={() => {
-                this.props.handleMenuItemEdit(this.props.idx);
-              }}
-              cancelFunction={this.props.handleDelMenu}
+              cancelTitle="Yes, Delete"
+              submitFunction={this.props.handleDelMenu}
+              cancelFunction={this.props.handleMenuItemDelete}
             />
-          )}
-        </div>
+          </div>
+        ) : (
+          <AdminButtons
+            submitId={this.props.item.menuId}
+            submitTitle="Edit"
+            cancelId={this.props.item.menuId}
+            cancelTitle="Delete"
+            submitFunction={() => {
+              this.props.handleMenuItemEdit(this.props.idx);
+            }}
+            cancelFunction={this.props.handleDelMenu}
+          />
+        )}
       </section>
     );
   }

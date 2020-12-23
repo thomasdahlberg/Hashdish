@@ -2,13 +2,25 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 1rem;
   color: #211103;
   background-color: #f9f8f8;
   border-radius: 5px;
   box-shadow: 2px 2px 2px #888888;
   align-items: flex-start;
   margin: 0.5rem;
+}
+
+.description {
+  font-style: italic;
+}
+
+.options {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  width: 95%;
+  border: solid #888888 2px;
 }
 
 .admin {
@@ -50,21 +62,6 @@
   box-shadow: none;
 }
 
-.admindel button {
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0.5rem;
-  border: none;
-  color: #f9f8f8;
-  background-color: #5cab7d;
-  box-shadow: 2px 2px 2px #888888;
-}
-
-.admindel button:active {
-  background-color: green;
-  box-shadow: none;
-}
-
 .price {
   width: 100%;
 }
@@ -87,6 +84,11 @@
 .del button:active {
   background-color: #bf1a2f;
   box-shadow: none;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
 }
 
 .title img {
