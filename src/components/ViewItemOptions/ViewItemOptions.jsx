@@ -6,11 +6,8 @@ const ViewItemOptions = (props) => {
     <Fragment>
       {Array.isArray(props.optionsCategories) &&
         props.optionsCategories.map((optionGroup, optionGroupidx) => (
-          <div key={optionGroupidx}>
-            <div
-              key={`${optionGroupidx}`}
-              className={styles.optionGroupTitle}
-            >
+          <div className={styles.container} key={optionGroupidx}>
+            <div key={`${optionGroupidx}`} className={styles.title}>
               <p>
                 [{props.title}] {optionGroup.name} (
                 {optionGroup.option_type})

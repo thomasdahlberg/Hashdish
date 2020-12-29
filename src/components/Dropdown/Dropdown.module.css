@@ -1,61 +1,60 @@
 .wrapper {
-    /* border: red solid 2px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+.button {
+  border: none;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  /* padding: 2.75rem; */
+  background-color: #f8e16c;
 }
 
-.container button {
-    border: none;
-    text-decoration: none;
-    color: inherit;
-    padding: 1.9rem;
-    background-color: #F8E16C;
+.button:focus {
+  outline: 0;
 }
 
-.container button:focus {
-    outline: 0;
-}
-
-.container button:hover {
-    text-decoration: none;
-    color: inherit;
-    color: #F9F8F8;
-    background-color: #211103;
-    /* padding: 1.45rem; */
+.button:hover {
+  text-decoration: none;
+  color: inherit;
+  color: #f9f8f8;
+  background-color: #211103;
+  /* padding: 1.45rem; */
 }
 
 .list a {
-    text-decoration: none;
-    color: inherit;
-    padding: 1rem;
-    /* border-radius: 2rem; */
-    /* margin-right:1rem; */
-    /* border: solid #211103 2px; */
+  text-decoration: none;
+  color: inherit;
+  width: 5rem;
+  padding: 1rem 2rem;
+  /* border-radius: 2rem; */
+  /* margin-right:1rem; */
+  /* border: solid #211103 2px; */
 }
 .list a:hover {
-    text-decoration: none;
-    background-color: #888888;
-    color: #F9F8F8;
-    background-color: #211103;
-    /* border-radius: 2rem; */
-    /* margin-right:1rem; */
-    /* border: solid #211103 2px; */
+  text-decoration: none;
+  background-color: #888888;
+  color: #f9f8f8;
+  background-color: #211103;
+  /* border-radius: 2rem; */
+  /* margin-right:1rem; */
+  /* border: solid #211103 2px; */
 }
 
 .list {
-    z-index: 10;
-    background-color: #F8E16C;
-    list-style-type: none;
-    flex-direction: column;
-    align-items: stretch;
-    display: none;
-    box-shadow: 3px 3px 3px #888888;
+  z-index: 10;
+  background-color: #f8e16c;
+  list-style-type: none;
+  flex-direction: column;
+  align-items: stretch;
+  position: fixed;
+  top: 5rem;
+  display: flex;
+  box-shadow: 3px 3px 3px #888888;
 }

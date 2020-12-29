@@ -9,6 +9,7 @@
   box-shadow: 2px 2px 2px #888888;
   align-items: flex-start;
   margin: 0.5rem;
+  width: 45%;
 }
 
 .description {
@@ -18,9 +19,7 @@
 .options {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  border-radius: 10px;
   width: 95%;
-  border: solid #888888 2px;
 }
 
 .admin {
@@ -91,6 +90,10 @@
   flex-direction: column;
 }
 
+.title h3 {
+  border-bottom: #211103 solid 2px;
+}
+
 .title img {
-  max-width: 100%;
+  max-width: 66%;
 }
