@@ -2,14 +2,24 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 1rem;
   color: #211103;
   background-color: #f9f8f8;
   border-radius: 5px;
   box-shadow: 2px 2px 2px #888888;
   align-items: flex-start;
   margin: 0.5rem;
-  max-width: 33%;
+  width: 45%;
+}
+
+.description {
+  font-style: italic;
+}
+
+.options {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 95%;
 }
 
 .admin {
@@ -51,21 +61,6 @@
   box-shadow: none;
 }
 
-.admindel button {
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0.5rem;
-  border: none;
-  color: #f9f8f8;
-  background-color: #5cab7d;
-  box-shadow: 2px 2px 2px #888888;
-}
-
-.admindel button:active {
-  background-color: green;
-  box-shadow: none;
-}
-
 .price {
   width: 100%;
 }
@@ -90,6 +85,15 @@
   box-shadow: none;
 }
 
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.title h3 {
+  border-bottom: #211103 solid 2px;
+}
+
 .title img {
-  max-width: 100%;
+  max-width: 66%;
 }
