@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
 import styles from './RestProfile.module.css';
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 function profileTime(timeArr) {
   let timeStringArr = [];
@@ -49,6 +50,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 class Profile extends Component {
+  state = {
+    loading: false
+  }
+  
   componentWillUnmount = () => {
     if (this.props.editProfPhoto) {
       this.props.handleFormToggle('editProfPhoto');
@@ -57,6 +62,40 @@ class Profile extends Component {
       this.props.handleFormToggle('editHours');
     }
   };
+
+  handleGenerateReport = async () => {
+    this.setState({loading: true})
+    await API.get(`/kitchen/report/${this.state.year}/${this.state.month}`)
+    .then((response) => {
+      if (response.status === 200) {
+        setTimeout(() => {
+          this.setState({loading: false})
+          window.open(`https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`)
+        }, 1000)
+      }
+    });
+  }
+  
+  handleMonthChange = (e) => {
+    var yearmonth = e.target.value.split('-')
+    var year = parseInt(yearmonth[0], 10)
+    var month = parseInt(yearmonth[1], 10)
+    var now = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)    
+    if (now.getFullYear() < year ||
+      (now.getFullYear() === year && (now.getMonth() + 1) < month)) {
+      alert(`Cannot generate report for ${year}-${('0' + month).slice(-2)}`)
+      this.setState({
+        year: undefined,
+        month: undefined,
+      })
+    }
+    else {
+      this.setState({
+        year,
+        month,
+      })
+    }
+  }
 
   render() {
     return (
@@ -89,6 +128,18 @@ class Profile extends Component {
                       onClick={this.props.handleClick}
                     >
                       Update Photo
+                    </button>
+                  </div>
+                  <div className={(this.state.year) ? styles.edit : styles.disabled}>
+                    <input
+                      type="month"                      
+                      value={(this.state.year) ? `${this.state.year}-${('0' + this.state.month).slice(-2)}` : ''}
+                      onChange={this.handleMonthChange} />
+                    <button
+                      disabled={!this.state.year}
+                      id="generateReport"
+                      onClick={this.handleGenerateReport}>
+                      {this.state.loading ? <div className={styles.loader}/> : 'Generate Report'}
                     </button>
                   </div>
                 </div>
