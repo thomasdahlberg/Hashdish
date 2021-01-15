@@ -27,7 +27,7 @@ function profileTime(timeArr) {
       ),
       ':',
       ('0' + String(time[1] % 100)).slice(-2),
-      time[0] / 100 >= 12 ? ' PM' : ' AM',
+      time[1] / 100 >= 12 ? ' PM' : ' AM',
     ].join('');
     timeStringArr.push(`${start} - ${end}`);
   }
