@@ -6,8 +6,8 @@ const cancelTokenSource = axios.CancelToken.source()
 
 let API_URL;
 process.env.NODE_ENV === 'production'
-  ? (API_URL = 'https://api.hashdish.com/')
-  : (API_URL = 'https://dev.hashdish.com/');
+  ? (API_URL = 'https://lychee-dev.hashdish.com/')
+  : (API_URL = 'https://lychee-dev.hashdish.com/');
 
 const axiosApiInstance = axios.create({
   baseURL: `${API_URL}v1.0/`,
