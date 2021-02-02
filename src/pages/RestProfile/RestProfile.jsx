@@ -44,9 +44,9 @@ const DAYS = [
   'Saturday',
 ];
 
-var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net';
+var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
-  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net';
+  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
 class Profile extends Component {

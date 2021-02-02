@@ -5,9 +5,9 @@ import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCate
 import styles from './EditMenuItem.module.css';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
-var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net';
+var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
-  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net';
+  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
 class EditMenuItem extends Component {
