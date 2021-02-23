@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import AdminButtons from '../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
 import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
-import styles from './EditMenuItem.module.css';
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  CircularProgress,
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
@@ -34,12 +34,15 @@ class EditMenuItem extends Component {
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
       open: true,
+      isLoading: false,
     };
   }
 
   handleCheckbox = (e) => {};
 
-  handleMenuItemUpdate = async () => {
+  handleMenuItemUpdate = async (event) => {
+    event.preventDefault();
+    this.setState({ isLoading: true });
     const item = { ...this.props.item };
     const optionDefs = {
       required: this.state.requiredOptions,
@@ -75,7 +78,10 @@ class EditMenuItem extends Component {
       })
       .then(async (response) => {
         this.props.handleMenuItemCancel();
-        this.props.handleGetKitchen();
+        await this.props.handleGetKitchen();
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
       });
   };
 
@@ -368,7 +374,6 @@ class EditMenuItem extends Component {
       <section
         id={this.props.item.menuId}
         key={this.props.item.menuId}
-        className={styles.item}
       >
         <Dialog open={this.state.open}>
           <DialogTitle>Update Item</DialogTitle>
@@ -403,6 +408,7 @@ class EditMenuItem extends Component {
               submitFunction={this.handleMenuItemUpdate}
               cancelFunction={this.props.handleMenuItemCancel}
             />
+            {this.state.isLoading ? <CircularProgress /> : null}
           </DialogActions>
         </Dialog>
       </section>

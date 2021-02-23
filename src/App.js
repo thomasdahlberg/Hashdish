@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Pages
 import Profile from './pages/RestProfile/RestProfile';
@@ -150,77 +151,80 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App-Outer-Container">
-        <Layout handleLogout={this.handleLogout} user={this.state.user}>
-          <Switch>
-            <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
-            <Route
-              exact
-              path="/profile"
-              render={() =>
-                LocalStorageService.getAuthToken() ? (
-                  <Profile
-                    myKitchen={this.state.myKitchen}
-                    openHours={this.state.openHours}
-                    editHours={this.state.editHours}
-                    editProfPhoto={this.state.editProfPhoto}
-                    handleGetKitchen={this.handleGetKitchen}
-                    handleClick={this.handleClick}
-                    handleFormToggle={this.handleFormToggle}
+      <Fragment>
+        <CssBaseline />
+        <div className="App-Outer-Container">
+          <Layout handleLogout={this.handleLogout} user={this.state.user}>
+            <Switch>
+              <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
+              <Route
+                exact
+                path="/profile"
+                render={() =>
+                  LocalStorageService.getAuthToken() ? (
+                    <Profile
+                      myKitchen={this.state.myKitchen}
+                      openHours={this.state.openHours}
+                      editHours={this.state.editHours}
+                      editProfPhoto={this.state.editProfPhoto}
+                      handleGetKitchen={this.handleGetKitchen}
+                      handleClick={this.handleClick}
+                      handleFormToggle={this.handleFormToggle}
+                    />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/menu"
+                render={() =>
+                  LocalStorageService.getAuthToken() ? (
+                    <Menu
+                      menuCats={this.state.menuCats}
+                      menuItems={this.state.menuItems}
+                      menuItemForm={this.state.addMenuItem}
+                      delMenu={this.state.delMenu}
+                      selectedMenuItem={this.state.selectedMenuItem}
+                      handleDelMenu={this.handleDelMenu}
+                      handleClick={this.handleClick}
+                      handleFormToggle={this.handleFormToggle}
+                      handleMenuItemEdit={this.handleMenuItemEdit}
+                      handleMenuItemUpdate={this.handleMenuItemUpdate}
+                      handleMenuItemDelete={this.handleMenuItemDelete}
+                      handleMenuItemCancel={this.handleMenuItemCancel}
+                      handleGetKitchen={this.handleGetKitchen}
+                    />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/login"
+                render={({ history }) => (
+                  <Login
+                    history={history}
+                    handleSignupOrLogin={this.handleSignupOrLogin}
                   />
-                ) : (
-                  <Redirect to="/login" />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/menu"
-              render={() =>
-                LocalStorageService.getAuthToken() ? (
-                  <Menu
-                    menuCats={this.state.menuCats}
-                    menuItems={this.state.menuItems}
-                    menuItemForm={this.state.addMenuItem}
-                    delMenu={this.state.delMenu}
-                    selectedMenuItem={this.state.selectedMenuItem}
-                    handleDelMenu={this.handleDelMenu}
-                    handleClick={this.handleClick}
-                    handleFormToggle={this.handleFormToggle}
-                    handleMenuItemEdit={this.handleMenuItemEdit}
-                    handleMenuItemUpdate={this.handleMenuItemUpdate}
-                    handleMenuItemDelete={this.handleMenuItemDelete}
-                    handleMenuItemCancel={this.handleMenuItemCancel}
-                    handleGetKitchen={this.handleGetKitchen}
+                )}
+              />
+              <Route
+                exact
+                path="/signup"
+                render={({ history }) => (
+                  <Signup
+                    history={history}
+                    handleSignupOrLogin={this.handleSignupOrLogin}
                   />
-                ) : (
-                  <Redirect to="/login" />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/login"
-              render={({ history }) => (
-                <Login
-                  history={history}
-                  handleSignupOrLogin={this.handleSignupOrLogin}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={({ history }) => (
-                <Signup
-                  history={history}
-                  handleSignupOrLogin={this.handleSignupOrLogin}
-                />
-              )}
-            />
-          </Switch>
-        </Layout>
-      </div>
+                )}
+              />
+            </Switch>
+          </Layout>
+        </div>
+      </Fragment>
     );
   }
 }
