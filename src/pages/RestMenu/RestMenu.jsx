@@ -1,10 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import MenuItemForm from '../../components/MenuItemForm/MenuItemForm';
-import MenuItems from '../../components/MenuItems/MenuItems';
-import styles from './RestMenu.module.css';
+
 import { Container, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+
+import MenuItems from '../../components/MenuItems/MenuItems';
+import EditMenuItem from '../../components/EditMenuItem/EditMenuItem';
+
+import styles from './RestMenu.module.css';
 
 const Menu = (props) => {
   return (
@@ -13,9 +16,9 @@ const Menu = (props) => {
         <Redirect to="/" />
       ) : (
         <div className={styles.container}>
-          {props.menuItemForm ? (
-            <MenuItemForm
-              menuItemForm={props.menuItemForm}
+          {props.addMenuItem ? (
+            <EditMenuItem
+              addMenuItem={props.addMenuItem}
               selectedMenuItem={props.selectedMenuItem}
               handleGetKitchen={props.handleGetKitchen}
               handleFormToggle={props.handleFormToggle}

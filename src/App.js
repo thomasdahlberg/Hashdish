@@ -184,7 +184,7 @@ class App extends Component {
                     <Menu
                       menuCats={this.state.menuCats}
                       menuItems={this.state.menuItems}
-                      menuItemForm={this.state.addMenuItem}
+                      addMenuItem={this.state.addMenuItem}
                       delMenu={this.state.delMenu}
                       selectedMenuItem={this.state.selectedMenuItem}
                       handleDelMenu={this.handleDelMenu}

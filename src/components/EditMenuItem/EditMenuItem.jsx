@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import AdminButtons from '../AdminButtons/AdminButtons';
-import EditItemDescription from '../EditItemDescription/EditItemDescription';
-import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
 import {
   Dialog,
   DialogActions,
@@ -11,15 +8,21 @@ import {
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
+import AdminButtons from '../AdminButtons/AdminButtons';
+import EditItemDescription from '../EditItemDescription/EditItemDescription';
+import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
+
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
   STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
 class EditMenuItem extends Component {
-  state = this.getInitialState();
+  state = this.props.addMenuItem
+    ? this.populateAddItemForm()
+    : this.populateUpdateItemForm();
 
-  getInitialState() {
+  populateUpdateItemForm() {
     return {
       name: this.props.item.name,
       description: this.props.item.description || '',
@@ -38,9 +41,20 @@ class EditMenuItem extends Component {
     };
   }
 
-  handleCheckbox = (e) => {};
+  populateAddItemForm() {
+    return {
+      name: '',
+      description: '',
+      price: '',
+      optionalOptions: [],
+      requiredOptions: [],
+      image: null,
+      open: true,
+      isLoading: false,
+    };
+  }
 
-  handleMenuItemUpdate = async (event) => {
+  handleUpdateItem = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
     const item = { ...this.props.item };
@@ -83,6 +97,10 @@ class EditMenuItem extends Component {
       .finally(() => {
         this.setState({ isLoading: false });
       });
+  };
+
+  handleAddItem = async (event) => {
+    return null;
   };
 
   handleDescriptionChange = (e) => {
@@ -372,11 +390,13 @@ class EditMenuItem extends Component {
   render() {
     return (
       <section
-        id={this.props.item.menuId}
-        key={this.props.item.menuId}
+        id={this.props.item ? this.props.item.menuId : 'newItem'}
+        key={this.props.item ? this.props.item.menuId : 'newItem'}
       >
-        <Dialog open={this.state.open}>
-          <DialogTitle>Update Item</DialogTitle>
+        <Dialog open={true}>
+          <DialogTitle>
+            {this.props.item ? 'Update' : 'Add'} Item
+          </DialogTitle>
           <DialogContent>
             <EditItemDescription
               itemName={this.state.name}
@@ -401,12 +421,26 @@ class EditMenuItem extends Component {
           </DialogContent>
           <DialogActions>
             <AdminButtons
-              submitId={this.props.item.menuId}
-              submitTitle="Update"
-              cancelId={this.props.item.menuId}
+              submitId={
+                this.props.item ? this.props.item.menuId : null
+              }
+              submitTitle={this.props.item ? 'Update' : 'Add Item'}
+              cancelId={
+                this.props.item
+                  ? this.props.item.menuId
+                  : 'addMenuItem'
+              }
               cancelTitle="Cancel"
-              submitFunction={this.handleMenuItemUpdate}
-              cancelFunction={this.props.handleMenuItemCancel}
+              submitFunction={
+                this.props.item
+                  ? this.handleUpdateItem
+                  : this.handleAddItem
+              }
+              cancelFunction={
+                this.props.item
+                  ? this.props.handleMenuItemCancel
+                  : this.props.handleClick
+              }
             />
             {this.state.isLoading ? <CircularProgress /> : null}
           </DialogActions>
