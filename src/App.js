@@ -27,7 +27,6 @@ class App extends Component {
       myKitchen: null,
       menuItems: null,
       menuCats: null,
-      openHours: [],
       editHours: false,
       editProfPhoto: false,
       delMenu: '',
@@ -40,30 +39,21 @@ class App extends Component {
       const data = response.data;
       const kitchen = {
         address: data.address,
-        cuisine: data.cuisine,
         email: data.email,
         flags: data.flags,
         kitchenId: data.kitchenId,
         name: data.name,
-        openHours: JSON.parse(data.openHoursDefinition).openHours,
         phoneNumber: data.phoneNumber,
         pictureKey: data.pictureKey,
       };
       this.setState({
 				myKitchen: kitchen,
       });
-      this.handleOpenHoursSort(kitchen.openHours);
       this.handleGetMenuItems(kitchen.kitchenId);
       
     } catch (error) {
         console.log('Error: ', error.message);
     }
-  };
-
-  handleOpenHoursSort = (openHours) => {
-    this.setState({
-      openHours,
-    });
   };
 
   handleGetMenuItems = async (id) => {
@@ -161,7 +151,6 @@ class App extends Component {
                 LocalStorageService.getAuthToken() ? (
                   <Profile
                     myKitchen={this.state.myKitchen}
-                    openHours={this.state.openHours}
                     editHours={this.state.editHours}
                     editProfPhoto={this.state.editProfPhoto}
                     handleGetKitchen={this.handleGetKitchen}

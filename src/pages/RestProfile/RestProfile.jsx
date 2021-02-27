@@ -1,7 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
 import styles from './RestProfile.module.css';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
@@ -183,36 +182,6 @@ class Profile extends Component {
                 </div>
               )}
             </div>
-            {this.props.editHours ? (
-              <UpdateHours
-                openHours={this.props.openHours}
-                handleClick={this.props.handleClick}
-                handleFormToggle={this.props.handleFormToggle}
-                handleGetKitchen={this.props.handleGetKitchen}
-              />
-            ) : (
-              <div className={styles.info}>
-                <h3>Open Hours</h3>
-                {DAYS.map((DAY, idx) => (
-                  <div className={styles.day}>
-                    <p key={idx}>{DAY}:</p>
-                    <p className={styles.hours}>
-                      {this.props.openHours[idx]?.length > 0
-                        ? `${profileTime(this.props.openHours[idx])}`
-                        : 'Closed'}
-                    </p>
-                  </div>
-                ))}
-                <div className={styles.edit}>
-                  <button
-                    id="editHours"
-                    onClick={this.props.handleClick}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            )}
           </section>
         )}
       </div>
