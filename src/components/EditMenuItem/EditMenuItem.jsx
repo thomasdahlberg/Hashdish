@@ -11,6 +11,17 @@ import { axiosApiInstance as API } from '../../utils/axiosConfig';
 import AdminButtons from '../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
 import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
+<<<<<<< HEAD
+=======
+import styles from './EditMenuItem.module.css';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@material-ui/core';
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
+>>>>>>> bf4cc57506224fa25d2cd369d1dfa55fbdd14637
 
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
@@ -37,7 +48,10 @@ class EditMenuItem extends Component {
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
       open: true,
+<<<<<<< HEAD
       isLoading: false,
+=======
+>>>>>>> bf4cc57506224fa25d2cd369d1dfa55fbdd14637
     };
   }
 
@@ -393,10 +407,15 @@ class EditMenuItem extends Component {
         id={this.props.item ? this.props.item.menuId : 'newItem'}
         key={this.props.item ? this.props.item.menuId : 'newItem'}
       >
+<<<<<<< HEAD
         <Dialog open={true}>
           <DialogTitle>
             {this.props.item ? 'Update' : 'Add'} Item
           </DialogTitle>
+=======
+        <Dialog open={this.state.open}>
+          <DialogTitle>Update Item</DialogTitle>
+>>>>>>> bf4cc57506224fa25d2cd369d1dfa55fbdd14637
           <DialogContent>
             <EditItemDescription
               itemName={this.state.name}
@@ -421,6 +440,7 @@ class EditMenuItem extends Component {
           </DialogContent>
           <DialogActions>
             <AdminButtons
+<<<<<<< HEAD
               submitId={
                 this.props.item ? this.props.item.menuId : null
               }
@@ -443,6 +463,15 @@ class EditMenuItem extends Component {
               }
             />
             {this.state.isLoading ? <CircularProgress /> : null}
+=======
+              submitId={this.props.item.menuId}
+              submitTitle="Update"
+              cancelId={this.props.item.menuId}
+              cancelTitle="Cancel"
+              submitFunction={this.handleMenuItemUpdate}
+              cancelFunction={this.props.handleMenuItemCancel}
+            />
+>>>>>>> bf4cc57506224fa25d2cd369d1dfa55fbdd14637
           </DialogActions>
         </Dialog>
       </section>

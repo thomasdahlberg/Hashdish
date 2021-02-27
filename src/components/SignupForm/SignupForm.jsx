@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import SignupFormRest from '../SignupFormRest/SignupFormRest';
-import SignupFormRestDetails from '../SignupFormRestDetails/SignupFormRestDetails';
-import SignupFormConfirmation from '../SignupFormConfirmation/SignupFormConfirmation';
-import SignupFormSuccess from '../SignupFormSuccess/SignupFormSuccess';
+import RestaurantInfo from './RestaurantInfo/RestaurantInfo';
+import RestaurantDetails from './RestaurantDetails/RestaurantDetails';
+import Confirmation from './Confirmation/Confirmation';
+import Success from './Success/Success';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 class SignupForm extends Component {
@@ -178,7 +178,7 @@ class SignupForm extends Component {
     switch (step) {
       case 1:
         return (
-          <SignupFormRest
+          <RestaurantInfo
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleAddressChange={this.handleAddressChange}
@@ -189,7 +189,7 @@ class SignupForm extends Component {
 
       case 2:
         return (
-          <SignupFormRestDetails
+          <RestaurantDetails
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
@@ -199,7 +199,7 @@ class SignupForm extends Component {
 
       case 3:
         return (
-          <SignupFormConfirmation
+          <Confirmation
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             values={values}
@@ -208,7 +208,7 @@ class SignupForm extends Component {
         );
 
       case 4:
-        return <SignupFormSuccess />;
+        return <Success />;
 
       default:
     }
