@@ -123,6 +123,14 @@ class App extends Component {
     }
   };
 
+  handleAddItemForm = () => {
+    if(this.state.addMenuItem) {
+      this.setState({addMenuItem: false});
+    } else {
+      this.setState({addMenuItem: true});
+    }
+  }
+
   handleDelMenu = (e) => {
     this.setState({ delMenu: e.target.id });
   };
@@ -189,6 +197,7 @@ class App extends Component {
                       selectedMenuItem={this.state.selectedMenuItem}
                       handleDelMenu={this.handleDelMenu}
                       handleClick={this.handleClick}
+                      handleAddItemForm={this.handleAddItemForm}
                       handleFormToggle={this.handleFormToggle}
                       handleMenuItemEdit={this.handleMenuItemEdit}
                       handleMenuItemUpdate={this.handleMenuItemUpdate}

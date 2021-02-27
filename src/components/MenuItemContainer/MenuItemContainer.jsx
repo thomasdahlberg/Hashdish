@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditMenuItem from '../EditMenuItem/EditMenuItem';
+import EditMenuItem from '../EditItemForm/EditMenuItem/EditMenuItem';
 import ViewMenuItem from '../ViewMenuItem/ViewMenuItem';
 
 class MenuItemContainer extends Component {

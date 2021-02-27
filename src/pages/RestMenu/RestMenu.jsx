@@ -5,7 +5,7 @@ import { Container, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 import MenuItems from '../../components/MenuItems/MenuItems';
-import EditMenuItem from '../../components/EditMenuItem/EditMenuItem';
+import EditMenuItem from '../../components/EditItemForm/EditMenuItem/EditMenuItem';
 
 import styles from './RestMenu.module.css';
 
@@ -22,7 +22,7 @@ const Menu = (props) => {
               selectedMenuItem={props.selectedMenuItem}
               handleGetKitchen={props.handleGetKitchen}
               handleFormToggle={props.handleFormToggle}
-              handleClick={props.handleClick}
+              handleAddItemForm={props.handleAddItemForm}
             />
           ) : (
             <div className={styles.add}>
