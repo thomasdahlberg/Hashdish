@@ -26,11 +26,11 @@ class EditMenuItem extends Component {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
-      optionalOptions: this.props.itemOptionalOptionDefs
-        ? this.props.itemOptionalOptionDefs
+      optionalOptions: this.props.optionDefs
+        ? this.props.optionDefs.optional
         : [],
-      requiredOptions: this.props.itemRequiredOptionDefs
-        ? this.props.itemRequiredOptionDefs
+      requiredOptions: this.props.optionDefs
+        ? this.props.optionDefs.required
         : [],
       image: this.props.item.pictureKey
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
@@ -90,7 +90,6 @@ class EditMenuItem extends Component {
         }
       })
       .then(async (response) => {
-        this.props.handleMenuItemCancel();
         await this.props.handleGetKitchen();
       })
       .finally(() => {
@@ -152,6 +151,7 @@ class EditMenuItem extends Component {
   };
 
   handleOptionChange = (e) => {
+    console.log('option change');
     switch (e.target.name) {
       case 'moveOptCatForward':
         this.moveOptCatForward(e.target);

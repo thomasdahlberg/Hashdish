@@ -1,7 +1,7 @@
 import React from 'react';
 import EditItemOption from '../EditItemOption/EditItemOption';
 import styles from './EditItemOptionCategory.module.css';
-import { Button } from '@material-ui/core';
+import { button } from '@material-ui/core';
 
 const EditItemOptionCategory = (props) => {
   return (
@@ -12,7 +12,7 @@ const EditItemOptionCategory = (props) => {
           color="primary"
           data-opt-type={props.optionType}
           name="addOptCat"
-          onClick={() => props.handleOptionChange}
+          onClick={props.handleOptionChange}
         >
           Add Option Category
         </button>
@@ -47,23 +47,23 @@ const EditItemOptionCategory = (props) => {
                   <option value="checkbox">checkbox</option>
                 </select>
               </div>
-              <Button
+              <button
                 data-category-idx={optCatIdx}
                 data-opt-type={props.optionType}
                 name="moveOptCatBackward"
                 onClick={props.handleOptionChange}
               >
                 ▲
-              </Button>
-              <Button
+              </button>
+              <button
                 data-category-idx={optCatIdx}
                 data-opt-type={props.optionType}
                 name="moveOptCatForward"
                 onClick={props.handleOptionChange}
               >
                 ▼
-              </Button>
-              <Button
+              </button>
+              <button
                 color="secondary"
                 data-category-idx={optCatIdx}
                 data-opt-type={props.optionType}
@@ -71,8 +71,8 @@ const EditItemOptionCategory = (props) => {
                 onClick={props.handleOptionChange}
               >
                 Delete Category
-              </Button>
-              <Button
+              </button>
+              <button
                 color="primary"
                 data-category-idx={optCatIdx}
                 data-opt-type={props.optionType}
@@ -80,7 +80,7 @@ const EditItemOptionCategory = (props) => {
                 onClick={props.handleOptionChange}
               >
                 Add Option
-              </Button>
+              </button>
             </div>
             {optionCategory.options.length > 0 && (
               <div>

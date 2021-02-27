@@ -39,11 +39,19 @@ class ViewMenuItem extends Component {
         <div className={styles.options}>
           <ViewItemOptions
             title="Required"
-            optionsCategories={this.props.itemRequiredOptionDefs}
+            optionsCategories={
+              this.props.optionDefs
+                ? this.props.optionDefs.required
+                : []
+            }
           />
           <ViewItemOptions
             title="Optional"
-            optionsCategories={this.props.itemOptionalOptionDefs}
+            optionsCategories={
+              this.props.optionDefs
+                ? this.props.optionDefs.optional
+                : []
+            }
           />
         </div>
         {this.props.delMenu === String(this.props.item.menuId) ? (
