@@ -21,7 +21,6 @@ class EditMenuItem extends Component {
 
   getInitialState() {
     return {
-      status: this.props.item.status,
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
@@ -34,7 +33,6 @@ class EditMenuItem extends Component {
       image: this.props.item.pictureKey
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
-      maxAmountPerOrder: this.props.item.maxAmountPerOrder,
       open: true,
     };
   }
@@ -52,11 +50,9 @@ class EditMenuItem extends Component {
     await API.patch(
       `/kitchen/menu/${item.menuId}`,
       Object.assign(item, {
-        status: (this.state.isActive) ? 1 : 0,
         name: this.state.name,
         description: this.state.description,
         price: this.state.price,
-        maxAmountPerOrder: this.state.maxAmountPerOrder,
         optionDefinitions: stringifiedOptionDefs,
       }),
     )
@@ -378,12 +374,10 @@ class EditMenuItem extends Component {
           <DialogTitle>Update Item</DialogTitle>
           <DialogContent>
             <EditItemDescription
-              itemIsActive={this.state.status === 1}
               itemName={this.state.name}
               itemImage={this.state.image}
               itemDescription={this.state.description}
               itemPrice={this.state.price}
-              itemMaxAmountPerOrder={this.state.maxAmountPerOrder}
               handleChange={this.handleDescriptionChange}
               handleImageChange={this.handleImageChange}
             />

@@ -6,20 +6,11 @@ const EditItemDescription = (props) => {
     <div className={styles.title}>
       <div className={styles.description}>
         <div className={styles.field}>
-          <label>IsActive</label>
-          <input
-            name="isActive"
-            type="checkbox"
-            checked={props.itemIsActive}
-            onChange={props.handleChange}
-          />
-        </div>
-        <div className={styles.field}>
           <label>Item Name</label>
           <input
             name="name"
             type="text"
-            value={props.itemName || ''}
+            value={props.itemName}
             onChange={props.handleChange}
           />
         </div>
@@ -29,7 +20,7 @@ const EditItemDescription = (props) => {
             name="description"
             type="text"
             rows={5}
-            value={props.itemDescription || ''}
+            value={props.itemDescription}
             onChange={props.handleChange}
           />
         </div>
@@ -38,16 +29,7 @@ const EditItemDescription = (props) => {
           <input
             name="price"
             type="text"
-            value={props.itemPrice || ''}
-            onChange={props.handleChange}
-          />
-        </div>
-        <div className={styles.field}>
-          <label>Max Amount Per Order</label>
-          <input
-            name="maxAmountPerOrder"
-            type="text"
-            value={props.itemMaxAmountPerOrder || ''}
+            value={props.itemPrice}
             onChange={props.handleChange}
           />
         </div>

@@ -79,6 +79,15 @@ class RestaurantInfo extends Component {
             <TextField
               margin="dense"
               fullWidth
+              label="Cuisine"
+              name="cuisine"
+              type="text"
+              defaultValue={values.cuisine}
+              onChange={handleChange('cuisine')}
+            />
+            <TextField
+              margin="dense"
+              fullWidth
               label="Phone Number"
               name="phone number"
               type="tel"

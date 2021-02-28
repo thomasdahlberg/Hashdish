@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RestaurantInfo from './RestaurantInfo/RestaurantInfo';
+import RestaurantDetails from './RestaurantDetails/RestaurantDetails';
 import Confirmation from './Confirmation/Confirmation';
 import Success from './Success/Success';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
@@ -12,12 +13,16 @@ class SignupForm extends Component {
     passwordConfirmation: '',
     phoneNumber: '',
     email: '',
+    cuisine: '',
     latitude: '',
     longitude: '',
     address: '',
     googlePlaceId: '',
     timezone: 'America/Los_Angeles',
+    minimumPreparingMinutes: '',
+    openHours: '',
     predictions: [],
+    flags: 1,
     error: '',
   };
 
@@ -92,11 +97,15 @@ class SignupForm extends Component {
       email,
       password,
       name,
+      cuisine,
       phoneNumber,
+      flags,
+      minimumPreparingMinutes,
       latitude,
       longitude,
       address,
       timezone,
+      openHours,
       googlePlaceId,
     } = this.state;
 
@@ -104,11 +113,15 @@ class SignupForm extends Component {
       email,
       password,
       name,
+      cuisine,
       phoneNumber,
+      flags,
+      minimumPreparingMinutes,
       latitude,
       longitude,
       address,
       timezone,
+      openHours,
       googlePlaceId,
     })
       .then((response) => {
@@ -131,12 +144,15 @@ class SignupForm extends Component {
       password,
       passwordConfirmation,
       email,
+      cuisine,
       phoneNumber,
       latitude,
       longitude,
       address,
       googlePlaceId,
       timezone,
+      minimumPreparingMinutes,
+      openHours,
       predictions,
       error,
     } = this.state;
@@ -146,12 +162,15 @@ class SignupForm extends Component {
       password,
       passwordConfirmation,
       email,
+      cuisine,
       phoneNumber,
       latitude,
       longitude,
       address,
       googlePlaceId,
       timezone,
+      minimumPreparingMinutes,
+      openHours,
       predictions,
       error,
     };
@@ -170,6 +189,16 @@ class SignupForm extends Component {
 
       case 2:
         return (
+          <RestaurantDetails
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+
+      case 3:
+        return (
           <Confirmation
             nextStep={this.nextStep}
             prevStep={this.prevStep}
@@ -178,7 +207,7 @@ class SignupForm extends Component {
           />
         );
 
-      case 3:
+      case 4:
         return <Success />;
 
       default:
