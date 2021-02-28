@@ -3,6 +3,12 @@ import AdminButtons from '../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
 import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
 import styles from './EditMenuItem.module.css';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@material-ui/core';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
@@ -27,6 +33,7 @@ class EditMenuItem extends Component {
       image: this.props.item.pictureKey
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
+      open: true,
     };
   }
 
@@ -363,35 +370,41 @@ class EditMenuItem extends Component {
         key={this.props.item.menuId}
         className={styles.item}
       >
-        <h2>Update Item</h2>
-        <EditItemDescription
-          itemName={this.state.name}
-          itemImage={this.state.image}
-          itemDescription={this.state.description}
-          itemPrice={this.state.price}
-          handleChange={this.handleDescriptionChange}
-          handleImageChange={this.handleImageChange}
-        />
-        <EditItemOptionCategory
-          headerText="Required Selections"
-          optionType="requiredOptions"
-          optionsCategories={this.state.requiredOptions}
-          handleOptionChange={this.handleOptionChange}
-        />
-        <EditItemOptionCategory
-          headerText="Add-on Options"
-          optionType="optionalOptions"
-          optionsCategories={this.state.optionalOptions}
-          handleOptionChange={this.handleOptionChange}
-        />
-        <AdminButtons
-          submitId={this.props.item.menuId}
-          submitTitle="Update"
-          cancelId={this.props.item.menuId}
-          cancelTitle="Cancel"
-          submitFunction={this.handleMenuItemUpdate}
-          cancelFunction={this.props.handleMenuItemCancel}
-        />
+        <Dialog open={this.state.open}>
+          <DialogTitle>Update Item</DialogTitle>
+          <DialogContent>
+            <EditItemDescription
+              itemName={this.state.name}
+              itemImage={this.state.image}
+              itemDescription={this.state.description}
+              itemPrice={this.state.price}
+              handleChange={this.handleDescriptionChange}
+              handleImageChange={this.handleImageChange}
+            />
+            <EditItemOptionCategory
+              headerText="Required Selections"
+              optionType="requiredOptions"
+              optionsCategories={this.state.requiredOptions}
+              handleOptionChange={this.handleOptionChange}
+            />
+            <EditItemOptionCategory
+              headerText="Add-on Options"
+              optionType="optionalOptions"
+              optionsCategories={this.state.optionalOptions}
+              handleOptionChange={this.handleOptionChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <AdminButtons
+              submitId={this.props.item.menuId}
+              submitTitle="Update"
+              cancelId={this.props.item.menuId}
+              cancelTitle="Cancel"
+              submitFunction={this.handleMenuItemUpdate}
+              cancelFunction={this.props.handleMenuItemCancel}
+            />
+          </DialogActions>
+        </Dialog>
       </section>
     );
   }
