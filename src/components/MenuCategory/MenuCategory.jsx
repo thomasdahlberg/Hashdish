@@ -8,7 +8,7 @@ const MenuCategory = (props) => {
       <h2>{props.category}</h2>
       <div className={styles.category}>
         {props.menuItems.map((item, idx) =>
-          item.category === props.category ? (
+          item.category === props.category && item.status > -1 ? (
             <MenuItemContainer
               key={idx}
               item={item}

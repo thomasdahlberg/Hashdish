@@ -26,10 +26,10 @@ class EditMenuItem extends Component {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
-      optionalOptions: this.props.optionDefs.optional
+      optionalOptions: this.props.optionDefs
         ? this.props.optionDefs.optional
         : [],
-      requiredOptions: this.props.optionDefs.required
+      requiredOptions: this.props.optionDefs
         ? this.props.optionDefs.required
         : [],
       image: this.props.item.pictureKey

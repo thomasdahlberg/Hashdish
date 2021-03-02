@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import AdminButtons from '../AdminButtons/AdminButtons';
 import styles from './ViewMenuItem.module.css';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  CircularProgress,
+} from '@material-ui/core';
 
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
@@ -8,6 +15,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 class ViewMenuItem extends Component {
+  state = {
+    isLoading: false,
+  };
   componentWillUnmount = () => {
     let closeDel = { target: { id: '' } };
     this.props.handleDelMenu(closeDel);
@@ -24,7 +34,7 @@ class ViewMenuItem extends Component {
           <h3>{this.props.item.name}</h3>
           {this.props.item.pictureKey && (
             <img
-              src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
+              // src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
               alt="menu item"
             />
           )}
@@ -36,17 +46,23 @@ class ViewMenuItem extends Component {
           <p>{this.props.item.price}</p>
         </div>
         {this.props.delMenu === String(this.props.item.menuId) ? (
-          <div className={styles.admindel}>
-            <p>Are you sure you want to delete this item?</p>
-            <AdminButtons
-              submitId=""
-              submitTitle="Cancel"
-              cancelId={this.props.item.menuId}
-              cancelTitle="Yes, Delete"
-              submitFunction={this.props.handleDelMenu}
-              cancelFunction={this.props.handleMenuItemDelete}
-            />
-          </div>
+          <Dialog open={true}>
+            <DialogTitle>{this.props.item.name}</DialogTitle>
+            <DialogContent>
+              <p>Are you sure you want to delete this item?</p>
+            </DialogContent>
+            <DialogActions>
+              {this.state.isLoading ? <CircularProgress /> : null}
+              <AdminButtons
+                submitId=""
+                submitTitle="Cancel"
+                cancelId={this.props.item.menuId}
+                cancelTitle="Yes, Delete"
+                submitFunction={this.props.handleDelMenu}
+                cancelFunction={this.props.handleMenuItemDelete}
+              />
+            </DialogActions>
+          </Dialog>
         ) : (
           <AdminButtons
             submitId={this.props.item.menuId}
