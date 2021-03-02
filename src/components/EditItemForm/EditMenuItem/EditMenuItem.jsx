@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import AdminButtons from '../AdminButtons/AdminButtons';
+import AdminButtons from '../../AdminButtons/AdminButtons';
 import EditItemDescription from '../EditItemDescription/EditItemDescription';
 import EditItemOptionCategory from '../EditItemOptionCategory/EditItemOptionCategory';
-import styles from './EditMenuItem.module.css';
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  CircularProgress,
 } from '@material-ui/core';
-import { axiosApiInstance as API } from '../../utils/axiosConfig';
+import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
@@ -17,29 +17,45 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 class EditMenuItem extends Component {
-  state = this.getInitialState();
+  state = this.props.addMenuItem
+    ? this.populateAddItemForm()
+    : this.populateUpdateItemForm();
 
-  getInitialState() {
+  populateUpdateItemForm() {
     return {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
-      optionalOptions: this.props.itemOptionalOptionDefs
-        ? this.props.itemOptionalOptionDefs
+      optionalOptions: this.props.optionDefs
+        ? this.props.optionDefs.optional
         : [],
-      requiredOptions: this.props.itemRequiredOptionDefs
-        ? this.props.itemRequiredOptionDefs
+      requiredOptions: this.props.optionDefs
+        ? this.props.optionDefs.required
         : [],
       image: this.props.item.pictureKey
         ? `${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`
         : null,
       open: true,
+      isLoading: false,
     };
   }
 
-  handleCheckbox = (e) => {};
+  populateAddItemForm() {
+    return {
+      name: '',
+      description: '',
+      price: '',
+      optionalOptions: [],
+      requiredOptions: [],
+      image: null,
+      open: true,
+      isLoading: false,
+    };
+  }
 
-  handleMenuItemUpdate = async () => {
+  handleUpdateItem = async (event) => {
+    event.preventDefault();
+    this.setState({ isLoading: true });
     const item = { ...this.props.item };
     const optionDefs = {
       required: this.state.requiredOptions,
@@ -74,9 +90,15 @@ class EditMenuItem extends Component {
         }
       })
       .then(async (response) => {
-        this.props.handleMenuItemCancel();
-        this.props.handleGetKitchen();
+        await this.props.handleGetKitchen();
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
       });
+  };
+
+  handleAddItem = async (event) => {
+    return null;
   };
 
   handleDescriptionChange = (e) => {
@@ -129,6 +151,7 @@ class EditMenuItem extends Component {
   };
 
   handleOptionChange = (e) => {
+    console.log('option change');
     switch (e.target.name) {
       case 'moveOptCatForward':
         this.moveOptCatForward(e.target);
@@ -360,18 +383,21 @@ class EditMenuItem extends Component {
   };
 
   componentWillUnmount = () => {
-    this.props.handleMenuItemCancel();
+    if (this.props.item) {
+      this.props.handleMenuItemCancel();
+    }
   };
 
   render() {
     return (
       <section
-        id={this.props.item.menuId}
-        key={this.props.item.menuId}
-        className={styles.item}
+        id={this.props.item ? this.props.item.menuId : 'newItem'}
+        key={this.props.item ? this.props.item.menuId : 'newItem'}
       >
-        <Dialog open={this.state.open}>
-          <DialogTitle>Update Item</DialogTitle>
+        <Dialog open={true}>
+          <DialogTitle>
+            {this.props.item ? 'Update' : 'Add'} Item
+          </DialogTitle>
           <DialogContent>
             <EditItemDescription
               itemName={this.state.name}
@@ -395,13 +421,28 @@ class EditMenuItem extends Component {
             />
           </DialogContent>
           <DialogActions>
+            {this.state.isLoading ? <CircularProgress /> : null}
             <AdminButtons
-              submitId={this.props.item.menuId}
-              submitTitle="Update"
-              cancelId={this.props.item.menuId}
+              submitId={
+                this.props.item ? this.props.item.menuId : null
+              }
+              submitTitle={this.props.item ? 'Update' : 'Add Item'}
+              cancelId={
+                this.props.item
+                  ? this.props.item.menuId
+                  : 'addMenuItem'
+              }
               cancelTitle="Cancel"
-              submitFunction={this.handleMenuItemUpdate}
-              cancelFunction={this.props.handleMenuItemCancel}
+              submitFunction={
+                this.props.item
+                  ? this.handleUpdateItem
+                  : this.handleAddItem
+              }
+              cancelFunction={
+                this.props.item
+                  ? this.props.handleMenuItemCancel
+                  : this.props.handleAddItemForm
+              }
             />
           </DialogActions>
         </Dialog>
