@@ -1,56 +1,5 @@
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding: 1.45rem;
-}
-
-.header {
+.add {
   position: fixed;
-  top: 10%;
-  left: 0;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  border: #211103 solid 2px;
-  border-radius: 50px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-left: none;
-  align-items: center;
-  background-color: #f8e16c;
-  color: #211103;
-}
-
-.addItem {
-  border-radius: 50%;
-  font-size: 2rem;
-  font-weight: 900;
-  text-align: center;
-  margin: auto;
-  padding: 0.5rem 1rem;
-  border: none;
-  color: #f9f8f8;
-  background-color: #5cab7d;
-  box-shadow: 2px 2px 2px #b7990d;
-}
-
-.header button:active {
-  background-color: green;
-  box-shadow: none;
-}
-
-.header button:focus {
-  outline: 0;
-}
-
-.content {
-  width: 85vw;
-}
-
-.content h1 {
-  font-size: 1.75rem;
-  font-style: italic;
-  font-weight: 900;
+  bottom: 10%;
+  right: 10%;
 }
