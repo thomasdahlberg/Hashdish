@@ -6,7 +6,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  CircularProgress,
 } from '@material-ui/core';
 
 var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
@@ -15,15 +14,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 class ViewMenuItem extends Component {
-  state = {
-    isLoading: false,
-  };
   componentWillUnmount = () => {
     let closeDel = { target: { id: '' } };
     this.props.handleDelMenu(closeDel);
   };
 
   render() {
+    const { menuId } = this.props.item;
     return (
       <section
         id={this.props.item.menuId}
@@ -45,21 +42,24 @@ class ViewMenuItem extends Component {
         <div className={styles.price}>
           <p>{this.props.item.price}</p>
         </div>
-        {this.props.delMenu === String(this.props.item.menuId) ? (
+        {this.props.delMenu === this.props.item.menuId ? (
           <Dialog open={true}>
             <DialogTitle>{this.props.item.name}</DialogTitle>
             <DialogContent>
               <p>Are you sure you want to delete this item?</p>
             </DialogContent>
             <DialogActions>
-              {this.state.isLoading ? <CircularProgress /> : null}
               <AdminButtons
                 submitId=""
                 submitTitle="Cancel"
                 cancelId={this.props.item.menuId}
                 cancelTitle="Yes, Delete"
-                submitFunction={this.props.handleDelMenu}
-                cancelFunction={this.props.handleMenuItemDelete}
+                submitFunction={() => {
+                  this.props.handleDelMenu(null);
+                }}
+                cancelFunction={() => {
+                  this.props.handleMenuItemDelete(menuId);
+                }}
               />
             </DialogActions>
           </Dialog>
@@ -72,7 +72,9 @@ class ViewMenuItem extends Component {
             submitFunction={() => {
               this.props.handleMenuItemEdit(this.props.idx);
             }}
-            cancelFunction={this.props.handleDelMenu}
+            cancelFunction={() => {
+              this.props.handleDelMenu(menuId);
+            }}
           />
         )}
       </section>

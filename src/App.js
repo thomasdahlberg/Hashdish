@@ -80,11 +80,9 @@ class App extends Component {
     this.setState({ menuCats: uniqueCatsArr });
   };
 
-  handleMenuItemDelete = async (e) => {
-    e.preventDefault();
-    console.log(e.target.id);
+  handleMenuItemDelete = async (id) => {
     try {
-      await API.delete(`/kitchen/menu/${e.target.id}`).then((response) => {
+      await API.delete(`/kitchen/menu/${id}`).then((response) => {
         if (response.status === 200) {
           console.log(response);
           this.handleGetKitchen();
@@ -131,8 +129,9 @@ class App extends Component {
     }
   }
 
-  handleDelMenu = (e) => {
-    this.setState({ delMenu: e.target.id });
+  handleDelMenu = (id) => {
+    console.log("Delete Item");
+    this.setState({ delMenu: id });
   };
 
   // Login/Logout Handlers
