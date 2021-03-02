@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ViewItemOptions from '../ViewItemOptions/ViewItemOptions';
 import AdminButtons from '../AdminButtons/AdminButtons';
 import styles from './ViewMenuItem.module.css';
 
@@ -35,24 +34,6 @@ class ViewMenuItem extends Component {
         </div>
         <div className={styles.price}>
           <p>{this.props.item.price}</p>
-        </div>
-        <div className={styles.options}>
-          <ViewItemOptions
-            title="Required"
-            optionsCategories={
-              this.props.optionDefs
-                ? this.props.optionDefs.required
-                : []
-            }
-          />
-          <ViewItemOptions
-            title="Optional"
-            optionsCategories={
-              this.props.optionDefs
-                ? this.props.optionDefs.optional
-                : []
-            }
-          />
         </div>
         {this.props.delMenu === String(this.props.item.menuId) ? (
           <div className={styles.admindel}>
