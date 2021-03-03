@@ -160,7 +160,7 @@ class LoginForm extends Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Log in
             </Typography>
             <form
               className={classes.form}
@@ -210,7 +210,7 @@ class LoginForm extends Component {
                 className={classes.submit}
                 disabled={!this.isFormValid()}
               >
-                Sign In
+                Log In
               </Button>
               <Grid container>
                 <Grid item>
