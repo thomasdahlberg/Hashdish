@@ -1,15 +1,88 @@
 import React, { Component } from 'react';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
 import LocalStorageService from '../../utils/localStorageService';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@material-ui/core';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Paper,
+  Box,
+  Grid,
+  Typography,
+  CircularProgress,
+  Backdrop,
+} from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = (theme) => ({
+  root: {
+    height: '100vh',
+  },
+  image: {
+    backgroundImage:
+      'url(https://source.unsplash.com/collection/386111)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+});
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      HashDish {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 class LoginForm extends Component {
   state = {
-      email: '',
-      password: '',
-      isLoading: false,
-      setOpen: true
+    email: '',
+    password: '',
+    isLoading: false,
+    isChecked: false,
   };
+
+  componentDidMount() {
+    if (localStorage.username && localStorage.checkbox !== '') {
+      this.setState({
+        email: localStorage.username,
+        isChecked: true,
+      });
+    }
+  }
 
   isFormValid = () => {
     return this.state.email && this.state.password;
@@ -21,10 +94,23 @@ class LoginForm extends Component {
     });
   };
 
+  handleCheckboxChange = (event) => {
+    this.setState({
+      isChecked: event.target.checked,
+    });
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
-    this.setState({ isLoading: true })
-    const { email, password } = this.state;
+    this.setState({ isLoading: true });
+    const { email, password, isChecked } = this.state;
+    if (isChecked && email !== '') {
+      localStorage.setItem('username', email);
+      localStorage.setItem('checkbox', isChecked);
+    } else {
+      localStorage.removeItem('username');
+      localStorage.removeItem('checkbox');
+    }
     await API.post(
       `/kitchen/authorize?email=${email}&password=${password}`,
     )
@@ -39,61 +125,112 @@ class LoginForm extends Component {
         alert('Failed to login');
       })
       .finally(() => {
-        this.setState({ isLoading: false })
-      })
+        this.setState({ isLoading: false });
+      });
     this.props.handleSignupOrLogin();
     LocalStorageService.getAuthToken()
       ? this.props.history.push('/')
       : this.props.history.push('/login');
   };
 
-  handleClose = () => {
-    this.setState({ setOpen: false })
-  }
-
   render() {
+    const { classes } = this.props;
+    const { email, password, isLoading, isChecked } = this.state;
     return (
-      <div>
-      <Dialog open={this.state.setOpen} onClose={this.handleClose}>
-        <DialogTitle>Log In</DialogTitle>
-        <form onSubmit={this.handleSubmit}>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            fullWidth
-            label="Email Address"
-            id="email"
-            name="email"
-            type="text"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <TextField
-            margin="dense"
-            fullWidth
-            label="Password"
-            id="password"
-            name="password"
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button type="submit" color="primary" disabled={!this.isFormValid()}>
-            Login
-          </Button>
-          {this.state.isLoading ? <CircularProgress /> : null}
-        </DialogActions>
-        </form>
-      </Dialog>
-      </div>
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          className={classes.image}
+        />
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleSubmit}
+            >
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={this.handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                value={password}
+                onChange={this.handleChange}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isChecked}
+                    onChange={this.handleCheckboxChange}
+                    color="primary"
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={!this.isFormValid()}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
+        <Backdrop className={classes.backdrop} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </Grid>
     );
   }
 }
 
-export default LoginForm;
+export default withStyles(styles)(LoginForm);
