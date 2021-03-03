@@ -16,6 +16,7 @@ import {
   CircularProgress,
   Backdrop,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -55,6 +56,9 @@ const styles = (theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
+  alert: {
+    marginTop: theme.spacing(2),
+  },
 });
 
 function Copyright() {
@@ -73,6 +77,7 @@ class LoginForm extends Component {
     password: '',
     isLoading: false,
     isChecked: false,
+    error: '',
   };
 
   componentDidMount() {
@@ -122,7 +127,7 @@ class LoginForm extends Component {
       })
       .catch((error) => {
         console.log(error);
-        alert('Failed to login');
+        this.setState({ error: 'Failed to log in' });
       })
       .finally(() => {
         this.setState({ isLoading: false });
@@ -135,7 +140,13 @@ class LoginForm extends Component {
 
   render() {
     const { classes } = this.props;
-    const { email, password, isLoading, isChecked } = this.state;
+    const {
+      email,
+      password,
+      isLoading,
+      isChecked,
+      error,
+    } = this.state;
     return (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
@@ -162,6 +173,11 @@ class LoginForm extends Component {
             <Typography component="h1" variant="h5">
               Log in
             </Typography>
+            {error && (
+              <Alert className={classes.alert} severity="error">
+                {error}
+              </Alert>
+            )}
             <form
               className={classes.form}
               noValidate
