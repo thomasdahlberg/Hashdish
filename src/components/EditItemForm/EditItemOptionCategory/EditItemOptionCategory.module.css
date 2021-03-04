@@ -1,0 +1,39 @@
+.options {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+.title h3 {
+  margin-right: 2rem;
+}
+
+.category {
+  display: flex;
+}
+
+.field {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+  margin-right: 0.5rem;
+  justify-content: center;
+}
+
+.field label {
+  margin-bottom: 0.25rem;
+}
+
+.optrender {
+  padding: 0.5rem;
+}
+
+.container {
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: solid #888888 2px;
+}

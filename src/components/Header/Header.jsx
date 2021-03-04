@@ -1,12 +1,10 @@
 import React, { Fragment } from 'react';
 import Media from 'react-media';
-import Dropdown from '../Dropdown/Dropdown'
+import Dropdown from '../Dropdown/Dropdown';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 
-
 const Header = (props) => {
-
   let nav = props.user ? (
     <Fragment>
       <li>
@@ -32,32 +30,38 @@ const Header = (props) => {
     </Fragment>
   );
 
-    return (
+  return (
     <header className={styles.container}>
-      <div className={styles.title}>
-        <Link to="/">
-          <h1>Hashdish</h1>
-        </Link>
-        <em>
-          <h2>Restaurant Manager</h2>
-        </em>
-      </div>
-        <Media queries={{ small: "(max-width: 799px)"}}>
-          {matches =>
-            matches.small ? (
-              <Dropdown 
+      <Media queries={{ small: '(max-width: 799px)' }}>
+        {(matches) =>
+          matches.small ? (
+            <Fragment>
+              <div className={styles.mobile}>
+                <Link to="/">
+                  <h1>Hashdish</h1>
+                </Link>
+                <h2>Restaurant Manager</h2>
+              </div>
+              <Dropdown
                 user={props.user}
                 handleLogout={props.handleLogout}
               />
-            ) : (
-              <ul className={styles.nav}>
-                {nav}
-              </ul>
-            )
-            }
-        </Media>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <div className={styles.title}>
+                <Link to="/">
+                  <h1>Hashdish</h1>
+                </Link>
+                <h2>Restaurant Manager</h2>
+              </div>
+              <ul className={styles.nav}>{nav}</ul>
+            </Fragment>
+          )
+        }
+      </Media>
     </header>
   );
-}
+};
 
 export default Header;
