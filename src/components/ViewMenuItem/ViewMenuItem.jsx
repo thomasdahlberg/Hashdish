@@ -8,10 +8,7 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 
-var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
-if (process.env.NODE_ENV === 'production') {
-  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
-}
+const STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 
 class ViewMenuItem extends Component {
   componentWillUnmount = () => {
@@ -31,7 +28,7 @@ class ViewMenuItem extends Component {
           <h3>{this.props.item.name}</h3>
           {this.props.item.pictureKey && (
             <img
-              // src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
+              src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
               alt="menu item"
             />
           )}
