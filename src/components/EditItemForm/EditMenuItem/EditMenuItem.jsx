@@ -11,10 +11,7 @@ import {
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
-var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
-if (process.env.NODE_ENV === 'production') {
-  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
-}
+const STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 
 class EditMenuItem extends Component {
   state = this.props.addMenuItem
@@ -26,6 +23,7 @@ class EditMenuItem extends Component {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
+      category: this.props.item.category,
       optionalOptions: this.props.optionDefs
         ? this.props.optionDefs.optional
         : [],
@@ -45,6 +43,7 @@ class EditMenuItem extends Component {
       name: '',
       description: '',
       price: '',
+      category: '',
       optionalOptions: [],
       requiredOptions: [],
       image: null,
@@ -69,6 +68,7 @@ class EditMenuItem extends Component {
         name: this.state.name,
         description: this.state.description,
         price: this.state.price,
+        category: this.state.category,
         optionDefinitions: stringifiedOptionDefs,
       }),
     )
@@ -98,7 +98,45 @@ class EditMenuItem extends Component {
   };
 
   handleAddItem = async (event) => {
-    return null;
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    const optionDefs = {
+      required: this.state.requiredOptions,
+      optional: this.state.optionalOptions,
+    };
+    const stringifiedOptionDefs = JSON.stringify(optionDefs);
+
+    await API.post(
+      `/kitchen/menu`,
+      Object.assign({
+        name: this.state.name,
+        description: this.state.description,
+        price: this.state.price,
+        optionDefinitions: stringifiedOptionDefs,
+      }),
+    )
+      .then(async (response) => {
+        if (response.status === 200) {
+          console.log(response);
+          // if (
+          //   this.state.image &&
+          //   this.state.image.startsWith('data:image/jpeg;base64')
+          // ) {
+          //   await API.patch(`/kitchen/menu/picture/${item.menuId}`, {
+          //     data: this.state.image.split(',')[1],
+          //   }).then((response) => {
+          //     if (response.status === 200) {
+          //       console.log(response);
+          //     }
+          //   });
+        }
+      })
+      .then(async (response) => {
+        await this.props.handleGetKitchen();
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
   };
 
   handleDescriptionChange = (e) => {
@@ -404,6 +442,7 @@ class EditMenuItem extends Component {
               itemImage={this.state.image}
               itemDescription={this.state.description}
               itemPrice={this.state.price}
+              itemCategory={this.state.category}
               handleChange={this.handleDescriptionChange}
               handleImageChange={this.handleImageChange}
             />

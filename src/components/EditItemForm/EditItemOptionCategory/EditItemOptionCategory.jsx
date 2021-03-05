@@ -3,10 +3,12 @@ import EditItemOption from '../EditItemOption/EditItemOption';
 import styles from './EditItemOptionCategory.module.css';
 import {
   Accordion,
-  Typography,
+  Button,
   AccordionSummary,
   AccordionDetails,
+  FormControlLabel,
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import classes from './EditItemOptionCategory.module.css';
 
@@ -15,9 +17,23 @@ const EditItemOptionCategory = (props) => {
     <div className={styles.options}>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={classes.heading}>
-            {props.headerText}
-          </Typography>
+          <FormControlLabel
+            aria-label="Add Form"
+            onClick={(event) => {
+              return event;
+            }}
+            control={
+              <Button
+                aria-label="Add Category"
+                color="primary"
+                variant="contained"
+                size="small"
+              >
+                <AddIcon />
+              </Button>
+            }
+            label={props.headerText}
+          />
         </AccordionSummary>
         <AccordionDetails>
           <button

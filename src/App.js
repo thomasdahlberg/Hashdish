@@ -130,7 +130,6 @@ class App extends Component {
   }
 
   handleDelMenu = (id) => {
-    console.log("Delete Item");
     this.setState({ delMenu: id });
   };
 

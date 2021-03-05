@@ -30,6 +30,15 @@ const EditItemDescription = (props) => {
               />
             </div>
             <div className={styles.field}>
+              <label>Category</label>
+              <input
+                name="category"
+                type="text"
+                value={props.itemCategory}
+                onChange={props.handleChange}
+              />
+            </div>
+            <div className={styles.field}>
               <label>Item Description</label>
               <textarea
                 name="description"
