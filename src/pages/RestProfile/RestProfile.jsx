@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
 import styles from './RestProfile.module.css';
+import { axiosApiInstance as API } from '../../utils/axiosConfig';
 
 function profileTime(timeArr) {
   let timeStringArr = [];
@@ -26,7 +27,7 @@ function profileTime(timeArr) {
       ),
       ':',
       ('0' + String(time[1] % 100)).slice(-2),
-      time[0] / 100 >= 12 ? ' PM' : ' AM',
+      time[1] / 100 >= 12 ? ' PM' : ' AM',
     ].join('');
     timeStringArr.push(`${start} - ${end}`);
   }
@@ -43,12 +44,16 @@ const DAYS = [
   'Saturday',
 ];
 
-var STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
+var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
-  STORAGE_URL = 'https://hashdish.blob.core.windows.net/';
+  STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
 class Profile extends Component {
+  state = {
+    loading: false
+  }
+  
   componentWillUnmount = () => {
     if (this.props.editProfPhoto) {
       this.props.handleFormToggle('editProfPhoto');
@@ -57,6 +62,63 @@ class Profile extends Component {
       this.props.handleFormToggle('editHours');
     }
   };
+
+  handleGenerateReport = async () => {
+    this.setState({loading: true})
+    if (this.state.month) {
+      await API.get(`/kitchen/report/${this.state.year}/${this.state.month}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setTimeout(() => {
+            this.setState({loading: false})
+            window.open(`https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`)
+          }, 1000)
+        }
+      });
+    }
+    else {
+      await API.get(`/kitchen/report/${this.state.yearOnly}/*`)
+      .then((response) => {
+        if (response.status === 200) {
+          setTimeout(() => {
+            this.setState({loading: false})
+            window.open(`https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`)
+          }, 1000)
+        }
+      });
+    }
+  }
+  
+  handleMonthChange = (e) => {
+    var yearmonth = e.target.value.split('-')
+    var year = parseInt(yearmonth[0], 10)
+    var month = parseInt(yearmonth[1], 10)
+    var now = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)    
+    if (now.getFullYear() < year ||
+      (now.getFullYear() === year && (now.getMonth() + 1) < month)) {
+      alert(`Cannot generate report for ${year}-${('0' + month).slice(-2)}`)
+      this.setState({
+        year: undefined,
+        month: undefined,
+        yearOnly: undefined,
+      })
+    }
+    else {
+      this.setState({
+        year,
+        month,
+        yearOnly: undefined,
+      })
+    }
+  }
+
+  handleYearChange = (e) => {
+    this.setState({
+      yearOnly: e.target.value,
+      year: undefined,
+      month: undefined,
+    })
+  }
 
   render() {
     return (
@@ -89,6 +151,33 @@ class Profile extends Component {
                       onClick={this.props.handleClick}
                     >
                       Update Photo
+                    </button>
+                  </div>
+                  <div className={(this.state.year) ? styles.edit : styles.disabled}>
+                    <input
+                      type="month"                      
+                      value={(this.state.year) ? `${this.state.year}-${('0' + this.state.month).slice(-2)}` : ''}
+                      onChange={this.handleMonthChange} />
+                    <button
+                      disabled={!this.state.year}
+                      id="generateReport"
+                      onClick={this.handleGenerateReport}>
+                      {this.state.loading ? <div className={styles.loader}/> : 'Generate Monthly Report'}
+                    </button>
+                  </div>
+                  <div className={(this.state.yearOnly) ? styles.edit : styles.disabled}>
+                    <select                    
+                      onChange={this.handleYearChange}>
+                        <option>Select Year</option>
+                      {[...new Array(new Date().getFullYear() - 2020)].map((v, i) => {
+                        return <option>{i + 2020}</option>
+                      })}
+                    </select>
+                    <button
+                      disabled={!this.state.yearOnly}
+                      id="generateReport"
+                      onClick={this.handleGenerateReport}>
+                      {this.state.loading ? <div className={styles.loader}/> : 'Generate Yearly Report'}
                     </button>
                   </div>
                 </div>
