@@ -105,38 +105,47 @@ class EditMenuItem extends Component {
       optional: this.state.optionalOptions,
     };
     const stringifiedOptionDefs = JSON.stringify(optionDefs);
+    const newItem = {
+      name: this.state.name,
+      description: this.state.description,
+      price: this.state.price,
+      category: this.state.category,
+      dietaryRestriction: '',
+      optionDefinitions: stringifiedOptionDefs,
+    };
 
-    await API.post(
-      `/kitchen/menu`,
-      Object.assign({
-        name: this.state.name,
-        description: this.state.description,
-        price: this.state.price,
-        optionDefinitions: stringifiedOptionDefs,
-      }),
-    )
-      .then(async (response) => {
-        if (response.status === 200) {
-          console.log(response);
-          // if (
-          //   this.state.image &&
-          //   this.state.image.startsWith('data:image/jpeg;base64')
-          // ) {
-          //   await API.patch(`/kitchen/menu/picture/${item.menuId}`, {
-          //     data: this.state.image.split(',')[1],
-          //   }).then((response) => {
-          //     if (response.status === 200) {
-          //       console.log(response);
-          //     }
-          //   });
-        }
-      })
-      .then(async (response) => {
-        await this.props.handleGetKitchen();
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    try {
+      await API.post(`/kitchen/menu`, newItem)
+        .then(async (response) => {
+          if (response.status === 200) {
+            console.log(response);
+            if (
+              this.state.image &&
+              this.state.image.startsWith('data:image/jpeg;base64')
+            ) {
+              await API.patch(
+                `/kitchen/menu/picture/${response.data.menuId}`,
+                {
+                  data: this.state.image.split(',')[1],
+                },
+              ).then((response) => {
+                if (response.status === 200) {
+                  console.log(response);
+                }
+              });
+            }
+          }
+        })
+        .then(async (response) => {
+          await this.props.handleGetKitchen();
+        })
+        .finally(() => {
+          this.setState({ isLoading: false });
+          this.props.handleAddItemForm();
+        });
+    } catch (error) {
+      console.log(`AddItem POST Error: ${error}`);
+    }
   };
 
   handleDescriptionChange = (e) => {
